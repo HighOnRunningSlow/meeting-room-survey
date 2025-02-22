@@ -1,48 +1,181 @@
-<form id="surveyForm">
-  <!-- Example Field: Overall Experience -->
-  <div class="question">
-    <label for="overall">Overall Experience:</label>
-    <select id="overall" name="overall">
-      <option value="">Select an option</option>
-      <option value="1">1 - Very Poor</option>
-      <option value="2">2 - Poor</option>
-      <option value="3">3 - Average</option>
-      <option value="4">4 - Good</option>
-      <option value="5">5 - Excellent</option>
-    </select>
-  </div>
-  <!-- Add your additional fields here -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Meeting Room Experience Survey</title>
+  <!-- Google Font for a modern look -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: #f0f2f5;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .container {
+      background: #fff;
+      padding: 30px 40px;
+      max-width: 600px;
+      width: 100%;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      font-size: 2em;
+      margin-bottom: 0.5em;
+      color: #333;
+    }
+    p.description {
+      font-size: 1.1em;
+      margin-bottom: 1.5em;
+      color: #555;
+    }
+    .page {
+      display: none;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .page.active {
+      display: block;
+      opacity: 1;
+    }
+    .question {
+      margin-bottom: 20px;
+    }
+    label {
+      font-size: 1.1em;
+      color: #333;
+    }
+    select, textarea {
+      font-size: 1em;
+      padding: 10px;
+      width: 100%;
+      max-width: 100%;
+      margin-top: 8px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+    th, td {
+      text-align: center;
+      padding: 12px;
+      border: 1px solid #ddd;
+    }
+    th {
+      background-color: #f7f7f7;
+      font-weight: 500;
+    }
+    .button {
+      padding: 12px 25px;
+      font-size: 1em;
+      background-color: #0078d4;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+      margin-top: 10px;
+    }
+    .button:hover {
+      background-color: #005a9e;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- Page 1: Introduction -->
+    <div id="page1" class="page active">
+      <h1>Meeting Room Experience Survey</h1>
+      <p class="description">
+        This is a one-month proof of concept—your feedback is important to help us refine and improve the meeting room experience.
+      </p>
+      <button class="button" onclick="nextPage('page2')">Start Survey</button>
+    </div>
+
+    <!-- Page 2: Overall Experience -->
+    <div id="page2" class="page">
+      <h1>Overall Experience</h1>
+      <p class="description">Please rate your overall meeting room experience.</p>
+      <div class="question">
+        <label for="overall">Overall, how was your experience?</label><br>
+        <select id="overall" name="overall">
+          <option value="">Select an option</option>
+          <option value="1">1 - Very Poor</option>
+          <option value="2">2 - Poor</option>
+          <option value="3">3 - Average</option>
+          <option value="4">4 - Good</option>
+          <option value="5">5 - Excellent</option>
+        </select>
+      </div>
+      <button class="button" onclick="nextPage('page3')">Next</button>
+    </div>
+
+    <!-- Page 3: Feature Ratings (Single Grid / Likert style) -->
+    <div id="page3" class="page">
+      <h1>Rate the Features</h1>
+      <p class="description">Please rate the following aspects of the meeting room:</p>
+      <form id="featuresForm">
+        <table>
+          <tr>
+            <th style="text-align: left;">Feature</th>
+            <th>Poor</th>
+            <th>Fair</th>
+            <th>Good</th>
+            <th>Very Good</th>
+            <th>Excellent</th>
+          </tr>
+          <tr>
+            <td style="text-align: left;">Video Quality</td>
+            <td><input type="radio" name="video" value="1"></td>
+            <td><input type="radio" name="video" value="2"></td>
+            <td><input type="radio" name="video" value="3"></td>
+            <td><input type="radio" name="video" value="4"></td>
+            <td><input type="radio" name="video" value="5"></td>
+          </tr>
+          <tr>
+            <td style="text-align: left;">Audio Clarity</td>
+            <td><input type="radio" name="audio" value="1"></td>
+            <td><input type="radio" name="audio" value="2"></td>
+            <td><input type="radio" name="audio" value="3"></td>
+            <td><input type="radio" name="audio" value="4"></td>
+            <td><input type="radio" name="audio" value="5"></td>
+          </tr>
+          <tr>
+            <td style="text-align: left;">Whiteboard Usability</td>
+            <td><input type="radio" name="whiteboard" value="1"></td>
+            <td><input type="radio" name="whiteboard" value="2"></td>
+            <td><input type="radio" name="whiteboard" value="3"></td>
+            <td><input type="radio" name="whiteboard" value="4"></td>
+            <td><input type="radio" name="whiteboard" value="5"></td>
+          </tr>
+          <tr>
+            <td style="text-align: left;">Automatic Booking</td>
+            <td><input type="radio" name="booking" value="1"></td>
+            <td><input type="radio" name="booking" value="2"></td>
+            <td><input type="radio" name="booking" value="3"></td>
+            <td><input type="radio" name="booking" value="4"></td>
+            <td><input type="radio" name="booking" value="5"></td>
+          </tr>
+          <tr>
+            <td style="text-align: left;">Video Framing</td>
+            <td><input type="radio" name="framing" value="1"></td>
+            <td><input type="radio" name="framing" value="2"></td>
+            <td><input type="radio" name="framing" value="3"></td>
+            <td><input type="radio" name="framing" value="4"></td>
+            <td><input type="radio" name="framing" value="5"></td>
+          </tr>
+        </table>
+        <button type="button" class="button" onclick="nextPage('page4')">Next</button>
   
-  <button type="submit" class="button">Submit</button>
-</form>
-
-<script>
-  document.getElementById('surveyForm').addEventListener('submit', function(event) {
-    event.preventDefault(); // Prevent the default form submission
-
-    // Gather form data
-    const formData = {
-      overall: document.getElementById('overall').value,
-      // Include additional fields here as needed:
-      // video: document.querySelector('input[name="video"]:checked')?.value || '',
-      // comments: document.getElementById('comments').value
-    };
-
-    // Send the data to your Apps Script endpoint
-    fetch("https://script.google.com/macros/s/AKfycbylEz6oQBFbjf9BUBb1e_SE0x_6ishaPbqsMQPnWSXnH6-1WxMtWpqfS83jtSLhuNj52g/exec", {
-      method: "POST",
-      mode: "no-cors", // Use no-cors if you don't need the response
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(formData)
-    }).then(() => {
-      alert("Thank you for your feedback!");
-      // Optionally, reset the form or reload the page
-      location.reload();
-    }).catch(error => {
-      console.error("Error submitting form: ", error);
-      alert("Submission failed. Please try again.");
-    });
-  });
-</script>

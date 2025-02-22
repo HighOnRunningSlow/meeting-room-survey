@@ -109,9 +109,9 @@
 <body>
   <div class="container">
 
-    <!-- Page 1: Overall Experience (Smiley Faces) -->
+    <!-- Page 1: Wireless Room Survey (Smiley Faces) -->
     <div id="page1" class="page active">
-      <h1>Overall Experience</h1>
+      <h1>Wireless Room Survey</h1>
       <p class="description">How was your overall meeting room experience?</p>
       <div class="question">
         <label style="display:block; margin-bottom:10px;">Please select a smiley:</label>
@@ -215,18 +215,18 @@
 
     <!-- Page 3: Additional Feedback (Optional) -->
     <div id="page3" class="page">
-      <h1>Additional Feedback</h1>
+      <h1>Additional Feedback (Optional)</h1>
       <div class="question">
-        <label for="comments">Please provide any additional comments (optional):</label><br>
+        <label for="comments">Please provide any additional comments:</label><br>
         <textarea id="comments" name="comments" rows="4" placeholder="Your comments..."></textarea>
       </div>
-      <button class="button" onclick="nextPage('page4')">Submit</button>
+      <button class="button" onclick="submitSurvey()">Submit</button>
     </div>
 
     <!-- Page 4: Thank You Page -->
     <div id="page4" class="page">
       <h1>Thank You!</h1>
-      <p class="description">Thank you for your feedback. Your responses have been recorded.</p>
+      <p class="description">Your responses have been recorded.</p>
     </div>
 
   </div>
@@ -239,6 +239,15 @@
         page.classList.remove('active');
       });
       document.getElementById(pageId).classList.add('active');
+    }
+
+    function submitSurvey() {
+      // Navigate to the thank-you page
+      nextPage('page4');
+      // After 5 seconds, return to the main page
+      setTimeout(function(){
+        nextPage('page1');
+      }, 5000);
     }
   </script>
   

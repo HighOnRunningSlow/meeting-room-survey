@@ -111,17 +111,8 @@
 <body>
   <div class="container">
 
-    <!-- Page 1: Introduction -->
+    <!-- Page 1: Overall Experience (Smiley Faces) -->
     <div id="page1" class="page active">
-      <h1>Meeting Room Experience Survey</h1>
-      <p class="description">
-        This is a one-month proof of concept—your feedback is important to help us refine and improve the meeting room experience.
-      </p>
-      <button class="button" onclick="nextPage('page2')">Start Survey</button>
-    </div>
-
-    <!-- Page 2: Overall Experience (Smiley Faces) -->
-    <div id="page2" class="page">
       <h1>Overall Experience</h1>
       <p class="description">How was your overall meeting room experience?</p>
       <div class="question">
@@ -160,11 +151,11 @@
           </label>
         </div>
       </div>
-      <button class="button" onclick="nextPage('page3')">Next</button>
+      <button class="button" onclick="nextPage('page2')">Next</button>
     </div>
 
-    <!-- Page 3: Feature Ratings (1-5 scale) -->
-    <div id="page3" class="page">
+    <!-- Page 2: Feature Ratings (1-5 scale) -->
+    <div id="page2" class="page">
       <h1>Rate the Features</h1>
       <p class="description">Please rate the following aspects of your meeting room experience:</p>
       <form id="featuresForm">
@@ -232,12 +223,12 @@
             <td><input type="radio" name="framing" value="5"></td>
           </tr>
         </table>
-        <button type="button" class="button" onclick="nextPage('page4')">Next</button>
+        <button type="button" class="button" onclick="nextPage('page3')">Next</button>
       </form>
     </div>
 
-    <!-- Page 4: Additional Feedback -->
-    <div id="page4" class="page">
+    <!-- Page 3: Additional Feedback -->
+    <div id="page3" class="page">
       <h1>Additional Feedback</h1>
       <div class="question">
         <label for="comments">Please provide any additional comments:</label><br>

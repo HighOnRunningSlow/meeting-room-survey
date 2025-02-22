@@ -1,227 +1,67 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Meeting Room Experience Survey</title>
-  <!-- Responsive for mobile devices -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Google Font for a modern look -->
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-    body {
-      font-family: 'Roboto', sans-serif;
-      background: #f0f2f5;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-    }
-    .container {
-      background: #fff;
-      padding: 30px 40px;
-      max-width: 600px;
-      width: 100%;
-      border-radius: 10px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    }
-    h1 {
-      font-size: 2em;
-      margin-bottom: 0.5em;
-      color: #333;
-    }
-    p.description {
-      font-size: 1.1em;
-      margin-bottom: 1.5em;
-      color: #555;
-    }
-    .page {
-      display: none;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-    .page.active {
-      display: block;
-      opacity: 1;
-    }
-    .question {
-      margin-bottom: 20px;
-    }
-    label {
-      font-size: 1.1em;
-      color: #333;
-    }
-    select, textarea {
-      font-size: 1em;
-      padding: 10px;
-      width: 100%;
-      max-width: 100%;
-      margin-top: 8px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-bottom: 20px;
-    }
-    thead th {
-      background-color: #f7f7f7;
-      font-weight: 500;
-      text-align: center;
-    }
-    tbody th {
-      text-align: left;
-    }
-    th, td {
-      padding: 12px;
-      border: 1px solid #ddd;
-    }
-    .button {
-      padding: 12px 25px;
-      font-size: 1em;
-      background-color: #0078d4;
-      color: #fff;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background-color 0.2s ease;
-      margin-top: 10px;
-    }
-    .button:hover {
-      background-color: #005a9e;
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-
-    <!-- Page 1: Introduction -->
-    <div id="page1" class="page active">
-      <h1>Meeting Room Experience Survey</h1>
-      <p class="description">
-        This is a one-month proof of concept—your feedback is important to help us refine and improve the meeting room experience.
-      </p>
-      <button class="button" onclick="nextPage('page2')">Start Survey</button>
-    </div>
-
-    <!-- Page 2: Overall Experience -->
-    <div id="page2" class="page">
-      <h1>Overall Experience</h1>
-      <p class="description">Please rate your overall meeting room experience.</p>
-      <div class="question">
-        <label for="overall">Overall, how was your experience?</label><br>
-        <select id="overall" name="overall">
-          <option value="">Select an option</option>
-          <option value="1">1 - Very Poor</option>
-          <option value="2">2 - Poor</option>
-          <option value="3">3 - Average</option>
-          <option value="4">4 - Good</option>
-          <option value="5">5 - Excellent</option>
-        </select>
-      </div>
-      <button class="button" onclick="nextPage('page3')">Next</button>
-    </div>
-
-    <!-- Page 3: Feature Ratings (Single Grid / Likert style) -->
-    <div id="page3" class="page">
-      <h1>Rate the Features</h1>
-      <p class="description">Please rate the following aspects of the meeting room:</p>
-      <form id="featuresForm">
-        <table>
-          <thead>
-            <tr>
-              <th scope="col">Feature</th>
-              <th scope="col">Poor</th>
-              <th scope="col">Fair</th>
-              <th scope="col">Good</th>
-              <th scope="col">Very Good</th>
-              <th scope="col">Excellent</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th scope="row">Video Quality</th>
-              <td><input type="radio" name="video" value="1" aria-label="Video Quality: Poor"></td>
-              <td><input type="radio" name="video" value="2" aria-label="Video Quality: Fair"></td>
-              <td><input type="radio" name="video" value="3" aria-label="Video Quality: Good"></td>
-              <td><input type="radio" name="video" value="4" aria-label="Video Quality: Very Good"></td>
-              <td><input type="radio" name="video" value="5" aria-label="Video Quality: Excellent"></td>
-            </tr>
-            <tr>
-              <th scope="row">Audio Clarity</th>
-              <td><input type="radio" name="audio" value="1" aria-label="Audio Clarity: Poor"></td>
-              <td><input type="radio" name="audio" value="2" aria-label="Audio Clarity: Fair"></td>
-              <td><input type="radio" name="audio" value="3" aria-label="Audio Clarity: Good"></td>
-              <td><input type="radio" name="audio" value="4" aria-label="Audio Clarity: Very Good"></td>
-              <td><input type="radio" name="audio" value="5" aria-label="Audio Clarity: Excellent"></td>
-            </tr>
-            <tr>
-              <th scope="row">Whiteboard Usability</th>
-              <td><input type="radio" name="whiteboard" value="1" aria-label="Whiteboard Usability: Poor"></td>
-              <td><input type="radio" name="whiteboard" value="2" aria-label="Whiteboard Usability: Fair"></td>
-              <td><input type="radio" name="whiteboard" value="3" aria-label="Whiteboard Usability: Good"></td>
-              <td><input type="radio" name="whiteboard" value="4" aria-label="Whiteboard Usability: Very Good"></td>
-              <td><input type="radio" name="whiteboard" value="5" aria-label="Whiteboard Usability: Excellent"></td>
-            </tr>
-            <tr>
-              <th scope="row">Automatic Booking</th>
-              <td><input type="radio" name="booking" value="1" aria-label="Automatic Booking: Poor"></td>
-              <td><input type="radio" name="booking" value="2" aria-label="Automatic Booking: Fair"></td>
-              <td><input type="radio" name="booking" value="3" aria-label="Automatic Booking: Good"></td>
-              <td><input type="radio" name="booking" value="4" aria-label="Automatic Booking: Very Good"></td>
-              <td><input type="radio" name="booking" value="5" aria-label="Automatic Booking: Excellent"></td>
-            </tr>
-            <tr>
-              <th scope="row">Video Framing</th>
-              <td><input type="radio" name="framing" value="1" aria-label="Video Framing: Poor"></td>
-              <td><input type="radio" name="framing" value="2" aria-label="Video Framing: Fair"></td>
-              <td><input type="radio" name="framing" value="3" aria-label="Video Framing: Good"></td>
-              <td><input type="radio" name="framing" value="4" aria-label="Video Framing: Very Good"></td>
-              <td><input type="radio" name="framing" value="5" aria-label="Video Framing: Excellent"></td>
-            </tr>
-          </tbody>
-        </table>
-        <button type="button" class="button" onclick="nextPage('page4')">Next</button>
-      </form>
-    </div>
-
-    <!-- Page 4: Additional Feedback -->
-    <div id="page4" class="page">
-      <h1>Additional Feedback</h1>
-      <div class="question">
-        <label for="comments">Please provide any additional comments:</label><br>
-        <textarea id="comments" name="comments" rows="4" placeholder="Your comments..."></textarea>
-      </div>
-      <button class="button" onclick="submitSurvey()">Submit</button>
-    </div>
-
-  </div>
-  
-  <script>
-    // Navigate between pages with a smooth transition
-    function nextPage(pageId) {
-      var pages = document.querySelectorAll('.page');
-      pages.forEach(function(page) {
-        page.classList.remove('active');
-      });
-      document.getElementById(pageId).classList.add('active');
-    }
-
-    // Simulate survey submission
-    function submitSurvey() {
-      // Here you would normally send the form data via AJAX or a form submission
-      alert("Thank you for your feedback!");
-      // In a kiosk environment, you might refresh the page after a delay:
-      setTimeout(function(){
-        location.reload();
-      }, 5000);
-    }
-  </script>
-  
-</body>
-</html>
+<!-- Page 3: Feature Ratings (Single Grid / Likert style) -->
+<div id="page3" class="page">
+  <h1>Rate the Features</h1>
+  <p class="description">Please rate the following aspects of your meeting room experience:</p>
+  <form id="featuresForm">
+    <table>
+      <thead>
+        <tr>
+          <th scope="col"></th>
+          <th scope="col">Poor</th>
+          <th scope="col">Fair</th>
+          <th scope="col">Good</th>
+          <th scope="col">Very good</th>
+          <th scope="col">Excellent</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Video -->
+        <tr>
+          <th scope="row">Video</th>
+          <td><input type="radio" name="video" value="Poor" aria-label="Video: Poor"></td>
+          <td><input type="radio" name="video" value="Fair" aria-label="Video: Fair"></td>
+          <td><input type="radio" name="video" value="Good" aria-label="Video: Good"></td>
+          <td><input type="radio" name="video" value="Very good" aria-label="Video: Very good"></td>
+          <td><input type="radio" name="video" value="Excellent" aria-label="Video: Excellent"></td>
+        </tr>
+        <!-- Audio -->
+        <tr>
+          <th scope="row">Audio</th>
+          <td><input type="radio" name="audio" value="Poor" aria-label="Audio: Poor"></td>
+          <td><input type="radio" name="audio" value="Fair" aria-label="Audio: Fair"></td>
+          <td><input type="radio" name="audio" value="Good" aria-label="Audio: Good"></td>
+          <td><input type="radio" name="audio" value="Very good" aria-label="Audio: Very good"></td>
+          <td><input type="radio" name="audio" value="Excellent" aria-label="Audio: Excellent"></td>
+        </tr>
+        <!-- Wireless -->
+        <tr>
+          <th scope="row">Wireless</th>
+          <td><input type="radio" name="wireless" value="Poor" aria-label="Wireless: Poor"></td>
+          <td><input type="radio" name="wireless" value="Fair" aria-label="Wireless: Fair"></td>
+          <td><input type="radio" name="wireless" value="Good" aria-label="Wireless: Good"></td>
+          <td><input type="radio" name="wireless" value="Very good" aria-label="Wireless: Very good"></td>
+          <td><input type="radio" name="wireless" value="Excellent" aria-label="Wireless: Excellent"></td>
+        </tr>
+        <!-- Room Booking -->
+        <tr>
+          <th scope="row">Room Booking</th>
+          <td><input type="radio" name="roomBooking" value="Poor" aria-label="Room Booking: Poor"></td>
+          <td><input type="radio" name="roomBooking" value="Fair" aria-label="Room Booking: Fair"></td>
+          <td><input type="radio" name="roomBooking" value="Good" aria-label="Room Booking: Good"></td>
+          <td><input type="radio" name="roomBooking" value="Very good" aria-label="Room Booking: Very good"></td>
+          <td><input type="radio" name="roomBooking" value="Excellent" aria-label="Room Booking: Excellent"></td>
+        </tr>
+        <!-- Whiteboard -->
+        <tr>
+          <th scope="row">Whiteboard</th>
+          <td><input type="radio" name="whiteboard" value="Poor" aria-label="Whiteboard: Poor"></td>
+          <td><input type="radio" name="whiteboard" value="Fair" aria-label="Whiteboard: Fair"></td>
+          <td><input type="radio" name="whiteboard" value="Good" aria-label="Whiteboard: Good"></td>
+          <td><input type="radio" name="whiteboard" value="Very good" aria-label="Whiteboard: Very good"></td>
+          <td><input type="radio" name="whiteboard" value="Excellent" aria-label="Whiteboard: Excellent"></td>
+        </tr>
+      </tbody>
+    </table>
+    <button type="button" class="button" onclick="nextPage('page4')">Next</button>
+  </form>
+</div>

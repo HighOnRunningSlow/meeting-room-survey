@@ -140,7 +140,8 @@
           </label>
         </div>
       </div>
-      <button class="button" onclick="goToPage2()">Next</button>
+      <!-- Next button is disabled until a selection is made -->
+      <button id="nextButton" class="button" onclick="goToPage2()" disabled>Next</button>
     </div>
 
     <!-- Page 2: Feature Ratings (1-5 scale) -->
@@ -256,6 +257,13 @@
         location.reload();
       }, 5000);
     }
+    
+    // Add event listeners to enable the Next button when a smiley is selected
+    document.querySelectorAll('input[name="overall"]').forEach(function(radio) {
+      radio.addEventListener('change', function() {
+        document.getElementById('nextButton').disabled = false;
+      });
+    });
   </script>
   
 </body>

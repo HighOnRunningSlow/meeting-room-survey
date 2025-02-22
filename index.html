@@ -65,7 +65,6 @@
     .button:hover {
       background-color: #005a9e;
     }
-
     /* Smiley container styling */
     .smiley-container {
       display: flex;
@@ -84,7 +83,6 @@
       outline-offset: 2px;
       border-radius: 50%;
     }
-
     /* Table styling for feature ratings */
     table {
       width: 100%;
@@ -108,7 +106,6 @@
 </head>
 <body>
   <div class="container">
-
     <!-- Page 1: Wireless Room Survey (Smiley Faces) -->
     <div id="page1" class="page active">
       <h1>Wireless Room Survey</h1>
@@ -143,7 +140,7 @@
           </label>
         </div>
       </div>
-      <button class="button" onclick="nextPage('page2')">Next</button>
+      <button class="button" onclick="goToPage2()">Next</button>
     </div>
 
     <!-- Page 2: Feature Ratings (1-5 scale) -->
@@ -240,13 +237,23 @@
       });
       document.getElementById(pageId).classList.add('active');
     }
+    
+    // Ensure a smiley is selected before proceeding from Page 1
+    function goToPage2() {
+      const selected = document.querySelector('input[name="overall"]:checked');
+      if (!selected) {
+        alert("Please select a rating before continuing.");
+        return;
+      }
+      nextPage('page2');
+    }
 
     function submitSurvey() {
       // Navigate to the thank-you page
       nextPage('page4');
-      // After 5 seconds, return to the main page
+      // After 5 seconds, reload the entire page to reset all inputs
       setTimeout(function(){
-        nextPage('page1');
+        location.reload();
       }, 5000);
     }
   </script>

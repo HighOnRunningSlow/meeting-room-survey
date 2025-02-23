@@ -18,24 +18,26 @@
       height: 100%;
     }
 
+    /* Center the container vertically and horizontally */
     body {
       font-family: 'Roboto', sans-serif;
       background: #f0f2f5;
       display: flex;
-      align-items: flex-start; /* start so we can add top margin inside container */
       justify-content: center;
+      align-items: center;
     }
 
     .container {
+      /* Fill the entire screen, center content */
       display: flex;
       flex-direction: column;
       align-items: center;
+      justify-content: center;
       min-height: 100vh;
       width: 100%;
       box-sizing: border-box;
       background: #fff;
       padding: 40px 50px;
-      margin-top: 20px; /* add some space from the top */
     }
 
     /* Hidden fields for room and submission ID */
@@ -43,14 +45,13 @@
 
     h1 {
       font-size: 2.5em;
-      margin: 0.5em 0 0.2em 0; /* slightly bigger gap above, smaller below */
+      margin: 0.5em 0 0.2em 0;
       color: #333;
       text-align: center;
     }
-
     p.description {
       font-size: 1.4em;
-      margin: 0.2em 0 1.5em 0; /* a bit less space above, normal below */
+      margin: 0.2em 0 1.5em 0;
       color: #555;
       text-align: center;
     }
@@ -60,7 +61,7 @@
       opacity: 0;
       transition: opacity 0.3s ease;
       width: 100%;
-      max-width: 900px; /* center content within container */
+      max-width: 900px; /* so the content doesn't get too wide */
       margin: 0 auto;
     }
     .page.active {
@@ -91,10 +92,10 @@
     /* Smiley container styling */
     .smiley-container {
       display: flex;
-      gap: 30px; /* increase gap for better distribution */
+      gap: 40px; /* bigger gap for better spacing */
       margin-top: 20px;
       justify-content: center;
-      flex-wrap: wrap; /* allow wrap if narrower screen */
+      flex-wrap: wrap;
     }
     .smiley-container label {
       cursor: pointer;
@@ -104,8 +105,8 @@
       display: none;
     }
     .smiley-container img {
-      width: 120px;
-      height: 120px;
+      width: 140px; /* bigger smileys */
+      height: 140px;
       object-fit: cover;
     }
     .smiley-container input[type="radio"]:checked + img {
@@ -188,8 +189,8 @@
         padding: 12px 24px;
       }
       .smiley-container img {
-        width: 90px;
-        height: 90px;
+        width: 100px;
+        height: 100px;
       }
       th, td {
         font-size: 1em;

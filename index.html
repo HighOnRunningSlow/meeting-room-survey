@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <title>Meeting Room Experience Survey</title>
+  <!-- Responsive for mobile devices -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Google Font -->
+  <!-- Google Font for a modern look -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; }
@@ -27,6 +28,7 @@
       box-shadow: 0 4px 15px rgba(0,0,0,0.1);
       position: relative;
     }
+    /* Hidden field for room identifier */
     input[type="hidden"] { display: none; }
     h1 {
       font-size: 2.5em;
@@ -60,6 +62,7 @@
       margin-top: 10px;
     }
     .button:hover { background-color: #005a9e; }
+    /* Smiley container styling */
     .smiley-container {
       display: flex;
       gap: 20px;
@@ -78,6 +81,7 @@
       outline-offset: 3px;
       border-radius: 50%;
     }
+    /* Table styling for feature ratings */
     table {
       width: 100%;
       border-collapse: collapse;
@@ -89,14 +93,20 @@
       border: 1px solid #ddd;
       font-size: 1.2em;
     }
-    th { background-color: #f7f7f7; font-weight: 500; }
-    td:first-child, th:first-child { text-align: left; background-color: #fff; }
+    th {
+      background-color: #f7f7f7;
+      font-weight: 500;
+    }
+    td:first-child, th:first-child {
+      text-align: left;
+      background-color: #fff;
+    }
     textarea {
       width: 100%;
       font-size: 1.2em;
       padding: 10px;
     }
-    /* Custom Modal */
+    /* Custom Modal Styles */
     .modal {
       display: none;
       position: fixed;
@@ -130,7 +140,7 @@
 </head>
 <body>
   <div class="container">
-    <!-- Hidden field for room identifier -->
+    <!-- Hidden field to store room identifier -->
     <input type="hidden" id="roomId" name="roomId">
     
     <!-- Page 1: Wireless Room Survey (Smiley Faces) -->
@@ -140,22 +150,27 @@
       <div class="question">
         <label style="display:block; margin-bottom:10px; font-size:1.3em;">Please select a smiley:</label>
         <div class="smiley-container">
+          <!-- Rating 1: Very Poor -->
           <label>
             <input type="radio" name="overall" value="1" aria-label="Very Poor">
             <img src="images/smiley1.png" alt="Very Poor">
           </label>
+          <!-- Rating 2: Poor -->
           <label>
             <input type="radio" name="overall" value="2" aria-label="Poor">
             <img src="images/smiley2.png" alt="Poor">
           </label>
+          <!-- Rating 3: Neutral -->
           <label>
             <input type="radio" name="overall" value="3" aria-label="Neutral">
             <img src="images/smiley3.png" alt="Neutral">
           </label>
+          <!-- Rating 4: Good -->
           <label>
             <input type="radio" name="overall" value="4" aria-label="Good">
             <img src="images/smiley4.png" alt="Good">
           </label>
+          <!-- Rating 5: Excellent -->
           <label>
             <input type="radio" name="overall" value="5" aria-label="Excellent">
             <img src="images/smiley5.png" alt="Excellent">
@@ -165,7 +180,7 @@
       <button id="nextButton" class="button" onclick="goToPage2()" disabled>Next</button>
     </div>
 
-    <!-- Page 2: Feature Ratings -->
+    <!-- Page 2: Feature Ratings (1-5 scale) -->
     <div id="page2" class="page">
       <h1>Rate the Features</h1>
       <p class="description">
@@ -322,7 +337,7 @@
       });
     });
     
-    // Idle timeout: reload page after 1 minute of inactivity
+    // Idle timeout: reload page after 1 minute of inactivity on any page
     let idleTimeout = null;
     const IDLE_TIME_MS = 60000;
     
@@ -347,6 +362,19 @@
       const room = getQueryParam('room') || 'Unknown Room';
       document.getElementById('roomId').value = room;
     });
+    
+    // Register Service Worker for offline caching
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('/sw.js')
+          .then(function(registration) {
+            console.log('ServiceWorker registration successful with scope: ', registration.scope);
+          })
+          .catch(function(error) {
+            console.log('ServiceWorker registration failed: ', error);
+          });
+      });
+    }
   </script>
 </body>
 </html>

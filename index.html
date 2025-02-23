@@ -17,8 +17,7 @@
       padding: 0;
       height: 100%;
     }
-
-    /* Center the container vertically and horizontally */
+    /* Center container vertically and horizontally */
     body {
       font-family: 'Roboto', sans-serif;
       background: #f0f2f5;
@@ -26,9 +25,7 @@
       justify-content: center;
       align-items: center;
     }
-
     .container {
-      /* Fill the entire screen, center content */
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -39,10 +36,8 @@
       background: #fff;
       padding: 40px 50px;
     }
-
     /* Hidden fields for room and submission ID */
     input[type="hidden"] { display: none; }
-
     h1 {
       font-size: 2.5em;
       margin: 0.5em 0 0.2em 0;
@@ -55,25 +50,22 @@
       color: #555;
       text-align: center;
     }
-
     .page {
       display: none;
       opacity: 0;
       transition: opacity 0.3s ease;
       width: 100%;
-      max-width: 900px; /* so the content doesn't get too wide */
+      max-width: 900px;
       margin: 0 auto;
     }
     .page.active {
       display: block;
       opacity: 1;
     }
-
     .question {
       margin-bottom: 30px;
       text-align: center;
     }
-
     .button {
       padding: 15px 30px;
       font-size: 1.2em;
@@ -85,27 +77,19 @@
       transition: background-color 0.2s ease;
       margin-top: 10px;
     }
-    .button:hover {
-      background-color: #005a9e;
-    }
-
+    .button:hover { background-color: #005a9e; }
     /* Smiley container styling */
     .smiley-container {
       display: flex;
-      gap: 40px; /* bigger gap for better spacing */
+      gap: 40px;
       margin-top: 20px;
       justify-content: center;
       flex-wrap: wrap;
     }
-    .smiley-container label {
-      cursor: pointer;
-      text-align: center;
-    }
-    .smiley-container input[type="radio"] {
-      display: none;
-    }
+    .smiley-container label { cursor: pointer; text-align: center; }
+    .smiley-container input[type="radio"] { display: none; }
     .smiley-container img {
-      width: 140px; /* bigger smileys */
+      width: 140px;
       height: 140px;
       object-fit: cover;
     }
@@ -114,7 +98,6 @@
       outline-offset: 3px;
       border-radius: 50%;
     }
-
     /* Table styling for feature ratings */
     table {
       width: 100%;
@@ -127,22 +110,14 @@
       border: 1px solid #ddd;
       font-size: 1.2em;
     }
-    th {
-      background-color: #f7f7f7;
-      font-weight: 500;
-    }
-    td:first-child, th:first-child {
-      text-align: left;
-      background-color: #fff;
-    }
-
+    th { background-color: #f7f7f7; font-weight: 500; }
+    td:first-child, th:first-child { text-align: left; background-color: #fff; }
     textarea {
       width: 100%;
       font-size: 1.2em;
       padding: 10px;
       box-sizing: border-box;
     }
-
     /* Custom Modal Styles */
     .modal {
       display: none;
@@ -165,9 +140,7 @@
       text-align: center;
       position: relative;
     }
-    .modal-content h2 {
-      margin-top: 0;
-    }
+    .modal-content h2 { margin-top: 0; }
     .close-button {
       position: absolute;
       right: 10px;
@@ -175,30 +148,14 @@
       font-size: 1.5em;
       cursor: pointer;
     }
-
     /* Media query for smaller screens */
     @media (max-width: 600px) {
-      h1 {
-        font-size: 2em;
-      }
-      p.description {
-        font-size: 1.2em;
-      }
-      .button {
-        font-size: 1em;
-        padding: 12px 24px;
-      }
-      .smiley-container img {
-        width: 100px;
-        height: 100px;
-      }
-      th, td {
-        font-size: 1em;
-        padding: 12px;
-      }
-      textarea {
-        font-size: 1em;
-      }
+      h1 { font-size: 2em; }
+      p.description { font-size: 1.2em; }
+      .button { font-size: 1em; padding: 12px 24px; }
+      .smiley-container img { width: 100px; height: 100px; }
+      th, td { font-size: 1em; padding: 12px; }
+      textarea { font-size: 1em; }
     }
   </style>
 </head>
@@ -208,10 +165,10 @@
     <input type="hidden" id="roomId" name="roomId">
     <input type="hidden" id="submissionId" name="submissionId">
     
-    <!-- Page 1: Wireless Room Survey -->
+    <!-- Page 1: Wireless Room Survey (Smiley Faces) -->
     <div id="page1" class="page active">
       <h1>Wireless Room Survey</h1>
-      <p class="description">How was your overall meeting room experience?</p>
+      <p class="description">Only a few seconds to complete!</p>
       <div class="question">
         <label style="display:block; margin-bottom:10px;">Please select a smiley:</label>
         <div class="smiley-container">

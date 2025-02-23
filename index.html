@@ -3,31 +3,42 @@
 <head>
   <meta charset="UTF-8">
   <title>Meeting Room Experience Survey</title>
+  <!-- Responsive meta tag -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Apple full-screen meta tags -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <!-- Google Font: Roboto -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
-    /* Global Reset */
+    /* Reset default margins/paddings */
     html, body {
       margin: 0;
       padding: 0;
       height: 100%;
     }
+    /* Body styling; removed centering here to let the container handle layout */
     body {
       font-family: 'Roboto', sans-serif;
       background: #f0f2f5;
+      display: flex;
     }
-    /* Container fills viewport */
+    /* Main container: centered with relative positioning for absolute children */
     .container {
-      min-height: 100vh;
-      margin: 0 auto;
+      position: relative;
+      margin: auto;
       background: #fff;
-      padding: 10px 20px;
+      padding: 40px 50px;
       box-sizing: border-box;
       width: 100%;
       max-width: 1200px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
     }
-    /* Page structure */
+    /* Pages within the container */
     .page {
       width: 100%;
       max-width: 900px;
@@ -40,65 +51,55 @@
       display: block;
       opacity: 1;
     }
-    /* Page 1: Increase top margin to 80px */
-    #page1 .content {
-      margin-top: 80px;
-    }
-    /* Page 3 & 4: Center content vertically and horizontally */
-    #page3, #page4 {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      min-height: 100vh;
-      margin: 0;
-      padding: 20px 0;
-    }
-    /* Headings & Paragraphs */
     h1 {
-      font-size: 2em;
+      font-size: 2.5em;
       margin: 0.5em 0 0.2em 0;
       color: #333;
       text-align: center;
     }
     p.description {
-      font-size: 1.1em;
-      margin: 0.2em 0 1em 0;
+      font-size: 1.4em;
+      margin: 0.2em 0 1.5em 0;
       color: #555;
       text-align: center;
     }
-    /* Smiley Container (Page 1) */
+    /* Smiley container styling */
     .smiley-container {
       display: flex;
-      gap: 20px;
-      margin-top: 10px;
-      margin-bottom: 20px;
+      gap: 40px;
+      margin-top: 20px;
+      margin-bottom: 80px; /* Extra space to avoid Next button overlap */
       justify-content: center;
       flex-wrap: wrap;
     }
-    .smiley-container label {
-      cursor: pointer;
-      text-align: center;
+    .smiley-container label { 
+      cursor: pointer; 
+      text-align: center; 
     }
-    .smiley-container input[type="radio"] {
-      display: none;
+    .smiley-container input[type="radio"] { 
+      display: none; 
     }
     .smiley-container img {
-      width: 100px;
-      height: 100px;
+      width: 140px;
+      height: 140px;
       object-fit: cover;
       transition: outline 0.2s ease;
     }
     .smiley-container input[type="radio"]:checked + img {
-      outline: 4px solid #0078d4;
-      outline-offset: 2px;
+      outline: 5px solid #0078d4;
+      outline-offset: 3px;
       border-radius: 50%;
     }
-    /* Button Styling (for Page 2 and onward) */
+    /* Bottom button pinned to the bottom-right */
+    .bottom-button {
+      position: absolute;
+      bottom: 40px;
+      right: 40px;
+    }
+    /* Button styling */
     .button {
-      padding: 12px 24px;
-      font-size: 1.1em;
+      padding: 15px 30px;
+      font-size: 1.2em;
       background-color: #0078d4;
       color: #fff;
       border: none;
@@ -107,36 +108,36 @@
       transition: background-color 0.2s ease;
       margin-top: 10px;
     }
-    .button:hover {
-      background-color: #005a9e;
+    .button:hover { 
+      background-color: #005a9e; 
     }
-    /* Table styling (Page 2) */
+    /* Table styling for feature ratings */
     table {
       width: 100%;
       border-collapse: collapse;
-      margin-bottom: 20px;
+      margin-bottom: 30px;
     }
     th, td {
       text-align: center;
-      padding: 12px;
+      padding: 16px;
       border: 1px solid #ddd;
-      font-size: 1.1em;
+      font-size: 1.2em;
     }
-    th {
+    th { 
       background-color: #f7f7f7;
-      font-weight: bold;
+      font-weight: 500;
     }
-    td:first-child, th:first-child {
-      text-align: left;
-      background-color: #fff;
+    td:first-child, th:first-child { 
+      text-align: left; 
+      background-color: #fff; 
     }
     textarea {
       width: 100%;
-      font-size: 1.1em;
-      padding: 8px;
+      font-size: 1.2em;
+      padding: 10px;
       box-sizing: border-box;
     }
-    /* Modal Styles (Optional) */
+    /* Custom Modal Styles */
     .modal {
       display: none;
       position: fixed;
@@ -149,7 +150,7 @@
     }
     .modal-content {
       background-color: #fff;
-      margin: 20% auto;
+      margin: 15% auto;
       padding: 20px;
       border-radius: 8px;
       width: 80%;
@@ -158,6 +159,9 @@
       text-align: center;
       position: relative;
     }
+    .modal-content h2 { 
+      margin-top: 0; 
+    }
     .close-button {
       position: absolute;
       right: 10px;
@@ -165,67 +169,79 @@
       font-size: 1.5em;
       cursor: pointer;
     }
-    /* Responsive adjustments */
+    /* Media query for smaller screens */
     @media (max-width: 600px) {
-      h1 {
-        font-size: 1.8em;
+      h1 { 
+        font-size: 2em; 
       }
-      p.description {
-        font-size: 1em;
+      p.description { 
+        font-size: 1.2em; 
       }
-      .button {
-        font-size: 1em;
-        padding: 10px 20px;
+      .button { 
+        font-size: 1em; 
+        padding: 12px 24px; 
       }
-      .smiley-container img {
-        width: 80px;
-        height: 80px;
+      .smiley-container img { 
+        width: 100px; 
+        height: 100px; 
       }
-      th, td {
-        font-size: 1em;
-        padding: 8px;
+      th, td { 
+        font-size: 1em; 
+        padding: 12px; 
       }
-      textarea {
-        font-size: 1em;
+      textarea { 
+        font-size: 1em; 
+      }
+      .bottom-button {
+        bottom: 20px;
+        right: 20px;
       }
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <!-- Hidden fields -->
+    <!-- Hidden fields for room and submission ID -->
     <input type="hidden" id="roomId" name="roomId">
     <input type="hidden" id="submissionId" name="submissionId">
-
-    <!-- Page 1: Wireless Room Survey -->
+    
+    <!-- Page 1: Wireless Room Survey (Smiley Faces) -->
     <div id="page1" class="page active">
       <div class="content">
         <h1>Wireless Room Survey</h1>
         <p class="description">Only a few seconds to complete!</p>
-        <p class="description" style="font-weight: bold; margin-bottom: 0.5em;">How was your overall meeting room experience?</p>
-        <p class="description" style="margin-bottom: 1em;">Please select a smiley:</p>
+        <p class="description" style="font-weight: bold; margin-bottom: 0.5em;">
+          How was your overall meeting room experience?
+        </p>
+        <p class="description" style="margin-bottom: 1.5em;">
+          Please select a smiley:
+        </p>
         <div class="smiley-container">
           <label>
-            <input type="radio" name="overall" value="1">
+            <input type="radio" name="overall" value="1" aria-label="Very Poor">
             <img src="./images/smiley1.png" alt="Very Poor">
           </label>
           <label>
-            <input type="radio" name="overall" value="2">
+            <input type="radio" name="overall" value="2" aria-label="Poor">
             <img src="./images/smiley2.png" alt="Poor">
           </label>
           <label>
-            <input type="radio" name="overall" value="3">
+            <input type="radio" name="overall" value="3" aria-label="Neutral">
             <img src="./images/smiley3.png" alt="Neutral">
           </label>
           <label>
-            <input type="radio" name="overall" value="4">
+            <input type="radio" name="overall" value="4" aria-label="Good">
             <img src="./images/smiley4.png" alt="Good">
           </label>
           <label>
-            <input type="radio" name="overall" value="5">
+            <input type="radio" name="overall" value="5" aria-label="Excellent">
             <img src="./images/smiley5.png" alt="Excellent">
           </label>
         </div>
+      </div>
+      <!-- Button container pinned to the bottom-right -->
+      <div class="bottom-button">
+        <button id="nextButton" class="button" onclick="goToPage2()" disabled>Next</button>
       </div>
     </div>
 
@@ -290,27 +306,25 @@
         <button type="button" class="button" onclick="nextPage('page3')">Next</button>
       </form>
     </div>
-
+    
     <!-- Page 3: Additional Feedback (Optional) -->
     <div id="page3" class="page">
       <h1>Additional Feedback (Optional)</h1>
-      <p class="description">Please provide any additional comments below:</p>
       <div class="question">
+        <label for="comments" style="font-size:1.3em;">Please provide any additional comments:</label><br>
         <textarea id="comments" name="comments" rows="5" placeholder="Your comments..."></textarea>
       </div>
       <button id="submitButton" class="button" onclick="submitSurvey()">Submit</button>
     </div>
-
+    
     <!-- Page 4: Thank You Page -->
     <div id="page4" class="page">
       <h1>Thank You! ❤️</h1>
-      <p class="description">
-        We truly appreciate your feedback! Your input helps us improve our meeting rooms for everyone.
-      </p>
+      <p class="description">We truly appreciate your feedback! Your input helps us improve our meeting rooms for everyone.</p>
     </div>
   </div>
-
-  <!-- Optional Modal -->
+  
+  <!-- Custom Modal -->
   <div id="customModal" class="modal">
     <div class="modal-content">
       <span class="close-button" onclick="closeModal()">&times;</span>
@@ -319,30 +333,47 @@
       <button class="button" onclick="closeModal()">OK</button>
     </div>
   </div>
-
+  
   <script>
-    /* Utility & Navigation */
+    // Generate a unique submission ID on load
     function generateSubmissionId() {
       return 'sub-' + Date.now() + '-' + Math.floor(Math.random() * 100000);
     }
+    
+    // Navigate between pages
     function nextPage(pageId) {
-      document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+      const pages = document.querySelectorAll('.page');
+      pages.forEach(page => page.classList.remove('active'));
       document.getElementById(pageId).classList.add('active');
     }
-    function showModal(msg) {
-      document.getElementById('modalMessage').textContent = msg;
+    
+    // Modal functions
+    function showModal(message) {
+      document.getElementById('modalMessage').textContent = message;
       document.getElementById('customModal').style.display = 'block';
     }
     function closeModal() {
       document.getElementById('customModal').style.display = 'none';
     }
-
-    /* Offline Handling */
+    
+    // Ensure a smiley is selected before proceeding from Page 1
+    function goToPage2() {
+      const selected = document.querySelector('input[name="overall"]:checked');
+      if (!selected) {
+        showModal("Please select a rating before continuing.");
+        return;
+      }
+      nextPage('page2');
+    }
+    
+    // Save data offline in localStorage if offline
     function saveDataOffline(data) {
       let offlineSubmissions = JSON.parse(localStorage.getItem('offlineSubmissions')) || [];
       offlineSubmissions.push(data);
       localStorage.setItem('offlineSubmissions', JSON.stringify(offlineSubmissions));
     }
+    
+    // Send data to the Apps Script web app
     function sendData(data) {
       fetch("https://script.google.com/macros/s/AKfycbw0xBHZNvp4CeQ7YpCqmICnd9idAPJK4PoDHKu5x0QirMBl6UD4RZ3N9RCj0dN8IdKd/exec", {
         method: "POST",
@@ -358,21 +389,27 @@
         console.error("Submission error:", err);
       });
     }
+    
+    // Remove a specific offline submission by its unique ID
     function removeOfflineSubmission(submissionId) {
       let offlineSubmissions = JSON.parse(localStorage.getItem('offlineSubmissions')) || [];
       offlineSubmissions = offlineSubmissions.filter(item => item.submissionId !== submissionId);
       localStorage.setItem('offlineSubmissions', JSON.stringify(offlineSubmissions));
     }
+    
+    // When device goes online, resend any offline submissions
     window.addEventListener('online', () => {
       let offlineSubmissions = JSON.parse(localStorage.getItem('offlineSubmissions')) || [];
       offlineSubmissions.forEach(sub => {
         sendData(sub);
       });
     });
-
-    /* Submit Survey */
+    
+    // Submit the survey
     function submitSurvey() {
+      // Disable the submit button to prevent duplicate submissions
       document.getElementById('submitButton').disabled = true;
+      
       const data = {
         submissionId: document.getElementById('submissionId').value,
         roomId: document.getElementById('roomId').value,
@@ -384,41 +421,50 @@
         booking: document.querySelector('input[name="booking"]:checked')?.value || "",
         comments: document.getElementById('comments').value || ""
       };
+      
       if (navigator.onLine) {
         sendData(data);
       } else {
         saveDataOffline(data);
       }
+      
       nextPage('page4');
-      setTimeout(() => location.reload(), 15000);
+      // After 15 seconds, reload the page to reset for the next user
+      setTimeout(() => { location.reload(); }, 15000);
     }
-
-    /* Auto-navigation from Page 1 to Page 2 upon smiley selection */
-    document.addEventListener('DOMContentLoaded', () => {
-      const room = new URLSearchParams(window.location.search).get('room') || 'Unknown Room';
-      document.getElementById('roomId').value = room;
-      document.getElementById('submissionId').value = generateSubmissionId();
-
-      document.querySelectorAll('input[name="overall"]').forEach(radio => {
-        radio.addEventListener('change', () => {
-          nextPage('page2');
-        });
+    
+    // Enable the Next button on Page 1 once a smiley is selected
+    document.querySelectorAll('input[name="overall"]').forEach(radio => {
+      radio.addEventListener('change', () => {
+        document.getElementById('nextButton').disabled = false;
       });
     });
-
-    /* Idle Timeout: Reload after 1 minute of inactivity */
+    
+    // Idle timeout: reload page after 1 minute of inactivity on any page
     let idleTimeout = null;
     const IDLE_TIME_MS = 60000;
     function resetIdleTimer() {
       clearTimeout(idleTimeout);
-      idleTimeout = setTimeout(() => location.reload(), IDLE_TIME_MS);
+      idleTimeout = setTimeout(() => { location.reload(); }, IDLE_TIME_MS);
     }
-    ['click', 'touchstart', 'keypress', 'mousemove'].forEach(evt => {
+    ['click','touchstart','keypress','mousemove'].forEach(evt => {
       document.addEventListener(evt, resetIdleTimer, { passive: true });
     });
     resetIdleTimer();
-
-    /* Service Worker Registration (Optional) */
+    
+    // Parse the "room" query parameter and generate a unique submission ID on load
+    function getQueryParam(param) {
+      const params = new URLSearchParams(window.location.search);
+      return params.get(param);
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+      const room = getQueryParam('room') || 'Unknown Room';
+      document.getElementById('roomId').value = room;
+      const submissionId = generateSubmissionId();
+      document.getElementById('submissionId').value = submissionId;
+    });
+    
+    // Register Service Worker for offline caching
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('./sw.js')

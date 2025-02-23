@@ -5,7 +5,7 @@
   <title>Meeting Room Experience Survey</title>
   <!-- Responsive for mobile devices -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Google Font: Roboto for a modern, consistent look -->
+  <!-- Google Font for a modern, consistent look -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; }
@@ -28,10 +28,8 @@
       box-shadow: 0 4px 15px rgba(0,0,0,0.1);
       position: relative;
     }
-    /* Hidden fields */
+    /* Hidden fields for room and submission ID */
     input[type="hidden"] { display: none; }
-    
-    /* Headings and descriptive text */
     h1 {
       font-size: 2.5em;
       margin-bottom: 0.5em;
@@ -42,11 +40,6 @@
       margin-bottom: 1.5em;
       color: #555;
     }
-    label {
-      font-size: 1.2em;
-      color: #333;
-    }
-    /* Consistent page styling */
     .page {
       display: none;
       opacity: 0;
@@ -101,10 +94,7 @@
       font-size: 1.2em;
     }
     th { background-color: #f7f7f7; font-weight: 500; }
-    td:first-child, th:first-child {
-      text-align: left;
-      background-color: #fff;
-    }
+    td:first-child, th:first-child { text-align: left; background-color: #fff; }
     textarea {
       width: 100%;
       font-size: 1.2em;
@@ -144,7 +134,7 @@
 </head>
 <body>
   <div class="container">
-    <!-- Hidden fields for room ID and submission ID -->
+    <!-- Hidden fields for room and unique submission ID -->
     <input type="hidden" id="roomId" name="roomId">
     <input type="hidden" id="submissionId" name="submissionId">
     
@@ -153,7 +143,7 @@
       <h1>Wireless Room Survey</h1>
       <p class="description">How was your overall meeting room experience?</p>
       <div class="question">
-        <label style="display:block; margin-bottom:10px;">Please select a smiley:</label>
+        <label style="display:block; margin-bottom:10px; font-size:1.3em;">Please select a smiley:</label>
         <div class="smiley-container">
           <label>
             <input type="radio" name="overall" value="1" aria-label="Very Poor">
@@ -242,7 +232,7 @@
       </form>
     </div>
     
-    <!-- Page 3: Additional Feedback -->
+    <!-- Page 3: Additional Feedback (Optional) -->
     <div id="page3" class="page">
       <h1>Additional Feedback (Optional)</h1>
       <div class="question">
@@ -255,7 +245,7 @@
     <!-- Page 4: Thank You Page -->
     <div id="page4" class="page">
       <h1>Thank You! ❤️</h1>
-      <p class="description">We truly appreciate your feedback. Your input helps us improve our meeting rooms for everyone.</p>
+      <p class="description">We truly appreciate your feedback! Your input helps us improve our meeting rooms for everyone.</p>
     </div>
   </div>
   
@@ -342,7 +332,7 @@
     
     // Submit the survey
     function submitSurvey() {
-      // Disable the submit button to prevent duplicates
+      // Disable the submit button to avoid multiple submissions
       document.getElementById('submitButton').disabled = true;
       
       const data = {
@@ -375,7 +365,7 @@
       });
     });
     
-    // Idle timeout: reload page after 1 minute of inactivity
+    // Idle timeout: reload page after 1 minute of inactivity on any page
     let idleTimeout = null;
     const IDLE_TIME_MS = 60000;
     function resetIdleTimer() {

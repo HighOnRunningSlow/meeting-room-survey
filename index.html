@@ -28,7 +28,7 @@
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
       position: relative;
     }
-    /* Hidden field for room ID */
+    /* Hidden field for room identifier */
     input[type="hidden"] { display: none; }
     h1 {
       font-size: 2.5em;
@@ -93,10 +93,7 @@
       border: 1px solid #ddd;
       font-size: 1.2em;
     }
-    th {
-      background-color: #f7f7f7;
-      font-weight: 500;
-    }
+    th { background-color: #f7f7f7; font-weight: 500; }
     td:first-child, th:first-child {
       text-align: left;
       background-color: #fff;
@@ -140,7 +137,7 @@
 </head>
 <body>
   <div class="container">
-    <!-- Hidden field to capture room identifier -->
+    <!-- Hidden field to store room identifier -->
     <input type="hidden" id="roomId" name="roomId">
     
     <!-- Page 1: Wireless Room Survey (Smiley Faces) -->
@@ -304,9 +301,8 @@
       nextPage('page2');
     }
     
-    // Submit the survey data to the Google Apps Script web app
+    // Submit survey data to your Apps Script web app using no-cors mode
     function submitSurvey() {
-      // Gather form data
       const data = {
         roomId: document.getElementById('roomId').value,
         overall: document.querySelector('input[name="overall"]:checked')?.value || "",
@@ -317,20 +313,18 @@
         booking: document.querySelector('input[name="booking"]:checked')?.value || "",
         comments: document.getElementById('comments').value || ""
       };
-
+      
       fetch("https://script.google.com/macros/s/AKfycbw0xBHZNvp4CeQ7YpCqmICnd9idAPJK4PoDHKu5x0QirMBl6UD4RZ3N9RCj0dN8IdKd/exec", {
         method: "POST",
+        mode: "no-cors",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data)
       })
-      .then(response => response.json())
-      .then(result => {
-        console.log("Submission success:", result);
+      .then(() => {
+        // With no-cors mode, we don't get a response, so assume success
         nextPage('page4');
-        // After 1 minute, reload the page to reset all inputs
-        setTimeout(function() {
-          location.reload();
-        }, 60000);
+        // Reload the page after 1 minute to reset the survey
+        setTimeout(() => { location.reload(); }, 60000);
       })
       .catch(err => {
         console.error("Submission error:", err);
@@ -347,23 +341,21 @@
     
     // Idle timeout: Reload the page after 1 minute of inactivity on any page
     let idleTimeout = null;
-    const IDLE_TIME_MS = 60000; // 1 minute
+    const IDLE_TIME_MS = 60000;
     
     function resetIdleTimer() {
       clearTimeout(idleTimeout);
-      idleTimeout = setTimeout(function() {
-        location.reload();
-      }, IDLE_TIME_MS);
+      idleTimeout = setTimeout(() => { location.reload(); }, IDLE_TIME_MS);
     }
     
-    ['click', 'touchstart', 'keypress', 'mousemove'].forEach(function(evt) {
+    ['click', 'touchstart', 'keypress', 'mousemove'].forEach(evt => {
       document.addEventListener(evt, resetIdleTimer, { passive: true });
     });
     
     // Start the idle timer on page load
     resetIdleTimer();
     
-    // Parse the "room" query parameter and set it in the hidden input field
+    // Parse the "room" query parameter and store it in the hidden input field
     function getQueryParam(param) {
       const params = new URLSearchParams(window.location.search);
       return params.get(param);

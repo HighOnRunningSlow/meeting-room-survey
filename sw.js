@@ -1,12 +1,12 @@
 const CACHE_NAME = 'survey-cache-v1';
 const urlsToCache = [
-  '/',
-  '/index.html',
-  '/images/smiley1.png',
-  '/images/smiley2.png',
-  '/images/smiley3.png',
-  '/images/smiley4.png',
-  '/images/smiley5.png'
+  './',
+  './index.html',
+  './images/smiley1.png',
+  './images/smiley2.png',
+  './images/smiley3.png',
+  './images/smiley4.png',
+  './images/smiley5.png'
 ];
 
 self.addEventListener('install', event => {
@@ -21,16 +21,13 @@ self.addEventListener('install', event => {
 
 self.addEventListener('fetch', event => {
   event.respondWith(
-    caches.match(event.request)
-      .then(response => {
-        // Return cached asset if available, otherwise fetch from network
-        return response || fetch(event.request).catch(() => {
-          // If the request is a navigation, serve the cached index.html
-          if (event.request.mode === 'navigate') {
-            return caches.match('/index.html');
-          }
-        });
-      })
+    caches.match(event.request).then(response => {
+      return response || fetch(event.request).catch(() => {
+        if (event.request.mode === 'navigate') {
+          return caches.match('./index.html');
+        }
+      });
+    })
   );
 });
 

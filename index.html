@@ -17,13 +17,13 @@
       padding: 0;
       height: 100%;
     }
-    /* Body styling; removed centering here to let the container handle layout */
+    /* Body styling */
     body {
       font-family: 'Roboto', sans-serif;
       background: #f0f2f5;
       display: flex;
     }
-    /* Main container: centered with relative positioning for absolute children */
+    /* Main container */
     .container {
       position: relative;
       margin: auto;
@@ -50,6 +50,10 @@
     .page.active {
       display: block;
       opacity: 1;
+    }
+    /* ↓↓↓ Add a top margin specifically for Page 1 content ↓↓↓ */
+    #page1 .content {
+      margin-top: 50px; /* Adjust this value to move the block further down or up */
     }
     h1 {
       font-size: 2.5em;

@@ -22,21 +22,20 @@
       font-family: 'Roboto', sans-serif;
       background: #f0f2f5;
       display: flex;
-      align-items: center;
+      align-items: flex-start; /* start so we can add top margin inside container */
       justify-content: center;
     }
 
     .container {
-      /* Fill the entire screen */
       display: flex;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
-      min-height: 100vh; /* fill vertical space */
-      width: 100%;       /* fill horizontal space */
-      padding: 40px 50px;
+      min-height: 100vh;
+      width: 100%;
       box-sizing: border-box;
       background: #fff;
+      padding: 40px 50px;
+      margin-top: 20px; /* add some space from the top */
     }
 
     /* Hidden fields for room and submission ID */
@@ -44,13 +43,14 @@
 
     h1 {
       font-size: 2.5em;
-      margin-bottom: 0.5em;
+      margin: 0.5em 0 0.2em 0; /* slightly bigger gap above, smaller below */
       color: #333;
       text-align: center;
     }
+
     p.description {
       font-size: 1.4em;
-      margin-bottom: 1.5em;
+      margin: 0.2em 0 1.5em 0; /* a bit less space above, normal below */
       color: #555;
       text-align: center;
     }
@@ -60,12 +60,12 @@
       opacity: 0;
       transition: opacity 0.3s ease;
       width: 100%;
-      max-width: 900px; /* content can be centered within container */
+      max-width: 900px; /* center content within container */
+      margin: 0 auto;
     }
     .page.active {
       display: block;
       opacity: 1;
-      margin: 0 auto;
     }
 
     .question {
@@ -91,7 +91,7 @@
     /* Smiley container styling */
     .smiley-container {
       display: flex;
-      gap: 20px;
+      gap: 30px; /* increase gap for better distribution */
       margin-top: 20px;
       justify-content: center;
       flex-wrap: wrap; /* allow wrap if narrower screen */
@@ -104,8 +104,8 @@
       display: none;
     }
     .smiley-container img {
-      width: 100px;
-      height: 100px;
+      width: 120px;
+      height: 120px;
       object-fit: cover;
     }
     .smiley-container input[type="radio"]:checked + img {
@@ -188,8 +188,8 @@
         padding: 12px 24px;
       }
       .smiley-container img {
-        width: 80px;
-        height: 80px;
+        width: 90px;
+        height: 90px;
       }
       th, td {
         font-size: 1em;

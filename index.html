@@ -165,37 +165,46 @@
     <input type="hidden" id="roomId" name="roomId">
     <input type="hidden" id="submissionId" name="submissionId">
     
-    <!-- Page 1: Wireless Room Survey (Smiley Faces) -->
-    <div id="page1" class="page active">
-      <h1>Wireless Room Survey</h1>
-      <p class="description">Only a few seconds to complete!</p>
-      <div class="question">
-        <label style="display:block; margin-bottom:10px;">Please select a smiley:</label>
-        <div class="smiley-container">
-          <label>
-            <input type="radio" name="overall" value="1" aria-label="Very Poor">
-            <img src="./images/smiley1.png" alt="Very Poor">
-          </label>
-          <label>
-            <input type="radio" name="overall" value="2" aria-label="Poor">
-            <img src="./images/smiley2.png" alt="Poor">
-          </label>
-          <label>
-            <input type="radio" name="overall" value="3" aria-label="Neutral">
-            <img src="./images/smiley3.png" alt="Neutral">
-          </label>
-          <label>
-            <input type="radio" name="overall" value="4" aria-label="Good">
-            <img src="./images/smiley4.png" alt="Good">
-          </label>
-          <label>
-            <input type="radio" name="overall" value="5" aria-label="Excellent">
-            <img src="./images/smiley5.png" alt="Excellent">
-          </label>
-        </div>
-      </div>
-      <button id="nextButton" class="button" onclick="goToPage2()" disabled>Next</button>
+  <!-- Page 1: Wireless Room Survey (Smiley Faces) -->
+<div id="page1" class="page active">
+  <div class="content">
+    <h1>Wireless Room Survey</h1>
+    <p class="description">Only a few seconds to complete!</p>
+    <p class="description" style="font-weight: bold; margin-bottom: 0.5em;">
+      How was your overall meeting room experience?
+    </p>
+    <p class="description" style="margin-bottom: 1.5em;">
+      Please select a smiley:
+    </p>
+    <div class="smiley-container">
+      <label>
+        <input type="radio" name="overall" value="1" aria-label="Very Poor">
+        <img src="./images/smiley1.png" alt="Very Poor">
+      </label>
+      <label>
+        <input type="radio" name="overall" value="2" aria-label="Poor">
+        <img src="./images/smiley2.png" alt="Poor">
+      </label>
+      <label>
+        <input type="radio" name="overall" value="3" aria-label="Neutral">
+        <img src="./images/smiley3.png" alt="Neutral">
+      </label>
+      <label>
+        <input type="radio" name="overall" value="4" aria-label="Good">
+        <img src="./images/smiley4.png" alt="Good">
+      </label>
+      <label>
+        <input type="radio" name="overall" value="5" aria-label="Excellent">
+        <img src="./images/smiley5.png" alt="Excellent">
+      </label>
     </div>
+  </div>
+  <!-- Button container at the bottom-right -->
+  <div class="bottom-button">
+    <button id="nextButton" class="button" onclick="goToPage2()" disabled>Next</button>
+  </div>
+</div>
+
     
     <!-- Page 2: Feature Ratings -->
     <div id="page2" class="page">

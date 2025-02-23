@@ -23,19 +23,17 @@
     }
     .container {
       background: #fff;
-      width: 90%;          /* Make container fill most of the screen width */
-      max-width: 1200px;   /* Cap it for very large screens if you like */
+      width: 90%;
+      max-width: 1200px;
       padding: 40px 50px;
       border-radius: 10px;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     }
-    /* Large headings for all pages */
     h1 {
       font-size: 2.5em;
       margin-bottom: 0.5em;
       color: #333;
     }
-    /* Larger descriptive text for all pages */
     p.description {
       font-size: 1.4em;
       margin-bottom: 1.5em;
@@ -50,11 +48,9 @@
       display: block;
       opacity: 1;
     }
-    /* Spacing for questions */
     .question {
       margin-bottom: 30px;
     }
-    /* Larger buttons */
     .button {
       padding: 15px 30px;
       font-size: 1.2em;
@@ -83,7 +79,6 @@
     .smiley-container input[type="radio"] {
       display: none;
     }
-    /* Make smileys bigger and highlight selected */
     .smiley-container img {
       width: 100px;
       height: 100px;
@@ -114,11 +109,43 @@
       text-align: left;
       background-color: #fff;
     }
-    /* Larger text area for feedback */
+    /* Textarea styling */
     textarea {
       width: 100%;
       font-size: 1.2em;
       padding: 10px;
+    }
+    /* Custom Modal Styles */
+    .modal {
+      display: none; 
+      position: fixed;
+      z-index: 9999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.4);
+    }
+    .modal-content {
+      background-color: #fff;
+      margin: 15% auto;
+      padding: 20px;
+      border-radius: 8px;
+      width: 80%;
+      max-width: 400px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      position: relative;
+    }
+    .modal-content h2 {
+      margin-top: 0;
+    }
+    .close-button {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      font-size: 1.5em;
+      cursor: pointer;
     }
   </style>
 </head>
@@ -127,13 +154,9 @@
     <!-- Page 1: Wireless Room Survey (Smiley Faces) -->
     <div id="page1" class="page active">
       <h1>Wireless Room Survey</h1>
-      <p class="description">
-        How was your overall meeting room experience?
-      </p>
+      <p class="description">How was your overall meeting room experience?</p>
       <div class="question">
-        <label style="display:block; margin-bottom:10px; font-size:1.3em;">
-          Please select a smiley:
-        </label>
+        <label style="display:block; margin-bottom:10px; font-size:1.3em;">Please select a smiley:</label>
         <div class="smiley-container">
           <!-- Rating 1: Very Poor -->
           <label>
@@ -175,7 +198,7 @@
       <form id="featuresForm">
         <table>
           <tr>
-            <th>Feature</th>
+            <th style="min-width:150px;">Feature</th>
             <th>1</th>
             <th>2</th>
             <th>3</th>
@@ -236,9 +259,7 @@
     <div id="page3" class="page">
       <h1>Additional Feedback (Optional)</h1>
       <div class="question">
-        <label for="comments" style="font-size:1.3em;">
-          Please provide any additional comments:
-        </label><br>
+        <label for="comments" style="font-size:1.3em;">Please provide any additional comments:</label><br>
         <textarea id="comments" name="comments" rows="5" placeholder="Your comments..."></textarea>
       </div>
       <button class="button" onclick="submitSurvey()">Submit</button>
@@ -248,6 +269,16 @@
     <div id="page4" class="page">
       <h1>Thank You! ❤️</h1>
       <p class="description">Your responses have been recorded.</p>
+    </div>
+  </div>
+  
+  <!-- Custom Modal (optional, for custom messages) -->
+  <div id="customModal" class="modal">
+    <div class="modal-content">
+      <span class="close-button" onclick="closeModal()">&times;</span>
+      <h2>Geneva IT says</h2>
+      <p id="modalMessage">Please select a rating before continuing.</p>
+      <button class="button" onclick="closeModal()">OK</button>
     </div>
   </div>
   
@@ -261,23 +292,33 @@
       document.getElementById(pageId).classList.add('active');
     }
     
+    // Custom modal functions
+    function showModal(message) {
+      document.getElementById('modalMessage').textContent = message;
+      document.getElementById('customModal').style.display = 'block';
+    }
+    
+    function closeModal() {
+      document.getElementById('customModal').style.display = 'none';
+    }
+    
     // Ensure a smiley is selected before proceeding from Page 1
     function goToPage2() {
       const selected = document.querySelector('input[name="overall"]:checked');
       if (!selected) {
-        alert("Please select a rating before continuing.");
+        showModal("Please select a rating before continuing.");
         return;
       }
       nextPage('page2');
     }
-
+    
     function submitSurvey() {
       // Navigate to the thank-you page
       nextPage('page4');
-      // After 5 seconds, reload the entire page to reset all inputs
+      // After 60 seconds of idle time, reload the page to reset all inputs
       setTimeout(function(){
         location.reload();
-      }, 5000);
+      }, 60000); // 60000 ms = 1 minute
     }
     
     // Enable the Next button on Page 1 once a smiley is selected
@@ -286,6 +327,25 @@
         document.getElementById('nextButton').disabled = false;
       });
     });
+    
+    // Idle timeout: Reload the page after 1 minute of inactivity
+    let idleTimeout = null;
+    const IDLE_TIME_MS = 60000; // 1 minute
+    
+    function resetIdleTimer() {
+      clearTimeout(idleTimeout);
+      idleTimeout = setTimeout(function(){
+        location.reload();
+      }, IDLE_TIME_MS);
+    }
+    
+    // Listen for user interactions to reset the idle timer
+    ['click', 'touchstart', 'keypress', 'mousemove'].forEach(function(evt) {
+      document.addEventListener(evt, resetIdleTimer, { passive: true });
+    });
+    
+    // Start the idle timer on page load
+    resetIdleTimer();
   </script>
 </body>
 </html>

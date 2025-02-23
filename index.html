@@ -77,7 +77,9 @@
       transition: background-color 0.2s ease;
       margin-top: 10px;
     }
-    .button:hover { background-color: #005a9e; }
+    .button:hover {
+      background-color: #005a9e;
+    }
     /* Smiley container styling */
     .smiley-container {
       display: flex;
@@ -86,8 +88,13 @@
       justify-content: center;
       flex-wrap: wrap;
     }
-    .smiley-container label { cursor: pointer; text-align: center; }
-    .smiley-container input[type="radio"] { display: none; }
+    .smiley-container label {
+      cursor: pointer;
+      text-align: center;
+    }
+    .smiley-container input[type="radio"] {
+      display: none;
+    }
     .smiley-container img {
       width: 140px;
       height: 140px;
@@ -110,8 +117,14 @@
       border: 1px solid #ddd;
       font-size: 1.2em;
     }
-    th { background-color: #f7f7f7; font-weight: 500; }
-    td:first-child, th:first-child { text-align: left; background-color: #fff; }
+    th {
+      background-color: #f7f7f7;
+      font-weight: 500;
+    }
+    td:first-child, th:first-child {
+      text-align: left;
+      background-color: #fff;
+    }
     textarea {
       width: 100%;
       font-size: 1.2em;
@@ -140,7 +153,9 @@
       text-align: center;
       position: relative;
     }
-    .modal-content h2 { margin-top: 0; }
+    .modal-content h2 {
+      margin-top: 0;
+    }
     .close-button {
       position: absolute;
       right: 10px;
@@ -148,14 +163,43 @@
       font-size: 1.5em;
       cursor: pointer;
     }
-    /* Media query for smaller screens */
+    /* For smaller screens */
     @media (max-width: 600px) {
-      h1 { font-size: 2em; }
-      p.description { font-size: 1.2em; }
-      .button { font-size: 1em; padding: 12px 24px; }
-      .smiley-container img { width: 100px; height: 100px; }
-      th, td { font-size: 1em; padding: 12px; }
-      textarea { font-size: 1em; }
+      h1 {
+        font-size: 2em;
+      }
+      p.description {
+        font-size: 1.2em;
+      }
+      .button {
+        font-size: 1em;
+        padding: 12px 24px;
+      }
+      .smiley-container img {
+        width: 100px;
+        height: 100px;
+      }
+      th, td {
+        font-size: 1em;
+        padding: 12px;
+      }
+      textarea {
+        font-size: 1em;
+      }
+    }
+    /* Bottom-right button approach for Page 1 only */
+    #page1 {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    #page1 .content {
+      /* We'll nest content here if needed, but for now we can keep the question in the page directly */
+    }
+    .bottom-button {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 20px;
     }
   </style>
 </head>
@@ -165,48 +209,48 @@
     <input type="hidden" id="roomId" name="roomId">
     <input type="hidden" id="submissionId" name="submissionId">
     
- <!-- Page 1: Wireless Room Survey (Smiley Faces) -->
-<div id="page1" class="page active">
-  <div class="content">
-    <h1>Wireless Room Survey</h1>
-    <p class="description">Only a few seconds to complete!</p>
-    <p class="description" style="font-weight: bold; margin-bottom: 0.5em;">
-      How was your overall meeting room experience?
-    </p>
-    <p class="description" style="margin-bottom: 2em;"> <!-- Increased bottom margin -->
-      Please select a smiley:
-    </p>
-    <div class="smiley-container">
-      <label>
-        <input type="radio" name="overall" value="1" aria-label="Very Poor">
-        <img src="./images/smiley1.png" alt="Very Poor">
-      </label>
-      <label>
-        <input type="radio" name="overall" value="2" aria-label="Poor">
-        <img src="./images/smiley2.png" alt="Poor">
-      </label>
-      <label>
-        <input type="radio" name="overall" value="3" aria-label="Neutral">
-        <img src="./images/smiley3.png" alt="Neutral">
-      </label>
-      <label>
-        <input type="radio" name="overall" value="4" aria-label="Good">
-        <img src="./images/smiley4.png" alt="Good">
-      </label>
-      <label>
-        <input type="radio" name="overall" value="5" aria-label="Excellent">
-        <img src="./images/smiley5.png" alt="Excellent">
-      </label>
+    <!-- Page 1: Wireless Room Survey (Smiley Faces) -->
+    <div id="page1" class="page active">
+      <!-- Main content area -->
+      <div class="content">
+        <h1>Wireless Room Survey</h1>
+        <p class="description">Only a few seconds to complete!</p>
+        <p class="description" style="font-weight: bold; margin-bottom: 0.5em;">
+          How was your overall meeting room experience?
+        </p>
+        <p class="description" style="margin-bottom: 2em;">
+          Please select a smiley:
+        </p>
+        <div class="smiley-container">
+          <label>
+            <input type="radio" name="overall" value="1" aria-label="Very Poor">
+            <img src="./images/smiley1.png" alt="Very Poor">
+          </label>
+          <label>
+            <input type="radio" name="overall" value="2" aria-label="Poor">
+            <img src="./images/smiley2.png" alt="Poor">
+          </label>
+          <label>
+            <input type="radio" name="overall" value="3" aria-label="Neutral">
+            <img src="./images/smiley3.png" alt="Neutral">
+          </label>
+          <label>
+            <input type="radio" name="overall" value="4" aria-label="Good">
+            <img src="./images/smiley4.png" alt="Good">
+          </label>
+          <label>
+            <input type="radio" name="overall" value="5" aria-label="Excellent">
+            <img src="./images/smiley5.png" alt="Excellent">
+          </label>
+        </div>
+      </div>
+      <!-- Next button at bottom-right -->
+      <div class="bottom-button">
+        <button id="nextButton" class="button" onclick="goToPage2()" disabled>Next</button>
+      </div>
     </div>
-  </div>
-  <!-- Button container at the bottom-right -->
-  <div class="bottom-button">
-    <button id="nextButton" class="button" onclick="goToPage2()" disabled>Next</button>
-  </div>
-</div>
-
     
-    <!-- Page 2: Feature Ratings -->
+    <!-- Page 2: Feature Ratings (centered button) -->
     <div id="page2" class="page">
       <h1>Rate the Features</h1>
       <p class="description">

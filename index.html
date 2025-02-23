@@ -5,7 +5,7 @@
   <title>Meeting Room Experience Survey</title>
   <!-- Responsive for mobile devices -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Google Font for a modern look -->
+  <!-- Google Font: Roboto for a modern, consistent look -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; }
@@ -30,6 +30,8 @@
     }
     /* Hidden fields */
     input[type="hidden"] { display: none; }
+    
+    /* Headings and descriptive text */
     h1 {
       font-size: 2.5em;
       margin-bottom: 0.5em;
@@ -40,6 +42,11 @@
       margin-bottom: 1.5em;
       color: #555;
     }
+    label {
+      font-size: 1.2em;
+      color: #333;
+    }
+    /* Consistent page styling */
     .page {
       display: none;
       opacity: 0;
@@ -137,7 +144,7 @@
 </head>
 <body>
   <div class="container">
-    <!-- Hidden fields for room and submission ID -->
+    <!-- Hidden fields for room ID and submission ID -->
     <input type="hidden" id="roomId" name="roomId">
     <input type="hidden" id="submissionId" name="submissionId">
     
@@ -146,7 +153,7 @@
       <h1>Wireless Room Survey</h1>
       <p class="description">How was your overall meeting room experience?</p>
       <div class="question">
-        <label style="display:block; margin-bottom:10px; font-size:1.3em;">Please select a smiley:</label>
+        <label style="display:block; margin-bottom:10px;">Please select a smiley:</label>
         <div class="smiley-container">
           <label>
             <input type="radio" name="overall" value="1" aria-label="Very Poor">
@@ -248,7 +255,7 @@
     <!-- Page 4: Thank You Page -->
     <div id="page4" class="page">
       <h1>Thank You! ❤️</h1>
-      <p class="description">We truly appreciate your feedback! Your input helps us improve our meeting rooms to better serve you.</p>
+      <p class="description">We truly appreciate your feedback. Your input helps us improve our meeting rooms for everyone.</p>
     </div>
   </div>
   
@@ -267,7 +274,7 @@
     function generateSubmissionId() {
       return 'sub-' + Date.now() + '-' + Math.floor(Math.random() * 100000);
     }
-
+    
     // Navigate between pages
     function nextPage(pageId) {
       const pages = document.querySelectorAll('.page');
@@ -294,7 +301,7 @@
       nextPage('page2');
     }
     
-    // Save data offline in localStorage
+    // Save data offline using localStorage if offline
     function saveDataOffline(data) {
       let offlineSubmissions = JSON.parse(localStorage.getItem('offlineSubmissions')) || [];
       offlineSubmissions.push(data);
@@ -325,7 +332,7 @@
       localStorage.setItem('offlineSubmissions', JSON.stringify(offlineSubmissions));
     }
     
-    // Resend any offline submissions when back online
+    // When device goes online, resend any offline submissions
     window.addEventListener('online', () => {
       let offlineSubmissions = JSON.parse(localStorage.getItem('offlineSubmissions')) || [];
       offlineSubmissions.forEach(sub => {
@@ -335,7 +342,7 @@
     
     // Submit the survey
     function submitSurvey() {
-      // Disable the submit button to avoid multiple submissions
+      // Disable the submit button to prevent duplicates
       document.getElementById('submitButton').disabled = true;
       
       const data = {
@@ -357,7 +364,7 @@
       }
       
       nextPage('page4');
-      // After 15 seconds (shorter timeout), reload the page to reset the survey
+      // After 15 seconds, reload the page to reset for the next user
       setTimeout(() => { location.reload(); }, 15000);
     }
     
@@ -368,7 +375,7 @@
       });
     });
     
-    // Idle timeout: reload page after 1 minute of inactivity on any page
+    // Idle timeout: reload page after 1 minute of inactivity
     let idleTimeout = null;
     const IDLE_TIME_MS = 60000;
     function resetIdleTimer() {

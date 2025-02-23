@@ -63,21 +63,6 @@
       color: #555;
       text-align: center;
     }
-    /* Page 1: Increase top margin to 80px */
-    #page1 .content {
-      margin-top: 80px;
-    }
-    /* Page 3 & 4: Center content vertically and horizontally */
-    #page3, #page4 {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      min-height: 100vh;
-      margin: 0;
-      padding: 20px 0;
-    }
     /* Smiley container styling */
     .smiley-container {
       display: flex;
@@ -325,8 +310,8 @@
     <!-- Page 3: Additional Feedback (Optional) -->
     <div id="page3" class="page">
       <h1>Additional Feedback (Optional)</h1>
-      <p class="description">Please provide any additional comments below:</p>
       <div class="question">
+        <label for="comments" style="font-size:1.3em;">Please provide any additional comments:</label><br>
         <textarea id="comments" name="comments" rows="5" placeholder="Your comments..."></textarea>
       </div>
       <button id="submitButton" class="button" onclick="submitSurvey()">Submit</button>
@@ -357,7 +342,8 @@
     
     // Navigate between pages
     function nextPage(pageId) {
-      document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+      const pages = document.querySelectorAll('.page');
+      pages.forEach(page => page.classList.remove('active'));
       document.getElementById(pageId).classList.add('active');
     }
     
@@ -421,7 +407,9 @@
     
     // Submit the survey
     function submitSurvey() {
+      // Disable the submit button to prevent duplicate submissions
       document.getElementById('submitButton').disabled = true;
+      
       const data = {
         submissionId: document.getElementById('submissionId').value,
         roomId: document.getElementById('roomId').value,
@@ -433,12 +421,15 @@
         booking: document.querySelector('input[name="booking"]:checked')?.value || "",
         comments: document.getElementById('comments').value || ""
       };
+      
       if (navigator.onLine) {
         sendData(data);
       } else {
         saveDataOffline(data);
       }
+      
       nextPage('page4');
+      // After 15 seconds, reload the page to reset for the next user
       setTimeout(() => { location.reload(); }, 15000);
     }
     
@@ -462,8 +453,12 @@
     resetIdleTimer();
     
     // Parse the "room" query parameter and generate a unique submission ID on load
+    function getQueryParam(param) {
+      const params = new URLSearchParams(window.location.search);
+      return params.get(param);
+    }
     document.addEventListener('DOMContentLoaded', () => {
-      const room = new URLSearchParams(window.location.search).get('room') || 'Unknown Room';
+      const room = getQueryParam('room') || 'Unknown Room';
       document.getElementById('roomId').value = room;
       const submissionId = generateSubmissionId();
       document.getElementById('submissionId').value = submissionId;

@@ -6,31 +6,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- Google Font: Roboto -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-
   <style>
-    /* Reset default margins/paddings */
+    /* Global Reset */
     html, body {
       margin: 0;
       padding: 0;
       height: 100%;
     }
-    /* Body styling */
     body {
       font-family: 'Roboto', sans-serif;
-      background: #f0f2f5; /* The background is now mostly hidden by .container */
+      background: #f0f2f5;
     }
-    /* Container filling the viewport */
+    /* Container fills viewport */
     .container {
-      min-height: 100vh;      /* Fills the entire viewport height */
+      min-height: 100vh;
       margin: 0 auto;
       background: #fff;
-      padding: 10px 20px;     /* You can reduce this if you want even less scrolling */
+      padding: 10px 20px;
       box-sizing: border-box;
       width: 100%;
       max-width: 1200px;
     }
-
-    /* Pages within the container */
+    /* Page structure */
     .page {
       width: 100%;
       max-width: 900px;
@@ -43,20 +40,22 @@
       display: block;
       opacity: 1;
     }
-
-    /* Page 1 content: small top margin */
+    /* Page 1: Increase top margin to 80px */
     #page1 .content {
-      margin-top: 10px;
+      margin-top: 80px;
     }
-
-    /* Page 3 & 4: minimal margin/padding so no big blank space */
+    /* Page 3 & 4: Center content vertically and horizontally */
     #page3, #page4 {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      min-height: 100vh;
       margin: 0;
       padding: 20px 0;
-      text-align: center;
     }
-
-    /* Headings & paragraphs */
+    /* Headings & Paragraphs */
     h1 {
       font-size: 2em;
       margin: 0.5em 0 0.2em 0;
@@ -69,8 +68,7 @@
       color: #555;
       text-align: center;
     }
-
-    /* Smiley container styling (Page 1) */
+    /* Smiley Container (Page 1) */
     .smiley-container {
       display: flex;
       gap: 20px;
@@ -97,8 +95,7 @@
       outline-offset: 2px;
       border-radius: 50%;
     }
-
-    /* Buttons */
+    /* Button Styling (for Page 2 and onward) */
     .button {
       padding: 12px 24px;
       font-size: 1.1em;
@@ -113,7 +110,6 @@
     .button:hover {
       background-color: #005a9e;
     }
-
     /* Table styling (Page 2) */
     table {
       width: 100%;
@@ -134,15 +130,13 @@
       text-align: left;
       background-color: #fff;
     }
-
     textarea {
       width: 100%;
       font-size: 1.1em;
       padding: 8px;
       box-sizing: border-box;
     }
-
-    /* Custom Modal Styles */
+    /* Modal Styles (Optional) */
     .modal {
       display: none;
       position: fixed;
@@ -171,8 +165,7 @@
       font-size: 1.5em;
       cursor: pointer;
     }
-
-    /* Media query for smaller screens */
+    /* Responsive adjustments */
     @media (max-width: 600px) {
       h1 {
         font-size: 1.8em;
@@ -200,7 +193,7 @@
 </head>
 <body>
   <div class="container">
-    <!-- Hidden fields for room and submission ID -->
+    <!-- Hidden fields -->
     <input type="hidden" id="roomId" name="roomId">
     <input type="hidden" id="submissionId" name="submissionId">
 
@@ -209,12 +202,8 @@
       <div class="content">
         <h1>Wireless Room Survey</h1>
         <p class="description">Only a few seconds to complete!</p>
-        <p class="description" style="font-weight: bold; margin-bottom: 0.5em;">
-          How was your overall meeting room experience?
-        </p>
-        <p class="description" style="margin-bottom: 1em;">
-          Please select a smiley:
-        </p>
+        <p class="description" style="font-weight: bold; margin-bottom: 0.5em;">How was your overall meeting room experience?</p>
+        <p class="description" style="margin-bottom: 1em;">Please select a smiley:</p>
         <div class="smiley-container">
           <label>
             <input type="radio" name="overall" value="1">
@@ -321,7 +310,7 @@
     </div>
   </div>
 
-  <!-- Custom Modal (Optional) -->
+  <!-- Optional Modal -->
   <div id="customModal" class="modal">
     <div class="modal-content">
       <span class="close-button" onclick="closeModal()">&times;</span>
@@ -401,7 +390,6 @@
         saveDataOffline(data);
       }
       nextPage('page4');
-      // Reload after 15s
       setTimeout(() => location.reload(), 15000);
     }
 
@@ -418,19 +406,19 @@
       });
     });
 
-    /* Idle Timeout: reload after 1 minute of inactivity */
+    /* Idle Timeout: Reload after 1 minute of inactivity */
     let idleTimeout = null;
     const IDLE_TIME_MS = 60000;
     function resetIdleTimer() {
       clearTimeout(idleTimeout);
       idleTimeout = setTimeout(() => location.reload(), IDLE_TIME_MS);
     }
-    ['click','touchstart','keypress','mousemove'].forEach(evt => {
+    ['click', 'touchstart', 'keypress', 'mousemove'].forEach(evt => {
       document.addEventListener(evt, resetIdleTimer, { passive: true });
     });
     resetIdleTimer();
 
-    /* Register Service Worker (Optional) */
+    /* Service Worker Registration (Optional) */
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('./sw.js')

@@ -6,19 +6,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- Google Font: Roboto -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
   <style>
-    /* Reset default margins/paddings */
+    /* 1) Global Reset & Body */
     html, body {
-      margin: 0;
-      padding: 0;
+      margin: 0; 
+      padding: 0; 
       height: 100%;
     }
-    /* Body styling */
     body {
       font-family: 'Roboto', sans-serif;
       background: #f0f2f5;
     }
-    /* Container: no forced height, minimal padding */
+
+    /* 2) Main Container: minimal padding, no forced height */
     .container {
       margin: auto;
       background: #fff;
@@ -27,7 +28,8 @@
       width: 100%;
       max-width: 1200px;
     }
-    /* Pages within container */
+
+    /* 3) Page Structure */
     .page {
       width: 100%;
       max-width: 900px;
@@ -40,31 +42,42 @@
       display: block;
       opacity: 1;
     }
-    /* Page 1 content: small top margin */
+
+    /* 4) Page 1: minimal top margin for content */
     #page1 .content {
       margin-top: 10px;
     }
-    /* Center pages 3 & 4 without large margins */
+
+    /* 5) Page 3 & 4: remove large margins; minimal vertical padding */
     #page3, #page4 {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      margin: 0;
+      padding: 20px 0; /* Adjust as desired to reduce or add vertical space */
       text-align: center;
-      padding: 10px 0;
     }
+
+    /* Headings & paragraphs on these pages */
+    #page3 h1, #page4 h1 {
+      margin: 0.5em 0 0.2em 0; /* smaller top/bottom spacing */
+    }
+    #page3 p.description, #page4 p.description {
+      margin: 0.2em 0 1em 0; /* minimal vertical space */
+    }
+
+    /* 6) Headings & Paragraphs (general) */
     h1 {
       font-size: 2em;
-      margin: 0.3em 0 0.2em 0;
+      margin: 0.5em 0 0.2em 0;
       color: #333;
       text-align: center;
     }
     p.description {
       font-size: 1.1em;
-      margin: 0.2em 0 0.8em 0;
+      margin: 0.2em 0 1em 0;
       color: #555;
       text-align: center;
     }
-    /* Smiley container styling */
+
+    /* 7) Smiley Container (Page 1) */
     .smiley-container {
       display: flex;
       gap: 20px;
@@ -81,7 +94,7 @@
       display: none;
     }
     .smiley-container img {
-      width: 100px;
+      width: 100px; 
       height: 100px;
       object-fit: cover;
       transition: outline 0.2s ease;
@@ -91,7 +104,8 @@
       outline-offset: 2px;
       border-radius: 50%;
     }
-    /* Button styling (for Page 2 & onward) */
+
+    /* 8) Buttons */
     .button {
       padding: 12px 24px;
       font-size: 1.1em;
@@ -106,7 +120,8 @@
     .button:hover {
       background-color: #005a9e;
     }
-    /* Table styling for Page 2 */
+
+    /* 9) Table styling (Page 2) */
     table {
       width: 100%;
       border-collapse: collapse;
@@ -126,13 +141,16 @@
       text-align: left;
       background-color: #fff;
     }
+
+    /* Textarea styling */
     textarea {
       width: 100%;
       font-size: 1.1em;
       padding: 8px;
       box-sizing: border-box;
     }
-    /* Modal styling (if needed) */
+
+    /* 10) Modal (optional) */
     .modal {
       display: none;
       position: fixed;
@@ -161,7 +179,8 @@
       font-size: 1.5em;
       cursor: pointer;
     }
-    /* Responsive adjustments for smaller screens */
+
+    /* 11) Responsive Adjustments */
     @media (max-width: 600px) {
       h1 {
         font-size: 1.8em;
@@ -192,8 +211,8 @@
     <!-- Hidden fields for room and submission ID -->
     <input type="hidden" id="roomId" name="roomId">
     <input type="hidden" id="submissionId" name="submissionId">
-    
-    <!-- Page 1: Wireless Room Survey (Smiley Faces) -->
+
+    <!-- Page 1: Wireless Room Survey -->
     <div id="page1" class="page active">
       <div class="content">
         <h1>Wireless Room Survey</h1>
@@ -290,25 +309,27 @@
         <button type="button" class="button" onclick="nextPage('page3')">Next</button>
       </form>
     </div>
-    
+
     <!-- Page 3: Additional Feedback (Optional) -->
     <div id="page3" class="page">
       <h1>Additional Feedback (Optional)</h1>
+      <p class="description">Please provide any additional comments below:</p>
       <div class="question">
-        <label for="comments" style="font-size:1.2em;">Please provide any additional comments:</label><br>
         <textarea id="comments" name="comments" rows="5" placeholder="Your comments..."></textarea>
       </div>
       <button id="submitButton" class="button" onclick="submitSurvey()">Submit</button>
     </div>
-    
+
     <!-- Page 4: Thank You Page -->
     <div id="page4" class="page">
       <h1>Thank You! ❤️</h1>
-      <p class="description">We truly appreciate your feedback! Your input helps us improve our meeting rooms for everyone.</p>
+      <p class="description">
+        We truly appreciate your feedback! Your input helps us improve our meeting rooms for everyone.
+      </p>
     </div>
   </div>
-  
-  <!-- Custom Modal (optional) -->
+
+  <!-- Optional Modal for warnings -->
   <div id="customModal" class="modal">
     <div class="modal-content">
       <span class="close-button" onclick="closeModal()">&times;</span>
@@ -317,18 +338,16 @@
       <button class="button" onclick="closeModal()">OK</button>
     </div>
   </div>
-  
+
   <script>
-    // Generate unique submission ID
+    /***** Utility & Navigation *****/
     function generateSubmissionId() {
       return 'sub-' + Date.now() + '-' + Math.floor(Math.random() * 100000);
     }
-    // Switch between pages
     function nextPage(pageId) {
       document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
       document.getElementById(pageId).classList.add('active');
     }
-    // Modal
     function showModal(msg) {
       document.getElementById('modalMessage').textContent = msg;
       document.getElementById('customModal').style.display = 'block';
@@ -336,7 +355,8 @@
     function closeModal() {
       document.getElementById('customModal').style.display = 'none';
     }
-    // Offline handling
+
+    /***** Offline Handling *****/
     function saveDataOffline(data) {
       let offlineSubmissions = JSON.parse(localStorage.getItem('offlineSubmissions')) || [];
       offlineSubmissions.push(data);
@@ -362,14 +382,14 @@
       offlineSubmissions = offlineSubmissions.filter(item => item.submissionId !== submissionId);
       localStorage.setItem('offlineSubmissions', JSON.stringify(offlineSubmissions));
     }
-    // Auto-resend offline data when online
     window.addEventListener('online', () => {
       let offlineSubmissions = JSON.parse(localStorage.getItem('offlineSubmissions')) || [];
       offlineSubmissions.forEach(sub => {
         sendData(sub);
       });
     });
-    // Submit the survey
+
+    /***** Submit Survey *****/
     function submitSurvey() {
       document.getElementById('submitButton').disabled = true;
       const data = {
@@ -392,7 +412,23 @@
       // Reload after 15s
       setTimeout(() => location.reload(), 15000);
     }
-    // Idle timeout: reload after 1 minute of inactivity
+
+    /***** Auto-navigation from Page 1 to Page 2 *****/
+    document.addEventListener('DOMContentLoaded', () => {
+      // Set room & submission ID
+      const room = new URLSearchParams(window.location.search).get('room') || 'Unknown Room';
+      document.getElementById('roomId').value = room;
+      document.getElementById('submissionId').value = generateSubmissionId();
+
+      // When user selects a smiley, move to Page 2
+      document.querySelectorAll('input[name="overall"]').forEach(radio => {
+        radio.addEventListener('change', () => {
+          nextPage('page2');
+        });
+      });
+    });
+
+    /***** Idle Timeout: Reload after 1 minute of inactivity *****/
     let idleTimeout = null;
     const IDLE_TIME_MS = 60000;
     function resetIdleTimer() {
@@ -403,24 +439,12 @@
       document.addEventListener(evt, resetIdleTimer, { passive: true });
     });
     resetIdleTimer();
-    // On DOM load, set roomId and submissionId, plus add event listener for smiley
-    document.addEventListener('DOMContentLoaded', () => {
-      const room = new URLSearchParams(window.location.search).get('room') || 'Unknown Room';
-      document.getElementById('roomId').value = room;
-      document.getElementById('submissionId').value = generateSubmissionId();
-      
-      // When user selects a smiley, move to Page 2
-      document.querySelectorAll('input[name="overall"]').forEach(radio => {
-        radio.addEventListener('change', () => {
-          nextPage('page2');
-        });
-      });
-    });
-    // Register Service Worker
+
+    /***** Service Worker Registration (optional) *****/
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('./sw.js')
-          .then(reg => console.log('ServiceWorker registered, scope:', reg.scope))
+          .then(reg => console.log('ServiceWorker registration successful with scope:', reg.scope))
           .catch(err => console.log('ServiceWorker registration failed:', err));
       });
     }

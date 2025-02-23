@@ -150,27 +150,22 @@
       <div class="question">
         <label style="display:block; margin-bottom:10px; font-size:1.3em;">Please select a smiley:</label>
         <div class="smiley-container">
-          <!-- Rating 1: Very Poor -->
           <label>
             <input type="radio" name="overall" value="1" aria-label="Very Poor">
             <img src="images/smiley1.png" alt="Very Poor">
           </label>
-          <!-- Rating 2: Poor -->
           <label>
             <input type="radio" name="overall" value="2" aria-label="Poor">
             <img src="images/smiley2.png" alt="Poor">
           </label>
-          <!-- Rating 3: Neutral -->
           <label>
             <input type="radio" name="overall" value="3" aria-label="Neutral">
             <img src="images/smiley3.png" alt="Neutral">
           </label>
-          <!-- Rating 4: Good -->
           <label>
             <input type="radio" name="overall" value="4" aria-label="Good">
             <img src="images/smiley4.png" alt="Good">
           </label>
-          <!-- Rating 5: Excellent -->
           <label>
             <input type="radio" name="overall" value="5" aria-label="Excellent">
             <img src="images/smiley5.png" alt="Excellent">
@@ -179,7 +174,7 @@
       </div>
       <button id="nextButton" class="button" onclick="goToPage2()" disabled>Next</button>
     </div>
-
+    
     <!-- Page 2: Feature Ratings (1-5 scale) -->
     <div id="page2" class="page">
       <h1>Rate the Features</h1>
@@ -241,7 +236,7 @@
         <button type="button" class="button" onclick="nextPage('page3')">Next</button>
       </form>
     </div>
-
+    
     <!-- Page 3: Additional Feedback (Optional) -->
     <div id="page3" class="page">
       <h1>Additional Feedback (Optional)</h1>
@@ -251,7 +246,7 @@
       </div>
       <button class="button" onclick="submitSurvey()">Submit</button>
     </div>
-
+    
     <!-- Page 4: Thank You Page -->
     <div id="page4" class="page">
       <h1>Thank You! ❤️</h1>
@@ -299,7 +294,7 @@
       nextPage('page2');
     }
     
-    // Submit survey data to your Apps Script web app using no-cors mode
+    // Submit survey data to your Apps Script web app using no-cors mode and handle offline submissions
     function submitSurvey() {
       const data = {
         roomId: document.getElementById('roomId').value,
@@ -311,15 +306,29 @@
         booking: document.querySelector('input[name="booking"]:checked')?.value || "",
         comments: document.getElementById('comments').value || ""
       };
-      
+
+      // Check if online
+      if (navigator.onLine) {
+        sendData(data);
+      } else {
+        // Save data locally if offline
+        saveDataOffline(data);
+        showModal("You're offline. Your response has been saved and will be submitted when you're back online.");
+        nextPage('page4');
+        // Optionally, reload after 1 minute to reset
+        setTimeout(() => { location.reload(); }, 60000);
+      }
+    }
+    
+    // Function to send data to the Apps Script web app
+    function sendData(data) {
       fetch("https://script.google.com/macros/s/AKfycbw0xBHZNvp4CeQ7YpCqmICnd9idAPJK4PoDHKu5x0QirMBl6UD4RZ3N9RCj0dN8IdKd/exec", {
         method: "POST",
-        mode: "no-cors",
+        mode: "no-cors", // using no-cors, so response isn't readable
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data)
       })
       .then(() => {
-        // With no-cors mode, we assume success
         nextPage('page4');
         // After 1 minute, reload the page to reset
         setTimeout(() => { location.reload(); }, 60000);
@@ -329,6 +338,24 @@
         showModal("Submission failed. Please try again.");
       });
     }
+    
+    // Function to save data offline using localStorage
+    function saveDataOffline(data) {
+      let offlineSubmissions = JSON.parse(localStorage.getItem('offlineSubmissions')) || [];
+      offlineSubmissions.push(data);
+      localStorage.setItem('offlineSubmissions', JSON.stringify(offlineSubmissions));
+    }
+    
+    // When back online, attempt to send any stored offline data
+    window.addEventListener('online', () => {
+      let offlineSubmissions = JSON.parse(localStorage.getItem('offlineSubmissions')) || [];
+      if (offlineSubmissions.length > 0) {
+        offlineSubmissions.forEach(data => {
+          sendData(data);
+        });
+        localStorage.removeItem('offlineSubmissions');
+      }
+    });
     
     // Enable the Next button on Page 1 once a smiley is selected
     document.querySelectorAll('input[name="overall"]').forEach(function(radio) {

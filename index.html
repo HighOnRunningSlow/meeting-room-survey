@@ -90,7 +90,7 @@
       outline-offset: 3px;
       border-radius: 50%;
     }
-    /* Bottom button pinned to the bottom-right */
+    /* Bottom button pinned to the bottom-right on Page 1 */
     .bottom-button {
       position: absolute;
       bottom: 40px;
@@ -111,26 +111,7 @@
     .button:hover { 
       background-color: #005a9e; 
     }
-    /* Table styling for feature ratings */
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-bottom: 30px;
-    }
-    th, td {
-      text-align: center;
-      padding: 16px;
-      border: 1px solid #ddd;
-      font-size: 1.2em;
-    }
-    th { 
-      background-color: #f7f7f7;
-      font-weight: 500;
-    }
-    td:first-child, th:first-child { 
-      text-align: left; 
-      background-color: #fff; 
-    }
+    /* Table styling for feature ratings removed (Page 2 removed) */
     textarea {
       width: 100%;
       font-size: 1.2em;
@@ -169,6 +150,17 @@
       font-size: 1.5em;
       cursor: pointer;
     }
+    /* Center content on Page 3 & Page 4 */
+    #page3, #page4 {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px 0;
+    }
     /* Media query for smaller screens */
     @media (max-width: 600px) {
       h1 { 
@@ -185,23 +177,10 @@
         width: 100px; 
         height: 100px; 
       }
-      th, td { 
-        font-size: 1em; 
-        padding: 12px; 
-      }
-      textarea { 
-        font-size: 1em; 
-      }
       .bottom-button {
         bottom: 20px;
         right: 20px;
       }
-#page1 h1 {
-  margin-top: 80px !important;
-}
-
-#page4 h1 {
-  margin-top: 80px !important;
     }
   </style>
 </head>
@@ -247,72 +226,10 @@
       </div>
       <!-- Button container pinned to the bottom-right -->
       <div class="bottom-button">
-        <button id="nextButton" class="button" onclick="goToPage2()" disabled>Next</button>
+        <button id="nextButton" class="button" onclick="goToPage3()" disabled>Next</button>
       </div>
     </div>
 
-    <!-- Page 2: Feature Ratings (Optional) -->
-    <div id="page2" class="page">
-      <h1>Rate the Features (Optional)</h1>
-      <p class="description">
-        Please rate the following aspects of your meeting room experience.<br>
-        <strong>Note:</strong> 1 = Poor, and 5 = Excellent.
-      </p>
-      <form id="featuresForm">
-        <table>
-          <tr>
-            <th style="min-width:150px;">Feature</th>
-            <th>1</th>
-            <th>2</th>
-            <th>3</th>
-            <th>4</th>
-            <th>5</th>
-          </tr>
-          <tr>
-            <td>Video</td>
-            <td><input type="radio" name="video" value="1"></td>
-            <td><input type="radio" name="video" value="2"></td>
-            <td><input type="radio" name="video" value="3"></td>
-            <td><input type="radio" name="video" value="4"></td>
-            <td><input type="radio" name="video" value="5"></td>
-          </tr>
-          <tr>
-            <td>Audio</td>
-            <td><input type="radio" name="audio" value="1"></td>
-            <td><input type="radio" name="audio" value="2"></td>
-            <td><input type="radio" name="audio" value="3"></td>
-            <td><input type="radio" name="audio" value="4"></td>
-            <td><input type="radio" name="audio" value="5"></td>
-          </tr>
-          <tr>
-            <td>Wireless</td>
-            <td><input type="radio" name="wireless" value="1"></td>
-            <td><input type="radio" name="wireless" value="2"></td>
-            <td><input type="radio" name="wireless" value="3"></td>
-            <td><input type="radio" name="wireless" value="4"></td>
-            <td><input type="radio" name="wireless" value="5"></td>
-          </tr>
-          <tr>
-            <td>Whiteboard</td>
-            <td><input type="radio" name="whiteboard" value="1"></td>
-            <td><input type="radio" name="whiteboard" value="2"></td>
-            <td><input type="radio" name="whiteboard" value="3"></td>
-            <td><input type="radio" name="whiteboard" value="4"></td>
-            <td><input type="radio" name="whiteboard" value="5"></td>
-          </tr>
-          <tr>
-            <td>Room Booking</td>
-            <td><input type="radio" name="booking" value="1"></td>
-            <td><input type="radio" name="booking" value="2"></td>
-            <td><input type="radio" name="booking" value="3"></td>
-            <td><input type="radio" name="booking" value="4"></td>
-            <td><input type="radio" name="booking" value="5"></td>
-          </tr>
-        </table>
-        <button type="button" class="button" onclick="nextPage('page3')">Next</button>
-      </form>
-    </div>
-    
     <!-- Page 3: Additional Feedback (Optional) -->
     <div id="page3" class="page">
       <h1>Additional Feedback (Optional)</h1>
@@ -348,8 +265,7 @@
     
     // Navigate between pages
     function nextPage(pageId) {
-      const pages = document.querySelectorAll('.page');
-      pages.forEach(page => page.classList.remove('active'));
+      document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
       document.getElementById(pageId).classList.add('active');
     }
     
@@ -363,13 +279,13 @@
     }
     
     // Ensure a smiley is selected before proceeding from Page 1
-    function goToPage2() {
+    function goToPage3() {
       const selected = document.querySelector('input[name="overall"]:checked');
       if (!selected) {
         showModal("Please select a rating before continuing.");
         return;
       }
-      nextPage('page2');
+      nextPage('page3');
     }
     
     // Save data offline in localStorage if offline
@@ -420,11 +336,6 @@
         submissionId: document.getElementById('submissionId').value,
         roomId: document.getElementById('roomId').value,
         overall: document.querySelector('input[name="overall"]:checked')?.value || "",
-        video: document.querySelector('input[name="video"]:checked')?.value || "",
-        audio: document.querySelector('input[name="audio"]:checked')?.value || "",
-        wireless: document.querySelector('input[name="wireless"]:checked')?.value || "",
-        whiteboard: document.querySelector('input[name="whiteboard"]:checked')?.value || "",
-        booking: document.querySelector('input[name="booking"]:checked')?.value || "",
         comments: document.getElementById('comments').value || ""
       };
       

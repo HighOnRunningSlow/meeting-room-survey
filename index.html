@@ -21,22 +21,16 @@
     body {
       font-family: 'Roboto', sans-serif;
       background: #f0f2f5;
-      display: flex;
     }
-    /* Main container */
+    /* Main container - removed fixed min-height and reduced padding */
     .container {
       position: relative;
       margin: auto;
       background: #fff;
-      padding: 40px 50px;
+      padding: 10px 20px; /* Reduced padding */
       box-sizing: border-box;
       width: 100%;
       max-width: 1200px;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      align-items: center;
     }
     /* Pages within the container */
     .page {
@@ -51,41 +45,37 @@
       display: block;
       opacity: 1;
     }
-    /* Page 1: adjust content spacing if needed */
+    /* Page 1: minimal top margin */
     #page1 .content {
-      margin-top: 50px; /* Adjust if there's too much vertical space */
+      margin-top: 10px; /* Reduced from 20-50px */
     }
-    /* Page 3: move content down by 80px */
-    #page3 {
-      margin-top: 80px;
-    }
-    /* Center content on pages 3 and 4 */
+    /* Page 3 & 4: center content without extra top margin */
     #page3, #page4 {
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       text-align: center;
-      min-height: 60vh; /* Adjust if needed */
+      padding: 10px 0; /* Less vertical padding */
     }
     h1 {
-      font-size: 2.5em;
-      margin: 0.5em 0 0.2em 0;
+      font-size: 2em; /* Slightly smaller */
+      margin: 0.3em 0 0.2em 0;
       color: #333;
       text-align: center;
     }
     p.description {
-      font-size: 1.4em;
-      margin: 0.2em 0 1.5em 0;
+      font-size: 1.1em; /* Slightly smaller */
+      margin: 0.2em 0 0.8em 0;
       color: #555;
       text-align: center;
     }
     /* Smiley container styling */
     .smiley-container {
       display: flex;
-      gap: 40px;
-      margin-top: 20px;
-      margin-bottom: 40px; /* Reduced to avoid too much scrolling */
+      gap: 20px; /* Reduced gap */
+      margin-top: 10px;
+      margin-bottom: 20px; /* Reduced bottom margin */
       justify-content: center;
       flex-wrap: wrap;
     }
@@ -97,20 +87,21 @@
       display: none;
     }
     .smiley-container img {
-      width: 120px;  /* Slightly smaller to reduce scrolling */
-      height: 120px;
+      width: 100px;  /* Reduced from 120px */
+      height: 100px;
       object-fit: cover;
       transition: outline 0.2s ease;
     }
     .smiley-container input[type="radio"]:checked + img {
-      outline: 5px solid #0078d4;
-      outline-offset: 3px;
+      outline: 4px solid #0078d4;
+      outline-offset: 2px;
       border-radius: 50%;
     }
-    /* Button styling (for other pages) */
+    /* No Next button on Page 1 */
+    /* Button styling for other pages */
     .button {
-      padding: 15px 30px;
-      font-size: 1.2em;
+      padding: 12px 24px;
+      font-size: 1.1em;
       background-color: #0078d4;
       color: #fff;
       border: none;
@@ -126,17 +117,17 @@
     table {
       width: 100%;
       border-collapse: collapse;
-      margin-bottom: 30px;
+      margin-bottom: 20px;
     }
     th, td {
       text-align: center;
-      padding: 16px;
+      padding: 12px;
       border: 1px solid #ddd;
-      font-size: 1.2em;
+      font-size: 1.1em;
     }
     th {
       background-color: #f7f7f7;
-      font-weight: bold; /* Bold header text */
+      font-weight: bold;
     }
     td:first-child, th:first-child {
       text-align: left;
@@ -144,8 +135,8 @@
     }
     textarea {
       width: 100%;
-      font-size: 1.2em;
-      padding: 10px;
+      font-size: 1.1em;
+      padding: 8px;
       box-sizing: border-box;
     }
     /* Custom Modal Styles */
@@ -161,7 +152,7 @@
     }
     .modal-content {
       background-color: #fff;
-      margin: 15% auto;
+      margin: 20% auto;
       padding: 20px;
       border-radius: 8px;
       width: 80%;
@@ -183,22 +174,22 @@
     /* Media query for smaller screens */
     @media (max-width: 600px) {
       h1 {
-        font-size: 2em;
+        font-size: 1.8em;
       }
       p.description {
-        font-size: 1.2em;
+        font-size: 1em;
       }
       .button {
         font-size: 1em;
-        padding: 12px 24px;
+        padding: 10px 20px;
       }
       .smiley-container img {
-        width: 80px;  /* Even smaller on mobile */
+        width: 80px;
         height: 80px;
       }
       th, td {
         font-size: 1em;
-        padding: 12px;
+        padding: 8px;
       }
       textarea {
         font-size: 1em;
@@ -220,7 +211,7 @@
         <p class="description" style="font-weight: bold; margin-bottom: 0.5em;">
           How was your overall meeting room experience?
         </p>
-        <p class="description" style="margin-bottom: 1.5em;">
+        <p class="description" style="margin-bottom: 1em;">
           Please select a smiley:
         </p>
         <div class="smiley-container">
@@ -246,7 +237,7 @@
           </label>
         </div>
       </div>
-      <!-- Next button removed from Page 1 -->
+      <!-- Next button removed; auto-navigate on selection -->
     </div>
 
     <!-- Page 2: Feature Ratings (Optional) -->
@@ -256,221 +247,4 @@
         Please rate the following aspects of your meeting room experience.<br>
         <strong>Note:</strong> 1 = Poor, and 5 = Excellent.
       </p>
-      <form id="featuresForm">
-        <table>
-          <tr>
-            <th style="min-width:150px;">Feature</th>
-            <th>1</th>
-            <th>2</th>
-            <th>3</th>
-            <th>4</th>
-            <th>5</th>
-          </tr>
-          <tr>
-            <td>Video</td>
-            <td><input type="radio" name="video" value="1"></td>
-            <td><input type="radio" name="video" value="2"></td>
-            <td><input type="radio" name="video" value="3"></td>
-            <td><input type="radio" name="video" value="4"></td>
-            <td><input type="radio" name="video" value="5"></td>
-          </tr>
-          <tr>
-            <td>Audio</td>
-            <td><input type="radio" name="audio" value="1"></td>
-            <td><input type="radio" name="audio" value="2"></td>
-            <td><input type="radio" name="audio" value="3"></td>
-            <td><input type="radio" name="audio" value="4"></td>
-            <td><input type="radio" name="audio" value="5"></td>
-          </tr>
-          <tr>
-            <td>Wireless</td>
-            <td><input type="radio" name="wireless" value="1"></td>
-            <td><input type="radio" name="wireless" value="2"></td>
-            <td><input type="radio" name="wireless" value="3"></td>
-            <td><input type="radio" name="wireless" value="4"></td>
-            <td><input type="radio" name="wireless" value="5"></td>
-          </tr>
-          <tr>
-            <td>Whiteboard</td>
-            <td><input type="radio" name="whiteboard" value="1"></td>
-            <td><input type="radio" name="whiteboard" value="2"></td>
-            <td><input type="radio" name="whiteboard" value="3"></td>
-            <td><input type="radio" name="whiteboard" value="4"></td>
-            <td><input type="radio" name="whiteboard" value="5"></td>
-          </tr>
-          <tr>
-            <td>Room Booking</td>
-            <td><input type="radio" name="booking" value="1"></td>
-            <td><input type="radio" name="booking" value="2"></td>
-            <td><input type="radio" name="booking" value="3"></td>
-            <td><input type="radio" name="booking" value="4"></td>
-            <td><input type="radio" name="booking" value="5"></td>
-          </tr>
-        </table>
-        <button type="button" class="button" onclick="nextPage('page3')">Next</button>
-      </form>
-    </div>
-    
-    <!-- Page 3: Additional Feedback (Optional) -->
-    <div id="page3" class="page">
-      <h1>Additional Feedback (Optional)</h1>
-      <div class="question">
-        <label for="comments" style="font-size:1.3em;">Please provide any additional comments:</label><br>
-        <textarea id="comments" name="comments" rows="5" placeholder="Your comments..."></textarea>
-      </div>
-      <button id="submitButton" class="button" onclick="submitSurvey()">Submit</button>
-    </div>
-    
-    <!-- Page 4: Thank You Page -->
-    <div id="page4" class="page">
-      <h1>Thank You! ❤️</h1>
-      <p class="description">We truly appreciate your feedback! Your input helps us improve our meeting rooms for everyone.</p>
-    </div>
-  </div>
-  
-  <!-- Custom Modal -->
-  <div id="customModal" class="modal">
-    <div class="modal-content">
-      <span class="close-button" onclick="closeModal()">&times;</span>
-      <h2>Geneva IT says</h2>
-      <p id="modalMessage">Please select a rating before continuing.</p>
-      <button class="button" onclick="closeModal()">OK</button>
-    </div>
-  </div>
-  
-  <script>
-    // Generate a unique submission ID on load
-    function generateSubmissionId() {
-      return 'sub-' + Date.now() + '-' + Math.floor(Math.random() * 100000);
-    }
-    
-    // Navigate between pages
-    function nextPage(pageId) {
-      const pages = document.querySelectorAll('.page');
-      pages.forEach(page => page.classList.remove('active'));
-      document.getElementById(pageId).classList.add('active');
-    }
-    
-    // Modal functions
-    function showModal(message) {
-      document.getElementById('modalMessage').textContent = message;
-      document.getElementById('customModal').style.display = 'block';
-    }
-    function closeModal() {
-      document.getElementById('customModal').style.display = 'none';
-    }
-    
-    // Move to Page 2 once a smiley is selected
-    function goToPage2() {
-      nextPage('page2');
-    }
-    
-    // Save data offline in localStorage if offline
-    function saveDataOffline(data) {
-      let offlineSubmissions = JSON.parse(localStorage.getItem('offlineSubmissions')) || [];
-      offlineSubmissions.push(data);
-      localStorage.setItem('offlineSubmissions', JSON.stringify(offlineSubmissions));
-    }
-    
-    // Send data to the Apps Script web app
-    function sendData(data) {
-      fetch("https://script.google.com/macros/s/AKfycbw0xBHZNvp4CeQ7YpCqmICnd9idAPJK4PoDHKu5x0QirMBl6UD4RZ3N9RCj0dN8IdKd/exec", {
-        method: "POST",
-        mode: "no-cors",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
-      })
-      .then(() => {
-        console.log("Data sent for submissionId:", data.submissionId);
-        removeOfflineSubmission(data.submissionId);
-      })
-      .catch(err => {
-        console.error("Submission error:", err);
-      });
-    }
-    
-    // Remove a specific offline submission by its unique ID
-    function removeOfflineSubmission(submissionId) {
-      let offlineSubmissions = JSON.parse(localStorage.getItem('offlineSubmissions')) || [];
-      offlineSubmissions = offlineSubmissions.filter(item => item.submissionId !== submissionId);
-      localStorage.setItem('offlineSubmissions', JSON.stringify(offlineSubmissions));
-    }
-    
-    // When device goes online, resend any offline submissions
-    window.addEventListener('online', () => {
-      let offlineSubmissions = JSON.parse(localStorage.getItem('offlineSubmissions')) || [];
-      offlineSubmissions.forEach(sub => {
-        sendData(sub);
-      });
-    });
-    
-    // Submit the survey
-    function submitSurvey() {
-      // Disable the submit button to prevent duplicate submissions
-      document.getElementById('submitButton').disabled = true;
-      
-      const data = {
-        submissionId: document.getElementById('submissionId').value,
-        roomId: document.getElementById('roomId').value,
-        overall: document.querySelector('input[name="overall"]:checked')?.value || "",
-        video: document.querySelector('input[name="video"]:checked')?.value || "",
-        audio: document.querySelector('input[name="audio"]:checked')?.value || "",
-        wireless: document.querySelector('input[name="wireless"]:checked')?.value || "",
-        whiteboard: document.querySelector('input[name="whiteboard"]:checked')?.value || "",
-        booking: document.querySelector('input[name="booking"]:checked')?.value || "",
-        comments: document.getElementById('comments').value || ""
-      };
-      
-      if (navigator.onLine) {
-        sendData(data);
-      } else {
-        saveDataOffline(data);
-      }
-      
-      nextPage('page4');
-      // After 15 seconds, reload the page to reset for the next user
-      setTimeout(() => { location.reload(); }, 15000);
-    }
-    
-    // Auto-navigate to Page 2 when a smiley is selected
-    document.querySelectorAll('input[name="overall"]').forEach(radio => {
-      radio.addEventListener('change', () => {
-        goToPage2();
-      });
-    });
-    
-    // Idle timeout: reload page after 1 minute of inactivity on any page
-    let idleTimeout = null;
-    const IDLE_TIME_MS = 60000;
-    function resetIdleTimer() {
-      clearTimeout(idleTimeout);
-      idleTimeout = setTimeout(() => { location.reload(); }, IDLE_TIME_MS);
-    }
-    ['click','touchstart','keypress','mousemove'].forEach(evt => {
-      document.addEventListener(evt, resetIdleTimer, { passive: true });
-    });
-    resetIdleTimer();
-    
-    // Parse the "room" query parameter and generate a unique submission ID on load
-    function getQueryParam(param) {
-      const params = new URLSearchParams(window.location.search);
-      return params.get(param);
-    }
-    document.addEventListener('DOMContentLoaded', () => {
-      const room = getQueryParam('room') || 'Unknown Room';
-      document.getElementById('roomId').value = room;
-      const submissionId = generateSubmissionId();
-      document.getElementById('submissionId').value = submissionId;
-    });
-    
-    // Register Service Worker for offline caching
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js')
-          .then(reg => console.log('ServiceWorker registration successful with scope:', reg.scope))
-          .catch(err => console.log('ServiceWorker registration failed:', err));
-      });
-    }
-  </script>
-</body>
-</html>
+      <form id="featuresFor

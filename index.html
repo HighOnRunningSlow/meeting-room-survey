@@ -3,11 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Meeting Room Experience Survey</title>
-  <!-- Responsive meta tag -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Apple full-screen meta tags -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <!-- Google Font: Roboto -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
@@ -22,17 +18,16 @@
       font-family: 'Roboto', sans-serif;
       background: #f0f2f5;
     }
-    /* Main container - removed fixed min-height and reduced padding */
+    /* Container: no forced height, minimal padding */
     .container {
-      position: relative;
       margin: auto;
       background: #fff;
-      padding: 10px 20px; /* Reduced padding */
+      padding: 10px 20px;
       box-sizing: border-box;
       width: 100%;
       max-width: 1200px;
     }
-    /* Pages within the container */
+    /* Pages within container */
     .page {
       width: 100%;
       max-width: 900px;
@@ -45,27 +40,26 @@
       display: block;
       opacity: 1;
     }
-    /* Page 1: minimal top margin */
+    /* Page 1 content: small top margin */
     #page1 .content {
-      margin-top: 10px; /* Reduced from 20-50px */
+      margin-top: 10px;
     }
-    /* Page 3 & 4: center content without extra top margin */
+    /* Center pages 3 & 4 without large margins */
     #page3, #page4 {
       display: flex;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
       text-align: center;
-      padding: 10px 0; /* Less vertical padding */
+      padding: 10px 0;
     }
     h1 {
-      font-size: 2em; /* Slightly smaller */
+      font-size: 2em;
       margin: 0.3em 0 0.2em 0;
       color: #333;
       text-align: center;
     }
     p.description {
-      font-size: 1.1em; /* Slightly smaller */
+      font-size: 1.1em;
       margin: 0.2em 0 0.8em 0;
       color: #555;
       text-align: center;
@@ -73,9 +67,9 @@
     /* Smiley container styling */
     .smiley-container {
       display: flex;
-      gap: 20px; /* Reduced gap */
+      gap: 20px;
       margin-top: 10px;
-      margin-bottom: 20px; /* Reduced bottom margin */
+      margin-bottom: 20px;
       justify-content: center;
       flex-wrap: wrap;
     }
@@ -87,7 +81,7 @@
       display: none;
     }
     .smiley-container img {
-      width: 100px;  /* Reduced from 120px */
+      width: 100px;
       height: 100px;
       object-fit: cover;
       transition: outline 0.2s ease;
@@ -97,8 +91,7 @@
       outline-offset: 2px;
       border-radius: 50%;
     }
-    /* No Next button on Page 1 */
-    /* Button styling for other pages */
+    /* Button styling (for Page 2 & onward) */
     .button {
       padding: 12px 24px;
       font-size: 1.1em;
@@ -113,7 +106,7 @@
     .button:hover {
       background-color: #005a9e;
     }
-    /* Table styling for feature ratings */
+    /* Table styling for Page 2 */
     table {
       width: 100%;
       border-collapse: collapse;
@@ -139,7 +132,7 @@
       padding: 8px;
       box-sizing: border-box;
     }
-    /* Custom Modal Styles */
+    /* Modal styling (if needed) */
     .modal {
       display: none;
       position: fixed;
@@ -161,9 +154,6 @@
       text-align: center;
       position: relative;
     }
-    .modal-content h2 {
-      margin-top: 0;
-    }
     .close-button {
       position: absolute;
       right: 10px;
@@ -171,7 +161,7 @@
       font-size: 1.5em;
       cursor: pointer;
     }
-    /* Media query for smaller screens */
+    /* Responsive adjustments for smaller screens */
     @media (max-width: 600px) {
       h1 {
         font-size: 1.8em;
@@ -216,28 +206,27 @@
         </p>
         <div class="smiley-container">
           <label>
-            <input type="radio" name="overall" value="1" aria-label="Very Poor">
+            <input type="radio" name="overall" value="1">
             <img src="./images/smiley1.png" alt="Very Poor">
           </label>
           <label>
-            <input type="radio" name="overall" value="2" aria-label="Poor">
+            <input type="radio" name="overall" value="2">
             <img src="./images/smiley2.png" alt="Poor">
           </label>
           <label>
-            <input type="radio" name="overall" value="3" aria-label="Neutral">
+            <input type="radio" name="overall" value="3">
             <img src="./images/smiley3.png" alt="Neutral">
           </label>
           <label>
-            <input type="radio" name="overall" value="4" aria-label="Good">
+            <input type="radio" name="overall" value="4">
             <img src="./images/smiley4.png" alt="Good">
           </label>
           <label>
-            <input type="radio" name="overall" value="5" aria-label="Excellent">
+            <input type="radio" name="overall" value="5">
             <img src="./images/smiley5.png" alt="Excellent">
           </label>
         </div>
       </div>
-      <!-- Next button removed; auto-navigate on selection -->
     </div>
 
     <!-- Page 2: Feature Ratings (Optional) -->
@@ -247,4 +236,194 @@
         Please rate the following aspects of your meeting room experience.<br>
         <strong>Note:</strong> 1 = Poor, and 5 = Excellent.
       </p>
-      <form id="featuresFor
+      <form id="featuresForm">
+        <table>
+          <tr>
+            <th style="min-width:150px;">Feature</th>
+            <th>1</th>
+            <th>2</th>
+            <th>3</th>
+            <th>4</th>
+            <th>5</th>
+          </tr>
+          <tr>
+            <td>Video</td>
+            <td><input type="radio" name="video" value="1"></td>
+            <td><input type="radio" name="video" value="2"></td>
+            <td><input type="radio" name="video" value="3"></td>
+            <td><input type="radio" name="video" value="4"></td>
+            <td><input type="radio" name="video" value="5"></td>
+          </tr>
+          <tr>
+            <td>Audio</td>
+            <td><input type="radio" name="audio" value="1"></td>
+            <td><input type="radio" name="audio" value="2"></td>
+            <td><input type="radio" name="audio" value="3"></td>
+            <td><input type="radio" name="audio" value="4"></td>
+            <td><input type="radio" name="audio" value="5"></td>
+          </tr>
+          <tr>
+            <td>Wireless</td>
+            <td><input type="radio" name="wireless" value="1"></td>
+            <td><input type="radio" name="wireless" value="2"></td>
+            <td><input type="radio" name="wireless" value="3"></td>
+            <td><input type="radio" name="wireless" value="4"></td>
+            <td><input type="radio" name="wireless" value="5"></td>
+          </tr>
+          <tr>
+            <td>Whiteboard</td>
+            <td><input type="radio" name="whiteboard" value="1"></td>
+            <td><input type="radio" name="whiteboard" value="2"></td>
+            <td><input type="radio" name="whiteboard" value="3"></td>
+            <td><input type="radio" name="whiteboard" value="4"></td>
+            <td><input type="radio" name="whiteboard" value="5"></td>
+          </tr>
+          <tr>
+            <td>Room Booking</td>
+            <td><input type="radio" name="booking" value="1"></td>
+            <td><input type="radio" name="booking" value="2"></td>
+            <td><input type="radio" name="booking" value="3"></td>
+            <td><input type="radio" name="booking" value="4"></td>
+            <td><input type="radio" name="booking" value="5"></td>
+          </tr>
+        </table>
+        <button type="button" class="button" onclick="nextPage('page3')">Next</button>
+      </form>
+    </div>
+    
+    <!-- Page 3: Additional Feedback (Optional) -->
+    <div id="page3" class="page">
+      <h1>Additional Feedback (Optional)</h1>
+      <div class="question">
+        <label for="comments" style="font-size:1.2em;">Please provide any additional comments:</label><br>
+        <textarea id="comments" name="comments" rows="5" placeholder="Your comments..."></textarea>
+      </div>
+      <button id="submitButton" class="button" onclick="submitSurvey()">Submit</button>
+    </div>
+    
+    <!-- Page 4: Thank You Page -->
+    <div id="page4" class="page">
+      <h1>Thank You! ❤️</h1>
+      <p class="description">We truly appreciate your feedback! Your input helps us improve our meeting rooms for everyone.</p>
+    </div>
+  </div>
+  
+  <!-- Custom Modal (optional) -->
+  <div id="customModal" class="modal">
+    <div class="modal-content">
+      <span class="close-button" onclick="closeModal()">&times;</span>
+      <h2>Geneva IT says</h2>
+      <p id="modalMessage">Please select a rating before continuing.</p>
+      <button class="button" onclick="closeModal()">OK</button>
+    </div>
+  </div>
+  
+  <script>
+    // Generate unique submission ID
+    function generateSubmissionId() {
+      return 'sub-' + Date.now() + '-' + Math.floor(Math.random() * 100000);
+    }
+    // Switch between pages
+    function nextPage(pageId) {
+      document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+      document.getElementById(pageId).classList.add('active');
+    }
+    // Modal
+    function showModal(msg) {
+      document.getElementById('modalMessage').textContent = msg;
+      document.getElementById('customModal').style.display = 'block';
+    }
+    function closeModal() {
+      document.getElementById('customModal').style.display = 'none';
+    }
+    // Offline handling
+    function saveDataOffline(data) {
+      let offlineSubmissions = JSON.parse(localStorage.getItem('offlineSubmissions')) || [];
+      offlineSubmissions.push(data);
+      localStorage.setItem('offlineSubmissions', JSON.stringify(offlineSubmissions));
+    }
+    function sendData(data) {
+      fetch("https://script.google.com/macros/s/AKfycbw0xBHZNvp4CeQ7YpCqmICnd9idAPJK4PoDHKu5x0QirMBl6UD4RZ3N9RCj0dN8IdKd/exec", {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      })
+      .then(() => {
+        console.log("Data sent for submissionId:", data.submissionId);
+        removeOfflineSubmission(data.submissionId);
+      })
+      .catch(err => {
+        console.error("Submission error:", err);
+      });
+    }
+    function removeOfflineSubmission(submissionId) {
+      let offlineSubmissions = JSON.parse(localStorage.getItem('offlineSubmissions')) || [];
+      offlineSubmissions = offlineSubmissions.filter(item => item.submissionId !== submissionId);
+      localStorage.setItem('offlineSubmissions', JSON.stringify(offlineSubmissions));
+    }
+    // Auto-resend offline data when online
+    window.addEventListener('online', () => {
+      let offlineSubmissions = JSON.parse(localStorage.getItem('offlineSubmissions')) || [];
+      offlineSubmissions.forEach(sub => {
+        sendData(sub);
+      });
+    });
+    // Submit the survey
+    function submitSurvey() {
+      document.getElementById('submitButton').disabled = true;
+      const data = {
+        submissionId: document.getElementById('submissionId').value,
+        roomId: document.getElementById('roomId').value,
+        overall: document.querySelector('input[name="overall"]:checked')?.value || "",
+        video: document.querySelector('input[name="video"]:checked')?.value || "",
+        audio: document.querySelector('input[name="audio"]:checked')?.value || "",
+        wireless: document.querySelector('input[name="wireless"]:checked')?.value || "",
+        whiteboard: document.querySelector('input[name="whiteboard"]:checked')?.value || "",
+        booking: document.querySelector('input[name="booking"]:checked')?.value || "",
+        comments: document.getElementById('comments').value || ""
+      };
+      if (navigator.onLine) {
+        sendData(data);
+      } else {
+        saveDataOffline(data);
+      }
+      nextPage('page4');
+      // Reload after 15s
+      setTimeout(() => location.reload(), 15000);
+    }
+    // Idle timeout: reload after 1 minute of inactivity
+    let idleTimeout = null;
+    const IDLE_TIME_MS = 60000;
+    function resetIdleTimer() {
+      clearTimeout(idleTimeout);
+      idleTimeout = setTimeout(() => location.reload(), IDLE_TIME_MS);
+    }
+    ['click','touchstart','keypress','mousemove'].forEach(evt => {
+      document.addEventListener(evt, resetIdleTimer, { passive: true });
+    });
+    resetIdleTimer();
+    // On DOM load, set roomId and submissionId, plus add event listener for smiley
+    document.addEventListener('DOMContentLoaded', () => {
+      const room = new URLSearchParams(window.location.search).get('room') || 'Unknown Room';
+      document.getElementById('roomId').value = room;
+      document.getElementById('submissionId').value = generateSubmissionId();
+      
+      // When user selects a smiley, move to Page 2
+      document.querySelectorAll('input[name="overall"]').forEach(radio => {
+        radio.addEventListener('change', () => {
+          nextPage('page2');
+        });
+      });
+    });
+    // Register Service Worker
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+          .then(reg => console.log('ServiceWorker registered, scope:', reg.scope))
+          .catch(err => console.log('ServiceWorker registration failed:', err));
+      });
+    }
+  </script>
+</body>
+</html>

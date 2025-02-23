@@ -8,28 +8,29 @@
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 
   <style>
-    /* 1) Global Reset & Body */
+    /* Reset default margins/paddings */
     html, body {
-      margin: 0; 
-      padding: 0; 
+      margin: 0;
+      padding: 0;
       height: 100%;
     }
+    /* Body styling */
     body {
       font-family: 'Roboto', sans-serif;
-      background: #f0f2f5;
+      background: #f0f2f5; /* The background is now mostly hidden by .container */
     }
-
-    /* 2) Main Container: minimal padding, no forced height */
+    /* Container filling the viewport */
     .container {
-      margin: auto;
+      min-height: 100vh;      /* Fills the entire viewport height */
+      margin: 0 auto;
       background: #fff;
-      padding: 10px 20px;
+      padding: 10px 20px;     /* You can reduce this if you want even less scrolling */
       box-sizing: border-box;
       width: 100%;
       max-width: 1200px;
     }
 
-    /* 3) Page Structure */
+    /* Pages within the container */
     .page {
       width: 100%;
       max-width: 900px;
@@ -43,27 +44,19 @@
       opacity: 1;
     }
 
-    /* 4) Page 1: minimal top margin for content */
+    /* Page 1 content: small top margin */
     #page1 .content {
-      margin-top: 80px;
+      margin-top: 10px;
     }
 
-    /* 5) Page 3 & 4: remove large margins; minimal vertical padding */
+    /* Page 3 & 4: minimal margin/padding so no big blank space */
     #page3, #page4 {
       margin: 0;
-      padding: 20px 0; /* Adjust as desired to reduce or add vertical space */
+      padding: 20px 0;
       text-align: center;
     }
 
-    /* Headings & paragraphs on these pages */
-    #page3 h1, #page4 h1 {
-      margin: 0.5em 0 0.2em 0; /* smaller top/bottom spacing */
-    }
-    #page3 p.description, #page4 p.description {
-      margin: 0.2em 0 1em 0; /* minimal vertical space */
-    }
-
-    /* 6) Headings & Paragraphs (general) */
+    /* Headings & paragraphs */
     h1 {
       font-size: 2em;
       margin: 0.5em 0 0.2em 0;
@@ -77,7 +70,7 @@
       text-align: center;
     }
 
-    /* 7) Smiley Container (Page 1) */
+    /* Smiley container styling (Page 1) */
     .smiley-container {
       display: flex;
       gap: 20px;
@@ -94,7 +87,7 @@
       display: none;
     }
     .smiley-container img {
-      width: 100px; 
+      width: 100px;
       height: 100px;
       object-fit: cover;
       transition: outline 0.2s ease;
@@ -105,7 +98,7 @@
       border-radius: 50%;
     }
 
-    /* 8) Buttons */
+    /* Buttons */
     .button {
       padding: 12px 24px;
       font-size: 1.1em;
@@ -121,7 +114,7 @@
       background-color: #005a9e;
     }
 
-    /* 9) Table styling (Page 2) */
+    /* Table styling (Page 2) */
     table {
       width: 100%;
       border-collapse: collapse;
@@ -142,7 +135,6 @@
       background-color: #fff;
     }
 
-    /* Textarea styling */
     textarea {
       width: 100%;
       font-size: 1.1em;
@@ -150,7 +142,7 @@
       box-sizing: border-box;
     }
 
-    /* 10) Modal (optional) */
+    /* Custom Modal Styles */
     .modal {
       display: none;
       position: fixed;
@@ -180,7 +172,7 @@
       cursor: pointer;
     }
 
-    /* 11) Responsive Adjustments */
+    /* Media query for smaller screens */
     @media (max-width: 600px) {
       h1 {
         font-size: 1.8em;
@@ -329,7 +321,7 @@
     </div>
   </div>
 
-  <!-- Optional Modal for warnings -->
+  <!-- Custom Modal (Optional) -->
   <div id="customModal" class="modal">
     <div class="modal-content">
       <span class="close-button" onclick="closeModal()">&times;</span>
@@ -340,7 +332,7 @@
   </div>
 
   <script>
-    /***** Utility & Navigation *****/
+    /* Utility & Navigation */
     function generateSubmissionId() {
       return 'sub-' + Date.now() + '-' + Math.floor(Math.random() * 100000);
     }
@@ -356,7 +348,7 @@
       document.getElementById('customModal').style.display = 'none';
     }
 
-    /***** Offline Handling *****/
+    /* Offline Handling */
     function saveDataOffline(data) {
       let offlineSubmissions = JSON.parse(localStorage.getItem('offlineSubmissions')) || [];
       offlineSubmissions.push(data);
@@ -389,7 +381,7 @@
       });
     });
 
-    /***** Submit Survey *****/
+    /* Submit Survey */
     function submitSurvey() {
       document.getElementById('submitButton').disabled = true;
       const data = {
@@ -413,14 +405,12 @@
       setTimeout(() => location.reload(), 15000);
     }
 
-    /***** Auto-navigation from Page 1 to Page 2 *****/
+    /* Auto-navigation from Page 1 to Page 2 upon smiley selection */
     document.addEventListener('DOMContentLoaded', () => {
-      // Set room & submission ID
       const room = new URLSearchParams(window.location.search).get('room') || 'Unknown Room';
       document.getElementById('roomId').value = room;
       document.getElementById('submissionId').value = generateSubmissionId();
 
-      // When user selects a smiley, move to Page 2
       document.querySelectorAll('input[name="overall"]').forEach(radio => {
         radio.addEventListener('change', () => {
           nextPage('page2');
@@ -428,7 +418,7 @@
       });
     });
 
-    /***** Idle Timeout: Reload after 1 minute of inactivity *****/
+    /* Idle Timeout: reload after 1 minute of inactivity */
     let idleTimeout = null;
     const IDLE_TIME_MS = 60000;
     function resetIdleTimer() {
@@ -440,7 +430,7 @@
     });
     resetIdleTimer();
 
-    /***** Service Worker Registration (optional) *****/
+    /* Register Service Worker (Optional) */
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('./sw.js')

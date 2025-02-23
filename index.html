@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <title>Meeting Room Experience Survey</title>
-  <!-- Responsive for mobile devices -->
+  <!-- Responsive meta tag -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Apple-specific meta tags for full-screen web app mode -->
+  <!-- Apple full-screen meta tags -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <!-- Google Font for a modern, consistent look -->
+  <!-- Google Font: Roboto -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; }
@@ -24,14 +24,13 @@
     }
     .container {
       background: #fff;
-      width: 90%;
+      width: 95%;
       max-width: 1200px;
       padding: 40px 50px;
       border-radius: 10px;
       box-shadow: 0 4px 15px rgba(0,0,0,0.1);
       position: relative;
     }
-    /* Hidden fields for room and submission ID */
     input[type="hidden"] { display: none; }
     h1 {
       font-size: 2.5em;
@@ -43,6 +42,7 @@
       margin-bottom: 1.5em;
       color: #555;
     }
+    label { font-size: 1.2em; color: #333; }
     .page {
       display: none;
       opacity: 0;
@@ -62,7 +62,6 @@
       margin-top: 10px;
     }
     .button:hover { background-color: #005a9e; }
-    /* Smiley container styling */
     .smiley-container {
       display: flex;
       gap: 20px;
@@ -81,7 +80,6 @@
       outline-offset: 3px;
       border-radius: 50%;
     }
-    /* Table styling for feature ratings */
     table {
       width: 100%;
       border-collapse: collapse;
@@ -130,6 +128,15 @@
       font-size: 1.5em;
       cursor: pointer;
     }
+    /* Media queries for mobile responsiveness */
+    @media (max-width: 600px) {
+      h1 { font-size: 2em; }
+      p.description, label { font-size: 1.2em; }
+      .button { font-size: 1em; padding: 12px 24px; }
+      .smiley-container img { width: 80px; height: 80px; }
+      th, td { font-size: 1em; padding: 12px; }
+      textarea { font-size: 1em; padding: 8px; }
+    }
   </style>
 </head>
 <body>
@@ -143,7 +150,7 @@
       <h1>Wireless Room Survey</h1>
       <p class="description">How was your overall meeting room experience?</p>
       <div class="question">
-        <label style="display:block; margin-bottom:10px; font-size:1.3em;">Please select a smiley:</label>
+        <label style="display:block; margin-bottom:10px;">Please select a smiley:</label>
         <div class="smiley-container">
           <label>
             <input type="radio" name="overall" value="1" aria-label="Very Poor">

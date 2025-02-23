@@ -51,9 +51,9 @@
       display: block;
       opacity: 1;
     }
-    /* Page 1: move content down by 50px */
+    /* Page 1: adjust content spacing if needed */
     #page1 .content {
-      margin-top: 80px;
+      margin-top: 50px; /* Adjust if there's too much vertical space */
     }
     /* Page 3: move content down by 80px */
     #page3 {
@@ -66,7 +66,7 @@
       justify-content: center;
       align-items: center;
       text-align: center;
-      min-height: 60vh; /* Adjust this value if needed */
+      min-height: 60vh; /* Adjust if needed */
     }
     h1 {
       font-size: 2.5em;
@@ -85,20 +85,20 @@
       display: flex;
       gap: 40px;
       margin-top: 20px;
-      margin-bottom: 80px; /* Extra space to avoid Next button overlap */
+      margin-bottom: 40px; /* Reduced to avoid too much scrolling */
       justify-content: center;
       flex-wrap: wrap;
     }
-    .smiley-container label { 
-      cursor: pointer; 
-      text-align: center; 
+    .smiley-container label {
+      cursor: pointer;
+      text-align: center;
     }
-    .smiley-container input[type="radio"] { 
-      display: none; 
+    .smiley-container input[type="radio"] {
+      display: none;
     }
     .smiley-container img {
-      width: 140px;
-      height: 140px;
+      width: 120px;  /* Slightly smaller to reduce scrolling */
+      height: 120px;
       object-fit: cover;
       transition: outline 0.2s ease;
     }
@@ -107,13 +107,7 @@
       outline-offset: 3px;
       border-radius: 50%;
     }
-    /* Bottom button pinned to the bottom-right */
-    .bottom-button {
-      position: absolute;
-      bottom: 40px;
-      right: 40px;
-    }
-    /* Button styling */
+    /* Button styling (for other pages) */
     .button {
       padding: 15px 30px;
       font-size: 1.2em;
@@ -125,8 +119,8 @@
       transition: background-color 0.2s ease;
       margin-top: 10px;
     }
-    .button:hover { 
-      background-color: #005a9e; 
+    .button:hover {
+      background-color: #005a9e;
     }
     /* Table styling for feature ratings */
     table {
@@ -140,13 +134,13 @@
       border: 1px solid #ddd;
       font-size: 1.2em;
     }
-    th { 
+    th {
       background-color: #f7f7f7;
       font-weight: bold; /* Bold header text */
     }
-    td:first-child, th:first-child { 
-      text-align: left; 
-      background-color: #fff; 
+    td:first-child, th:first-child {
+      text-align: left;
+      background-color: #fff;
     }
     textarea {
       width: 100%;
@@ -176,8 +170,8 @@
       text-align: center;
       position: relative;
     }
-    .modal-content h2 { 
-      margin-top: 0; 
+    .modal-content h2 {
+      margin-top: 0;
     }
     .close-button {
       position: absolute;
@@ -188,30 +182,26 @@
     }
     /* Media query for smaller screens */
     @media (max-width: 600px) {
-      h1 { 
-        font-size: 2em; 
+      h1 {
+        font-size: 2em;
       }
-      p.description { 
-        font-size: 1.2em; 
+      p.description {
+        font-size: 1.2em;
       }
-      .button { 
-        font-size: 1em; 
-        padding: 12px 24px; 
+      .button {
+        font-size: 1em;
+        padding: 12px 24px;
       }
-      .smiley-container img { 
-        width: 100px; 
-        height: 100px; 
+      .smiley-container img {
+        width: 80px;  /* Even smaller on mobile */
+        height: 80px;
       }
-      th, td { 
-        font-size: 1em; 
-        padding: 12px; 
+      th, td {
+        font-size: 1em;
+        padding: 12px;
       }
-      textarea { 
-        font-size: 1em; 
-      }
-      .bottom-button {
-        bottom: 20px;
-        right: 20px;
+      textarea {
+        font-size: 1em;
       }
     }
   </style>
@@ -256,10 +246,7 @@
           </label>
         </div>
       </div>
-      <!-- Button container pinned to the bottom-right -->
-      <div class="bottom-button">
-        <button id="nextButton" class="button" onclick="goToPage2()" disabled>Next</button>
-      </div>
+      <!-- Next button removed from Page 1 -->
     </div>
 
     <!-- Page 2: Feature Ratings (Optional) -->
@@ -373,13 +360,8 @@
       document.getElementById('customModal').style.display = 'none';
     }
     
-    // Ensure a smiley is selected before proceeding from Page 1
+    // Move to Page 2 once a smiley is selected
     function goToPage2() {
-      const selected = document.querySelector('input[name="overall"]:checked');
-      if (!selected) {
-        showModal("Please select a rating before continuing.");
-        return;
-      }
       nextPage('page2');
     }
     
@@ -450,10 +432,10 @@
       setTimeout(() => { location.reload(); }, 15000);
     }
     
-    // Enable the Next button on Page 1 once a smiley is selected
+    // Auto-navigate to Page 2 when a smiley is selected
     document.querySelectorAll('input[name="overall"]').forEach(radio => {
       radio.addEventListener('change', () => {
-        document.getElementById('nextButton').disabled = false;
+        goToPage2();
       });
     });
     

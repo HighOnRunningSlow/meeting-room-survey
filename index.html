@@ -486,8 +486,11 @@ document.querySelectorAll(".star").forEach((star, index) => {
     // Navigate between pages
     function nextPage(pageId) {
       const pages = document.querySelectorAll('.page');
+      console.log(pages);
       pages.forEach(page => page.classList.remove('active'));
       document.getElementById(pageId).classList.add('active');
+console.log(document.getElementById(pageId).classList.add('active'));
+      
     }
     function showToast() {
   const toast = document.getElementById("toast");
@@ -500,7 +503,6 @@ document.querySelectorAll(".star").forEach((star, index) => {
     function goToPage2() {
   const ratingType = document.getElementById("ratingType").value;
   let selected = false;
-  console.log(ratingType);
    if (ratingType === "smiley") {
     selected = document.querySelector('input[name="overall"]:checked');
   } 
@@ -508,7 +510,6 @@ document.querySelectorAll(".star").forEach((star, index) => {
   else if (ratingType === "stars") {
     selected = currentRating > 0;
   }
-console.log(selected);
   if (!selected) {
     showToast();
     return;

@@ -492,7 +492,7 @@ document.querySelectorAll(".star").forEach((star, index) => {
 
 // Handle clicks outside of the star container (optional)
 document.addEventListener('click', function(event) {
-  const starRatingContainer = document.querySelector('.star-rating');
+  const starRatingContainer = document.querySelector('.starRating');
   // If the click is outside the star-rating container, you can handle it here
   if (!starRatingContainer.contains(event.target)) {
     console.log('Clicked outside the stars');

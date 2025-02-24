@@ -321,13 +321,17 @@
 </div>
 
 <!-- Star Rating (Hidden Initially) -->
-<div id="starRating" class="smiley-container" style="display: none;">
+<div id="starRating" class="smiley-container" style="display: none; flex-direction: column; text-align: center">
+  <div>
   <span class="star" onclick="setRating(1)">⭐</span>
   <span class="star" onclick="setRating(2)">⭐</span>
   <span class="star" onclick="setRating(3)">⭐</span>
   <span class="star" onclick="setRating(4)">⭐</span>
   <span class="star" onclick="setRating(5)">⭐</span>
+  </div>
+  <div>
   <span id="starRatingText">0/5</span>
+  </div>
 </div>
         <div class="bottom-dropdown ">
   <label for="ratingType">Choose Rating Type:</label>

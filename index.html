@@ -470,11 +470,8 @@ document.querySelectorAll(".star").forEach((star, index) => {
     // Navigate between pages
     function nextPage(pageId) {
       const pages = document.querySelectorAll('.page');
-      console.log(pages);
       pages.forEach(page => page.classList.remove('active'));
-      document.getElementById(pageId).classList.add('active');
-console.log(document.getElementById(pageId).classList.add('active'));
-      
+      document.getElementById(pageId).classList.add('active');      
     }
     function showToast() {
   const toast = document.getElementById("toast");

@@ -484,7 +484,7 @@ document.querySelectorAll(".star").forEach((star, index) => {
   });
 });
     function updateStars() {
-document.querySelectorAll(".star").forEach((star) => {
+  document.querySelectorAll(".star").forEach((star) => {
     let value = parseInt(star.getAttribute("value"));
     star.style.color = value <= currentRating ? "gold" : "gray";
   });

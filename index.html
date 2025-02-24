@@ -466,23 +466,7 @@ document.querySelectorAll(".star").forEach((star, index) => {
     star.style.color = value <= currentRating ? "gold" : "gray";
   });
 }
-    document.querySelectorAll(".star").forEach((star) => {
-  let value = parseInt(star.getAttribute("data-value"));
-
-  star.addEventListener("mouseover", () => {
-    document.querySelectorAll(".star").forEach((s) => {
-      s.style.color = parseInt(s.getAttribute("data-value")) <= value ? "gold" : "gray";
-    });
-  });
-
-  star.addEventListener("mouseout", () => {
-    updateStars(); // Reset to selected rating
-  });
-
-  star.addEventListener("click", () => {
-    setRating(value);
-  });
-});
+ 
     // Navigate between pages
     function nextPage(pageId) {
       const pages = document.querySelectorAll('.page');

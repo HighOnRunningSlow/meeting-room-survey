@@ -462,7 +462,7 @@ document.querySelectorAll(".star").forEach((star, index) => {
     function updateStars() {
   document.getElementById("starRatingText").textContent = `${currentRating}/5`;
   document.querySelectorAll(".star").forEach((star) => {
-    let value = parseInt(star.getAttribute("data-value"));
+    let value = parseInt(star.getAttribute("value"));
     star.style.color = value <= currentRating ? "gold" : "gray";
   });
 }

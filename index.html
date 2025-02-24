@@ -438,6 +438,8 @@
   </div>
   
   <script>
+    let currentRating = 0;
+    
     // Generate a unique submission ID on load
     function generateSubmissionId() {
       return 'sub-' + Date.now() + '-' + Math.floor(Math.random() * 100000);
@@ -450,9 +452,29 @@
 
 // Star Rating Logic
 function setRating(value) {
-  document.getElementById("starRatingText").textContent = `${value}/5`;
+  currentRating = value;
+  updateStars();
+}
+    // Star Hover Effect
+document.querySelectorAll(".star").forEach((star, index) => {
+  star.addEventListener("mouseover", () => {
+    document.querySelectorAll(".star").forEach((s, i) => {
+      s.style.color = i <= index ? "gold" : "gray";
+    });
+  });
+
+  star.addEventListener("mouseout", () => {
+    updateStars(); // Reset to selected state
+  });
+
+  star.addEventListener("click", () => {
+    setRating(index + 1);
+  });
+});
+    function updateStars() {
+  document.getElementById("starRatingText").textContent = `${currentRating}/5`;
   document.querySelectorAll(".star").forEach((star, index) => {
-    star.style.color = index < value ? "gold" : "gray";
+    star.style.color = index < currentRating ? "gold" : "gray";
   });
 }
     // Navigate between pages

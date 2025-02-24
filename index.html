@@ -418,6 +418,17 @@
         }
       });
     }
+    if(smileyContainer){
+     smileyContainer.addEventListener('click', (event) =>{
+       if(event.target.value){
+        const selectedValue = event.target.value;
+         if(selectedValue != undefined){
+           nextPage('page3');
+         } 
+         
+       }
+     })
+   }
     
     // Generate a unique submission ID on load
     function generateSubmissionId() {

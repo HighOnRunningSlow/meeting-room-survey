@@ -263,29 +263,69 @@
         <p class="description" style="font-weight: bold; margin-bottom: 2em;">
           How was your overall meeting room experience?
         </p>
-       <div class="smiley-container">
+     //  <div class="smiley-container">
+  //<label>
+    //<input type="radio" name="overall" value="1" aria-label="Very Poor">
+    //<img src="./images/smiley1.png" alt="Very Poor">
+  //</label>
+  //<label>
+   // <input type="radio" name="overall" value="2" aria-label="Poor">
+    //<img src="./images/smiley2.png" alt="Poor">
+  //</label>
+  //<label>
+   // <input type="radio" name="overall" value="3" aria-label="Neutral">
+    //<img src="./images/smiley3.png" alt="Neutral">
+  //</label>
+  //<label>
+   // <input type="radio" name="overall" value="4" aria-label="Good">
+    //<img src="./images/smiley4.png" alt="Good">
+ // </label>
+  //<label>
+    //<input type="radio" name="overall" value="5" aria-label="Excellent">
+    //<img src="./images/smiley5.png" alt="Excellent">
+  //</label>
+//</div>
+<div class="dropdown-container">
+  <label for="ratingType">Choose Rating Type:</label>
+  <select id="ratingType" onchange="toggleRating()">
+    <option value="smiley">😊 Smileys</option>
+    <option value="stars">⭐ Stars</option>
+  </select>
+</div>
+
+<!-- Smiley Rating (Default) -->
+<div id="smileyRating" class="rating-container">
   <label>
-    <input type="radio" name="overall" value="1" aria-label="Very Poor">
+    <input type="radio" name="overall" value="1">
     <img src="./images/smiley1.png" alt="Very Poor">
   </label>
   <label>
-    <input type="radio" name="overall" value="2" aria-label="Poor">
+    <input type="radio" name="overall" value="2">
     <img src="./images/smiley2.png" alt="Poor">
   </label>
   <label>
-    <input type="radio" name="overall" value="3" aria-label="Neutral">
+    <input type="radio" name="overall" value="3">
     <img src="./images/smiley3.png" alt="Neutral">
   </label>
   <label>
-    <input type="radio" name="overall" value="4" aria-label="Good">
+    <input type="radio" name="overall" value="4">
     <img src="./images/smiley4.png" alt="Good">
   </label>
   <label>
-    <input type="radio" name="overall" value="5" aria-label="Excellent">
+    <input type="radio" name="overall" value="5">
     <img src="./images/smiley5.png" alt="Excellent">
   </label>
 </div>
 
+<!-- Star Rating (Hidden Initially) -->
+<div id="starRating" class="rating-container" style="display: none;">
+  <span class="star" onclick="setRating(1)">⭐</span>
+  <span class="star" onclick="setRating(2)">⭐</span>
+  <span class="star" onclick="setRating(3)">⭐</span>
+  <span class="star" onclick="setRating(4)">⭐</span>
+  <span class="star" onclick="setRating(5)">⭐</span>
+  <p id="starRatingText">0/5</p>
+</div>
 <!-- Toast Notification -->
 <div id="toast" class="toast">Please select an option before continuing.</div>
 
@@ -392,7 +432,19 @@
     function generateSubmissionId() {
       return 'sub-' + Date.now() + '-' + Math.floor(Math.random() * 100000);
     }
-    
+    function toggleRating() {
+  const ratingType = document.getElementById("ratingType").value;
+  document.getElementById("smileyRating").style.display = ratingType === "smiley" ? "block" : "none";
+  document.getElementById("starRating").style.display = ratingType === "stars" ? "block" : "none";
+}
+
+// Star Rating Logic
+function setRating(value) {
+  document.getElementById("starRatingText").textContent = `${value}/5`;
+  document.querySelectorAll(".star").forEach((star, index) => {
+    star.style.color = index < value ? "gold" : "gray";
+  });
+}
     // Navigate between pages
     function nextPage(pageId) {
       const pages = document.querySelectorAll('.page');
@@ -418,12 +470,21 @@
     
     // Ensure a smiley is selected before proceeding from Page 1
     function goToPage2() {
-  const selected = document.querySelector('input[name="overall"]:checked');
+  const ratingType = document.getElementById("ratingType").value;
+  let selected = false;
+
+  if (ratingType === "smiley") {
+    selected = document.querySelector('input[name="overall"]:checked');
+  } else if (ratingType === "stars") {
+    selected = document.getElementById("starRatingText").textContent !== "0/5";
+  }
+
   if (!selected) {
-    showToast(); // Display toast notification
+    showToast();
     return;
   }
-  nextPage('page2'); // Proceed to next page
+
+  nextPage('page2'); 
 }
     
     // Save data offline in localStorage if offline

@@ -218,6 +218,11 @@
   from { opacity: 1; }
   to { opacity: 0; }
 }
+    .bottom-dropdown {
+      position: absolute;
+      bottom: 40px;
+      left: 40px;
+    }
     /* Media query for smaller screens */
     @media (max-width: 600px) {
       h1 { 
@@ -319,7 +324,7 @@
   <span class="star" onclick="setRating(5)">⭐</span>
   <p id="starRatingText">0/5</p>
 </div>
-        <div class="dropdown-container">
+        <div class="bottom-dropdown ">
   <label for="ratingType">Choose Rating Type:</label>
   <select id="ratingType" onchange="toggleRating()">
     <option value="smiley">😊 Smileys</option>

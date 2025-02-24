@@ -428,21 +428,25 @@ x<!DOCTYPE html>
   <script>
     let currentRating = 0;
 
-    const starContainer = document.querySelector('.star-rating');
+    const starContainer = document.querySelector('#starRating');
+    
+    if (starContainer) {
+      document.querySelector('#starRating');
     
     if (starContainer) {
       starContainer.addEventListener('click', function (event) {
+        console.log('Into the event handler');
         if (event.target.classList.contains('star')) {
-          const selectedValue = event.target.getAttribute('data-value');
+          const selectedValue = event.target.getAttribute('value');
           console.log('Selected Star Value:', selectedValue);
-          goToPage2();
+          nextPage('page3');
         }
       });
     }
+    }
     // Handle clicks outside of the star container (optional)
 document.addEventListener('click', function(event) {
-  const starRatingContainer = document.querySelector('.starRating');
-  // If the click is outside the star-rating container, you can handle it here
+  const starRatingContainer = document.querySelector('#starRating');
   if (!starRatingContainer.contains(event.target)) {
     console.log('Clicked outside the stars');
     // You can add logic here if you want to do something when clicking outside

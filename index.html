@@ -481,22 +481,24 @@ document.querySelectorAll(".star").forEach((star, index) => {
   }, 3000);
 }    
     // Ensure a smiley is selected before proceeding from Page 1
-    function goToPage2() {
+   function goToPage2() {
   const ratingType = document.getElementById("ratingType").value;
   let selected = false;
-   if (ratingType === "smiley") {
+  console.log('Rating Type:', ratingType); // Debugging line
+  if (ratingType === "smiley") {
     selected = document.querySelector('input[name="overall"]:checked');
-  } 
-  // Check if Star Rating is selected
-  else if (ratingType === "stars") {
+    console.log('Smiley Rating Selected:', selected); // Debugging line
+  } else if (ratingType === "stars") {
     selected = currentRating > 0;
+    console.log('Star Rating Selected:', selected); // Debugging line
   }
+
   if (!selected) {
     showToast();
     return;
   }
 
-  nextPage('page2'); 
+  nextPage('page2');
 }
     
     // Save data offline in localStorage if offline

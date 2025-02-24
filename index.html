@@ -1,4 +1,4 @@
-x<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -324,13 +324,6 @@ x<!DOCTYPE html>
     <option value="smiley">😊 Smileys</option>
   </select>
 </div>
-<!-- Toast Notification -->
-<div id="toast" class="toast">Please select an rate option before continuing.</div>
-
-<!-- Button container pinned to the bottom-right -->
-<!-- <div class="bottom-button">
-  <button id="nextButton" class="button" onclick="goToPage2()">Next</button>
-</div> -->
 </div>
 </div>
 
@@ -394,9 +387,6 @@ x<!DOCTYPE html>
           </tr>
         </table>
       </form>
-      <div class="bottom-button">
-    <button type="button" class="button" onclick="nextPage('page3')">Next</button>
-  </div>
     </div>-->
     
     <!-- Page 3: Additional Feedback (Optional) -->
@@ -414,17 +404,6 @@ x<!DOCTYPE html>
       <p class="description">We truly appreciate your feedback! Your input helps us improve our meeting rooms for everyone.</p>
     </div>
   </div>
-  
-  <!-- Custom Modal -->
-  <div id="customModal" class="modal">
-    <div class="modal-content">
-      <span class="close-button" onclick="closeModal()">&times;</span>
-      <h2>Geneva IT says</h2>
-      <p id="modalMessage">Please select a rating before continuing.</p>
-      <button class="button" onclick="closeModal()">OK</button>
-    </div>
-  </div>
-  
   <script>
     let currentRating = 0;
 
@@ -444,14 +423,6 @@ x<!DOCTYPE html>
       });
     }
     }
-    // Handle clicks outside of the star container (optional)
-document.addEventListener('click', function(event) {
-  const starRatingContainer = document.querySelector('#starRating');
-  if (!starRatingContainer.contains(event.target)) {
-    console.log('Clicked outside the stars');
-    // You can add logic here if you want to do something when clicking outside
-  }
-});
     // Generate a unique submission ID on load
     function generateSubmissionId() {
       return 'sub-' + Date.now() + '-' + Math.floor(Math.random() * 100000);
@@ -497,41 +468,12 @@ document.querySelectorAll(".star").forEach((star, index) => {
       pages.forEach(page => page.classList.remove('active'));
       document.getElementById(pageId).classList.add('active');      
     }
-    function showToast() {
-  const toast = document.getElementById("toast");
-  toast.classList.add("show");
-  setTimeout(() => {
-    toast.classList.remove("show");
-  }, 3000);
-}  
-
-
-    
-    // Ensure a smiley is selected before proceeding from Page 1
-   function goToPage2() {
-  const ratingType = document.getElementById("ratingType").value;
-  let selected = false;
-  if (ratingType === "smiley") {
-    selected = document.querySelector('input[name="overall"]:checked');
-  } else if (ratingType === "stars") {
-    selected = currentRating > 0;
-  }
-
-  if (!selected) {
-    showToast();
-    return;
-  }
-
-  nextPage('page2');
-}
-    
     // Save data offline in localStorage if offline
     function saveDataOffline(data) {
       let offlineSubmissions = JSON.parse(localStorage.getItem('offlineSubmissions')) || [];
       offlineSubmissions.push(data);
       localStorage.setItem('offlineSubmissions', JSON.stringify(offlineSubmissions));
-    }
-    
+    }    
     // Send data to the Apps Script web app
     function sendData(data) {
       fetch("https://script.google.com/macros/s/AKfycbw0xBHZNvp4CeQ7YpCqmICnd9idAPJK4PoDHKu5x0QirMBl6UD4RZ3N9RCj0dN8IdKd/exec", {
@@ -588,7 +530,7 @@ document.querySelectorAll(".star").forEach((star, index) => {
       }
       
       nextPage('page4');
-      // After 15 seconds, reload the page to reset for the next user
+      // After 10 seconds, reload the page to reset for the next user
       setTimeout(() => { location.reload(); }, 10000);
     }
     

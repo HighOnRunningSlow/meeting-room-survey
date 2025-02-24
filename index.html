@@ -305,12 +305,14 @@
 </div>
 
 <!-- Star Rating (Hidden Initially) -->
-<div id="starRating" class="smiley-container" style="display: none; flex-direction: column; text-align: center">
+<div id="starRating" style="display: none; flex-direction: column; text-align: center">
+  <div class="smiley-container">
   <i class="fa fa-star star" data-value="1"></i>
   <i class="fa fa-star star" data-value="2"></i>
   <i class="fa fa-star star" data-value="3"></i>
   <i class="fa fa-star star" data-value="4"></i>
   <i class="fa fa-star star" data-value="5"></i>
+  </div>
   <div>
   <span id="starRatingText">0/5</span>
   </div>
@@ -508,7 +510,7 @@ document.querySelectorAll(".star").forEach((star, index) => {
     function goToPage2() {
   const ratingType = document.getElementById("ratingType").value;
   let selected = false;
-
+  console.log(ratingType);
    if (ratingType === "smiley") {
     selected = document.querySelector('input[name="overall"]:checked');
   } 
@@ -516,7 +518,7 @@ document.querySelectorAll(".star").forEach((star, index) => {
   else if (ratingType === "stars") {
     selected = currentRating > 0;
   }
-
+console.log(selected);
   if (!selected) {
     showToast();
     return;

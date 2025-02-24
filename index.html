@@ -428,6 +428,7 @@
   </div>
   <script>
     let currentRating = 0;
+    const pages = document.querySelectorAll('.page');
 
     const starContainer = document.querySelector('#starRating');
     const smileyContainer = document.querySelector('#smileyRating');
@@ -489,13 +490,6 @@ document.querySelectorAll(".star").forEach((star, index) => {
     star.style.color = value <= currentRating ? "gold" : "gray";
   });
 }
- 
-    // Navigate between pages
-    /*function nextPage(pageId) {
-      const pages = document.querySelectorAll('.page');
-      pages.forEach(page => page.classList.remove('active'));
-      document.getElementById(pageId).classList.add('active');      
-    }*/
     // Save data offline in localStorage if offline
     function saveDataOffline(data) {
       let offlineSubmissions = JSON.parse(localStorage.getItem('offlineSubmissions')) || [];
@@ -597,10 +591,9 @@ document.querySelectorAll(".star").forEach((star, index) => {
 
 
     ///////Touch pad gesture navigation ///////
-let startTouchX = 0;
+/*let startTouchX = 0;
 let endTouchX = 0;
 
-const pages = document.querySelectorAll('.page');
 let activePageIndex = 0;
 
 function handleSwipeStart(e) {
@@ -636,7 +629,7 @@ function nextPage(pageIndex) {
 // Add swipe event listeners
 document.addEventListener('touchstart', handleSwipeStart);
 document.addEventListener('touchmove', handleSwipeMove);
-document.addEventListener('touchend', handleSwipeEnd);
+document.addEventListener('touchend', handleSwipeEnd);*/
   </script>
 </body>
 </html>

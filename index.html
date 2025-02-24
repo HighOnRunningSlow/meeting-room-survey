@@ -427,7 +427,27 @@ x<!DOCTYPE html>
   
   <script>
     let currentRating = 0;
+
+    const starContainer = document.querySelector('.star-rating');
     
+    if (starContainer) {
+      starContainer.addEventListener('click', function (event) {
+        if (event.target.classList.contains('star')) {
+          const selectedValue = event.target.getAttribute('data-value');
+          console.log('Selected Star Value:', selectedValue);
+          goToPage2();
+        }
+      });
+    }
+    // Handle clicks outside of the star container (optional)
+document.addEventListener('click', function(event) {
+  const starRatingContainer = document.querySelector('.starRating');
+  // If the click is outside the star-rating container, you can handle it here
+  if (!starRatingContainer.contains(event.target)) {
+    console.log('Clicked outside the stars');
+    // You can add logic here if you want to do something when clicking outside
+  }
+});
     // Generate a unique submission ID on load
     function generateSubmissionId() {
       return 'sub-' + Date.now() + '-' + Math.floor(Math.random() * 100000);
@@ -479,26 +499,9 @@ document.querySelectorAll(".star").forEach((star, index) => {
   setTimeout(() => {
     toast.classList.remove("show");
   }, 3000);
-}    
-    document.querySelector('.starRating').addEventListener('click', function(event) {
-  // Check if a star was clicked (ensure the clicked element has the 'star' class)
-  if (event.target.classList.contains('star')) {
-    const selectedValue = event.target.getAttribute('value');
-    console.log('Selected Star Value:', selectedValue);
+}  
 
-    nextPage('page3'); // Assuming this function switches to the next page
-  }
-});
 
-// Handle clicks outside of the star container (optional)
-document.addEventListener('click', function(event) {
-  const starRatingContainer = document.querySelector('.starRating');
-  // If the click is outside the star-rating container, you can handle it here
-  if (!starRatingContainer.contains(event.target)) {
-    console.log('Clicked outside the stars');
-    // You can add logic here if you want to do something when clicking outside
-  }
-});
     
     // Ensure a smiley is selected before proceeding from Page 1
    function goToPage2() {

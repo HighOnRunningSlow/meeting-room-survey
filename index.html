@@ -320,8 +320,8 @@
         <div class="bottom-dropdown ">
   <label for="ratingType">Choose Rating Type:</label>
   <select id="ratingType" onchange="toggleRating()">
-    <option value="smiley">😊 Smileys</option>
     <option value="stars">⭐ Stars</option>
+    <option value="smiley">😊 Smileys</option>
   </select>
 </div>
 <!-- Toast Notification -->
@@ -564,13 +564,6 @@ document.querySelectorAll(".star").forEach((star, index) => {
       // After 15 seconds, reload the page to reset for the next user
       setTimeout(() => { location.reload(); }, 15000);
     }
-    
-    // Enable the Next button on Page 1 once a smiley is selected
-    document.querySelectorAll('input[name="overall"]').forEach(radio => {
-      radio.addEventListener('change', () => {
-        document.getElementById('nextButton').disabled = false;
-      });
-    });
     
     // Idle timeout: reload page after 1 minute of inactivity on any page
     let idleTimeout = null;

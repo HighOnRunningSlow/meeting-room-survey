@@ -542,7 +542,7 @@ document.querySelectorAll(".star").forEach((star, index) => {
       const data = {
         submissionId: document.getElementById('submissionId').value,
         roomId: document.getElementById('roomId').value,
-        overall: document.querySelector('input[name="overall"]:checked')?.value || "",
+        overall: currentRating != 0 ? currentRating : document.querySelector('input[name="overall"]:checked')?.value,
         video: document.querySelector('input[name="video"]:checked')?.value || "",
         audio: document.querySelector('input[name="audio"]:checked')?.value || "",
         wireless: document.querySelector('input[name="wireless"]:checked')?.value || "",

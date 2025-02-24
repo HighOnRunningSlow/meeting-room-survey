@@ -490,6 +490,12 @@ document.querySelectorAll(".star").forEach((star, index) => {
     star.style.color = value <= currentRating ? "gold" : "gray";
   });
 }
+    function nextPage(pageId) {
+      const pages = document.querySelectorAll('.page');
+      pages.forEach(page => page.classList.remove('active'));
+      document.getElementById(pageId).classList.add('active');      
+    }
+    }
     // Save data offline in localStorage if offline
     function saveDataOffline(data) {
       let offlineSubmissions = JSON.parse(localStorage.getItem('offlineSubmissions')) || [];

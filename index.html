@@ -185,6 +185,39 @@
     #page4{
     margin: 14rem 0;
     }
+    .toast {
+  visibility: hidden;
+  min-width: 250px;
+  background-color: rgba(51, 51, 51, 0.9);
+  color: white;
+  text-align: center;
+  border-radius: 5px;
+  padding: 12px;
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  font-size: 16px;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.toast.show {
+  visibility: visible;
+  opacity: 1;
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+@keyframes fadein {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeout {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
     /* Media query for smaller screens */
     @media (max-width: 600px) {
       h1 { 
@@ -230,33 +263,36 @@
         <p class="description" style="font-weight: bold; margin-bottom: 2em;">
           How was your overall meeting room experience?
         </p>
-        <div class="smiley-container">
-          <label>
-            <input type="radio" name="overall" value="1" aria-label="Very Poor">
-            <img src="./images/smiley1.png" alt="Very Poor">
-          </label>
-          <label>
-            <input type="radio" name="overall" value="2" aria-label="Poor">
-            <img src="./images/smiley2.png" alt="Poor">
-          </label>
-          <label>
-            <input type="radio" name="overall" value="3" aria-label="Neutral">
-            <img src="./images/smiley3.png" alt="Neutral">
-          </label>
-          <label>
-            <input type="radio" name="overall" value="4" aria-label="Good">
-            <img src="./images/smiley4.png" alt="Good">
-          </label>
-          <label>
-            <input type="radio" name="overall" value="5" aria-label="Excellent">
-            <img src="./images/smiley5.png" alt="Excellent">
-          </label>
-        </div>
-      </div>
-      <!-- Button container pinned to the bottom-right -->
-      <div class="bottom-button">
-        <button id="nextButton" class="button" onclick="goToPage2()" disabled>Next</button>
-      </div>
+       <div class="smiley-container">
+  <label>
+    <input type="radio" name="overall" value="1" aria-label="Very Poor">
+    <img src="./images/smiley1.png" alt="Very Poor">
+  </label>
+  <label>
+    <input type="radio" name="overall" value="2" aria-label="Poor">
+    <img src="./images/smiley2.png" alt="Poor">
+  </label>
+  <label>
+    <input type="radio" name="overall" value="3" aria-label="Neutral">
+    <img src="./images/smiley3.png" alt="Neutral">
+  </label>
+  <label>
+    <input type="radio" name="overall" value="4" aria-label="Good">
+    <img src="./images/smiley4.png" alt="Good">
+  </label>
+  <label>
+    <input type="radio" name="overall" value="5" aria-label="Excellent">
+    <img src="./images/smiley5.png" alt="Excellent">
+  </label>
+</div>
+
+<!-- Toast Notification -->
+<div id="toast" class="toast">Please select an option before continuing.</div>
+
+<!-- Button container pinned to the bottom-right -->
+<div class="bottom-button">
+  <button id="nextButton" class="button" onclick="goToPage2()">Next</button>
+</div>
     </div>
 
     <!-- Page 2: Feature Ratings (Optional) -->
@@ -369,19 +405,34 @@
       document.getElementById('modalMessage').textContent = message;
       document.getElementById('customModal').style.display = 'block';
     }
+    function showToast() {
+  const toast = document.getElementById("toast");
+  toast.classList.add("show");
+  setTimeout(() => {
+    toast.classList.remove("show");
+  }, 3000);
+}
     function closeModal() {
       document.getElementById('customModal').style.display = 'none';
     }
     
     // Ensure a smiley is selected before proceeding from Page 1
+    //function goToPage2() {
+    //  const selected = document.querySelector('input[name="overall"]:checked');
+     // if (!selected) {
+      //  showModal("Please select a rating before continuing.");
+     //   return;
+     // }
+    //  nextPage('page2');
+   // }
     function goToPage2() {
-      const selected = document.querySelector('input[name="overall"]:checked');
-      if (!selected) {
-        showModal("Please select a rating before continuing.");
-        return;
-      }
-      nextPage('page2');
-    }
+  const selected = document.querySelector('input[name="overall"]:checked');
+  if (!selected) {
+    showToast(); // Display toast notification
+    return;
+  }
+  nextPage('page2'); // Proceed to next page
+}
     
     // Save data offline in localStorage if offline
     function saveDataOffline(data) {

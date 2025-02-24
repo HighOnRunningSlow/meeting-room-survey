@@ -489,23 +489,13 @@ document.querySelectorAll(".star").forEach((star, index) => {
       pages.forEach(page => page.classList.remove('active'));
       document.getElementById(pageId).classList.add('active');
     }
-    
-    // Modal functions
-    function showModal(message) {
-      document.getElementById('modalMessage').textContent = message;
-      document.getElementById('customModal').style.display = 'block';
-    }
     function showToast() {
   const toast = document.getElementById("toast");
   toast.classList.add("show");
   setTimeout(() => {
     toast.classList.remove("show");
   }, 3000);
-}
-    function closeModal() {
-      document.getElementById('customModal').style.display = 'none';
-    }
-    
+}    
     // Ensure a smiley is selected before proceeding from Page 1
     function goToPage2() {
   const ratingType = document.getElementById("ratingType").value;

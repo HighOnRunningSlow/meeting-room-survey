@@ -338,9 +338,6 @@
   <i class="fa fa-star star" value="4"></i>
   <i class="fa fa-star star" value="5"></i>
   </div>
-  <div>
-  <span id="starRatingText">0/5</span>
-  </div>
 </div>
         <div class="bottom-dropdown ">
   <label for="ratingType">Choose Rating Type:</label>
@@ -487,7 +484,6 @@ document.querySelectorAll(".star").forEach((star, index) => {
   });
 });
     function updateStars() {
-  document.getElementById("starRatingText").textContent = `${currentRating}/5`;
   document.querySelectorAll(".star").forEach((star) => {
     let value = parseInt(star.getAttribute("value"));
     star.style.color = value <= currentRating ? "gold" : "gray";

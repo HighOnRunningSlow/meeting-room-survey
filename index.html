@@ -408,21 +408,35 @@
     let currentRating = 0;
 
     const starContainer = document.querySelector('#starRating');
+    const smileyContainer = document.querySelector('#smileyRating');
     
     if (starContainer) {
       document.querySelector('#starRating');
     
     if (starContainer) {
       starContainer.addEventListener('click', function (event) {
-        console.log('Into the event handler');
         if (event.target.classList.contains('star')) {
           const selectedValue = event.target.getAttribute('value');
-          console.log('Selected Star Value:', selectedValue);
           nextPage('page3');
         }
       });
     }
+    }else if(smileyContainer){
+        document.querySelector('#smileyRating');
+    
+    if (smileyContainer) {
+      smileyContainer.addEventListener('click', function (event) {
+         if (event.target.classList.contains('smiley')) {
+          const selectedValue = document.querySelector('input[name="overall"]:checked');
+          if (radioInput) {
+        radioInput.checked = true;
+      }
+
+      nextPage('page3');
+        }
+      });
     }
+    
     // Generate a unique submission ID on load
     function generateSubmissionId() {
       return 'sub-' + Date.now() + '-' + Math.floor(Math.random() * 100000);

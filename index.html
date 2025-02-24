@@ -280,29 +280,6 @@
         <p class="description" style="font-weight: bold; margin-bottom: 2em;">
           How was your overall meeting room experience?
         </p>
-    <!--<div class="smiley-container">
-  //<label>
-    //<input type="radio" name="overall" value="1" aria-label="Very Poor">
-    //<img src="./images/smiley1.png" alt="Very Poor">
-  //</label>
-  //<label>
-   // <input type="radio" name="overall" value="2" aria-label="Poor">
-    //<img src="./images/smiley2.png" alt="Poor">
-  //</label>
-  //<label>
-   // <input type="radio" name="overall" value="3" aria-label="Neutral">
-    //<img src="./images/smiley3.png" alt="Neutral">
-  //</label>
-  //<label>
-   // <input type="radio" name="overall" value="4" aria-label="Good">
-    //<img src="./images/smiley4.png" alt="Good">
- // </label>
-  //<label>
-    //<input type="radio" name="overall" value="5" aria-label="Excellent">
-    //<img src="./images/smiley5.png" alt="Excellent">
-  //</label>
-//</div>-->
-
 <!-- Smiley Rating (Default) -->
 <div id="smileyRating" class="smiley-container">
   <label>
@@ -329,13 +306,11 @@
 
 <!-- Star Rating (Hidden Initially) -->
 <div id="starRating" class="smiley-container" style="display: none; flex-direction: column; text-align: center">
-  <div>
   <i class="fa fa-star star" data-value="1"></i>
   <i class="fa fa-star star" data-value="2"></i>
   <i class="fa fa-star star" data-value="3"></i>
   <i class="fa fa-star star" data-value="4"></i>
   <i class="fa fa-star star" data-value="5"></i>
-  </div>
   <div>
   <span id="starRatingText">0/5</span>
   </div>
@@ -534,9 +509,11 @@ document.querySelectorAll(".star").forEach((star, index) => {
   const ratingType = document.getElementById("ratingType").value;
   let selected = false;
 
-  if (ratingType === "smiley") {
+   if (ratingType === "smiley") {
     selected = document.querySelector('input[name="overall"]:checked');
-  } else if (ratingType === "stars") {
+  } 
+  // Check if Star Rating is selected
+  else if (ratingType === "stars") {
     selected = currentRating > 0;
   }
 

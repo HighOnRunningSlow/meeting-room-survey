@@ -480,7 +480,7 @@ document.querySelectorAll(".star").forEach((star, index) => {
     toast.classList.remove("show");
   }, 3000);
 }    
-    document.querySelector('.star-rating').addEventListener('click', function(event) {
+    document.querySelector('.starRating').addEventListener('click', function(event) {
   // Check if a star was clicked (ensure the clicked element has the 'star' class)
   if (event.target.classList.contains('star')) {
     const selectedValue = event.target.getAttribute('value');

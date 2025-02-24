@@ -509,9 +509,9 @@ document.querySelectorAll(".star").forEach((star, index) => {
   const ratingType = document.getElementById("ratingType").value;
   let selected = false;
 
-  if (ratingType === "smiley") {
+  if (ratingType == "smiley") {
     selected = document.querySelector('input[name="overall"]:checked');
-  } else if (ratingType === "stars") {
+  } else if (ratingType == "stars") {
     selected = document.getElementById("starRatingText").textContent !== "0/5";
   }
 

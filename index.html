@@ -285,34 +285,27 @@
     //<img src="./images/smiley5.png" alt="Excellent">
   //</label>
 //</div>-->
-<div class="dropdown-container">
-  <label for="ratingType">Choose Rating Type:</label>
-  <select id="ratingType" onchange="toggleRating()">
-    <option value="smiley">😊 Smileys</option>
-    <option value="stars">⭐ Stars</option>
-  </select>
-</div>
 
 <!-- Smiley Rating (Default) -->
-<div id="smileyRating" class="rating-container">
+<div class="smiley-container">
   <label>
-    <input type="radio" name="overall" value="1">
+    <input type="radio" name="overall" value="1" aria-label="Very Poor">
     <img src="./images/smiley1.png" alt="Very Poor">
   </label>
   <label>
-    <input type="radio" name="overall" value="2">
+    <input type="radio" name="overall" value="2" aria-label="Poor">
     <img src="./images/smiley2.png" alt="Poor">
   </label>
   <label>
-    <input type="radio" name="overall" value="3">
+   <input type="radio" name="overall" value="3" aria-label="Neutral">
     <img src="./images/smiley3.png" alt="Neutral">
   </label>
   <label>
-    <input type="radio" name="overall" value="4">
+    <input type="radio" name="overall" value="4" aria-label="Good">
     <img src="./images/smiley4.png" alt="Good">
   </label>
   <label>
-    <input type="radio" name="overall" value="5">
+    <input type="radio" name="overall" value="5" aria-label="Excellent">
     <img src="./images/smiley5.png" alt="Excellent">
   </label>
 </div>
@@ -325,6 +318,13 @@
   <span class="star" onclick="setRating(4)">⭐</span>
   <span class="star" onclick="setRating(5)">⭐</span>
   <p id="starRatingText">0/5</p>
+</div>
+        <div class="dropdown-container">
+  <label for="ratingType">Choose Rating Type:</label>
+  <select id="ratingType" onchange="toggleRating()">
+    <option value="smiley">😊 Smileys</option>
+    <option value="stars">⭐ Stars</option>
+  </select>
 </div>
 <!-- Toast Notification -->
 <div id="toast" class="toast">Please select an option before continuing.</div>

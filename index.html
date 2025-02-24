@@ -421,20 +421,6 @@
         }
       });
     }
-    }else if(smileyContainer){
-        document.querySelector('#smileyRating');
-    
-    if (smileyContainer) {
-      smileyContainer.addEventListener('click', function (event) {
-         if (event.target.classList.contains('smiley')) {
-          const selectedValue = document.querySelector('input[name="overall"]:checked');
-          if (radioInput) {
-        radioInput.checked = true;
-      }
-
-      nextPage('page3');
-        }
-      });
     }
     
     // Generate a unique submission ID on load

@@ -235,6 +235,16 @@
     }
     .starRatingText{
     }
+    @keyframes heartbeat {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+.heart {
+  display: inline-block;
+  animation: heartbeat 1.5s ease-in-out infinite;
+}
     /* Media query for smaller screens */
     @media (max-width: 600px) {
       h1 { 
@@ -399,10 +409,10 @@
     </div>
     
     <!-- Page 4: Thank You Page -->
-    <div id="page4" class="page">
-      <h1>Thank You! ❤️</h1>
-      <p class="description">We truly appreciate your feedback! Your input helps us improve our meeting rooms for everyone.</p>
-    </div>
+     <div id="page4" class="page">
+  <h1>Thank You! <span class="heart">❤️</span></h1>
+  <p class="description">We truly appreciate your feedback! Your input helps us improve our meeting rooms for everyone.</p>
+</div>
   </div>
   <script>
     let currentRating = 0;

@@ -10,6 +10,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <!-- Google Font: Roboto -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <style>
     /* Reset default margins/paddings */
     html, body {
@@ -225,6 +226,12 @@
     }
     .star{
       font-size: 100px;
+      cursor: pointer;
+      color: gray;
+      transition: color 0.3s ease;
+    }
+    .star:hover {
+     color: gold;
     }
     .starRatingText{
     }
@@ -323,11 +330,11 @@
 <!-- Star Rating (Hidden Initially) -->
 <div id="starRating" class="smiley-container" style="display: none; flex-direction: column; text-align: center">
   <div>
-  <span class="star" onclick="setRating(1)">⭐</span>
-  <span class="star" onclick="setRating(2)">⭐</span>
-  <span class="star" onclick="setRating(3)">⭐</span>
-  <span class="star" onclick="setRating(4)">⭐</span>
-  <span class="star" onclick="setRating(5)">⭐</span>
+  <i class="fa fa-star star" data-value="1"></i>
+  <i class="fa fa-star star" data-value="2"></i>
+  <i class="fa fa-star star" data-value="3"></i>
+  <i class="fa fa-star star" data-value="4"></i>
+  <i class="fa fa-star star" data-value="5"></i>
   </div>
   <div>
   <span id="starRatingText">0/5</span>
@@ -477,10 +484,28 @@ document.querySelectorAll(".star").forEach((star, index) => {
 });
     function updateStars() {
   document.getElementById("starRatingText").textContent = `${currentRating}/5`;
-  document.querySelectorAll(".star").forEach((star, index) => {
-    star.style.color = index < currentRating ? "gold" : "gray";
+  document.querySelectorAll(".star").forEach((star) => {
+    let value = parseInt(star.getAttribute("data-value"));
+    star.style.color = value <= currentRating ? "gold" : "gray";
   });
 }
+    document.querySelectorAll(".star").forEach((star) => {
+  let value = parseInt(star.getAttribute("data-value"));
+
+  star.addEventListener("mouseover", () => {
+    document.querySelectorAll(".star").forEach((s) => {
+      s.style.color = parseInt(s.getAttribute("data-value")) <= value ? "gold" : "gray";
+    });
+  });
+
+  star.addEventListener("mouseout", () => {
+    updateStars(); // Reset to selected rating
+  });
+
+  star.addEventListener("click", () => {
+    setRating(value);
+  });
+});
     // Navigate between pages
     function nextPage(pageId) {
       const pages = document.querySelectorAll('.page');
@@ -509,10 +534,10 @@ document.querySelectorAll(".star").forEach((star, index) => {
   const ratingType = document.getElementById("ratingType").value;
   let selected = false;
 
-  if (ratingType == "smiley") {
+  if (ratingType === "smiley") {
     selected = document.querySelector('input[name="overall"]:checked');
-  } else if (ratingType == "stars") {
-    selected = document.getElementById("starRatingText").textContent !== "0/5";
+  } else if (ratingType === "stars") {
+    selected = currentRating > 0;
   }
 
   if (!selected) {

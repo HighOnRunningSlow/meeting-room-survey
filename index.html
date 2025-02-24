@@ -331,7 +331,8 @@
 <div class="bottom-button">
   <button id="nextButton" class="button" onclick="goToPage2()">Next</button>
 </div>
-    </div>
+</div>
+</div>
 
     <!-- Page 2: Feature Ratings (Optional) -->
     <div id="page2" class="page active">
@@ -484,13 +485,10 @@ document.querySelectorAll(".star").forEach((star, index) => {
    function goToPage2() {
   const ratingType = document.getElementById("ratingType").value;
   let selected = false;
-  console.log('Rating Type:', ratingType); // Debugging line
   if (ratingType === "smiley") {
     selected = document.querySelector('input[name="overall"]:checked');
-    console.log('Smiley Rating Selected:', selected); // Debugging line
   } else if (ratingType === "stars") {
     selected = currentRating > 0;
-    console.log('Star Rating Selected:', selected); // Debugging line
   }
 
   if (!selected) {

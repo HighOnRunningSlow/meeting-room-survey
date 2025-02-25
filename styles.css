@@ -1,5 +1,6 @@
 /* Reset default margins/paddings */
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   height: 100%;
@@ -60,12 +61,12 @@ p.description {
   justify-content: center;
   flex-wrap: wrap;
 }
-.smiley-container label { 
-  cursor: pointer; 
-  text-align: center; 
+.smiley-container label {
+  cursor: pointer;
+  text-align: center;
 }
-.smiley-container input[type="radio"] { 
-  display: none; 
+.smiley-container input[type='radio'] {
+  display: none;
 }
 .smiley-container img {
   width: 140px;
@@ -73,7 +74,7 @@ p.description {
   object-fit: cover;
   transition: outline 0.2s ease;
 }
-.smiley-container input[type="radio"]:checked + img {
+.smiley-container input[type='radio']:checked + img {
   outline: 5px solid #0078d4;
   outline-offset: 3px;
   border-radius: 50%;
@@ -96,8 +97,8 @@ p.description {
   transition: background-color 0.2s ease;
   margin-top: 10px;
 }
-.button:hover { 
-  background-color: #005a9e; 
+.button:hover {
+  background-color: #005a9e;
 }
 /* Table styling for feature ratings */
 table {
@@ -105,19 +106,21 @@ table {
   border-collapse: collapse;
   margin-bottom: 30px;
 }
-th, td {
+th,
+td {
   text-align: center;
   padding: 16px;
   border: 1px solid #ddd;
   font-size: 1.2em;
 }
-th { 
+th {
   background-color: #f7f7f7;
   font-weight: 500;
 }
-td:first-child, th:first-child { 
-  text-align: left; 
-  background-color: #fff; 
+td:first-child,
+th:first-child {
+  text-align: left;
+  background-color: #fff;
 }
 textarea {
   width: 100%;
@@ -134,7 +137,7 @@ textarea {
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0,0,0,0.4);
+  background-color: rgba(0, 0, 0, 0.4);
 }
 .modal-content {
   background-color: #fff;
@@ -143,12 +146,12 @@ textarea {
   border-radius: 8px;
   width: 80%;
   max-width: 400px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   text-align: center;
   position: relative;
 }
-.modal-content h2 { 
-  margin-top: 0; 
+.modal-content h2 {
+  margin-top: 0;
 }
 .close-button {
   position: absolute;
@@ -157,7 +160,20 @@ textarea {
   font-size: 1.5em;
   cursor: pointer;
 }
-.question{
+.question {
   margin-top: 3.5rem;
 }
-#
+.thumb-btn {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.thumb-btn svg {
+  fill: gray;
+  transition: fill 0.3s;
+}
+
+.thumb-btn.selected svg {
+  fill: rgb(34, 197, 19);
+}

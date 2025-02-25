@@ -9,9 +9,7 @@ if (starContainer) {
   starContainer.addEventListener('click', function (event) {
     const star = event.target.closest('.star');
     if (star) {
-      let starSVG = document.querySelector('.star');
-
-      let selectedValue = starSVG.getAttribute('data-value');
+      document.getElementById('firstPageButton').style.display = 'block';
       nextPage('page2');
     }
   });
@@ -21,7 +19,8 @@ if (smileyContainer) {
     if (event.target.value) {
       const selectedValue = event.target.value;
       if (selectedValue != undefined) {
-        nextPage('page3');
+        currentRating = selectedValue;
+        nextPage('page2');
       }
     }
   });
@@ -72,13 +71,23 @@ document.querySelectorAll('.thumb-btn').forEach((button) => {
     document
       .querySelectorAll(`.thumb-btn[data-feature="${feature}"]`)
       .forEach((btn) => {
-        btn.classList.remove('up', 'down');
+        btn.classList.remove('up', 'down', 'na');
       });
     if (value === 'up') {
       this.classList.add('up');
     } else if (value === 'down') {
       this.classList.add('down');
+    } else if (value === 'N/A') {
+      this.classList.add('na');
     }
+  });
+});
+// When device goes online, resend any offline submissions
+window.addEventListener('online', () => {
+  let offlineSubmissions =
+    JSON.parse(localStorage.getItem('offlineSubmissions')) || [];
+  offlineSubmissions.forEach((sub) => {
+    sendData(sub);
   });
 });
 
@@ -96,7 +105,6 @@ function toggleRating() {
 // Star Rating Logic
 function setRating(value) {
   currentRating = value;
-
   updateStars();
 }
 function updateStars() {
@@ -152,14 +160,7 @@ function removeOfflineSubmission(submissionId) {
     JSON.stringify(offlineSubmissions)
   );
 }
-// When device goes online, resend any offline submissions
-window.addEventListener('online', () => {
-  let offlineSubmissions =
-    JSON.parse(localStorage.getItem('offlineSubmissions')) || [];
-  offlineSubmissions.forEach((sub) => {
-    sendData(sub);
-  });
-});
+
 // Submit the survey
 function submitSurvey() {
   // Disable the submit button to prevent duplicate submissions

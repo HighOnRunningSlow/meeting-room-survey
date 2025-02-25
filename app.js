@@ -5,8 +5,9 @@
 
     if (starContainer) {
       starContainer.addEventListener('click', function (event) {
-        if (event.target.classList.contains('star')) {
-          const selectedValue = event.target.getAttribute('value');
+        const star = event.target.closest('.star');
+        if (star) {
+          const selectedValue = event.target.getAttribute('data-value');
           nextPage('page3');
         }
       });

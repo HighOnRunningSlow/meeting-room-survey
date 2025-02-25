@@ -196,6 +196,9 @@ textarea {
   justify-content: space-between;
   margin-top: 1rem;
 }
+.flexContainer span {
+  margin-top: 1%;
+}
 #submitButton {
   margin: 10% 36% 0 36%;
   width: 16rem;
@@ -265,4 +268,10 @@ textarea {
   opacity: 0;
   animation: fadeSlide 0.8s ease-out forwards;
   margin-top: 14rem;
+}
+.flexContainerButtons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-grow: 0.2;
 }

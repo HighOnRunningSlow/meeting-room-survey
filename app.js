@@ -173,17 +173,15 @@ function submitSurvey() {
       currentRating != 0
         ? currentRating
         : document.querySelector('input[name="overall"]:checked')?.value,
-    video: document.querySelector('input[name="video"]:checked')?.value || '',
-    audio: document.querySelector('input[name="audio"]:checked')?.value || '',
-    wireless:
-      document.querySelector('input[name="wireless"]:checked')?.value || '',
-    whiteboard:
-      document.querySelector('input[name="whiteboard"]:checked')?.value || '',
-    booking:
-      document.querySelector('input[name="booking"]:checked')?.value || '',
+    joinMeeting:
+      document.querySelector('input[name="joinMeeting"]')?.value || '',
+    sharingContent:
+      document.querySelector('input[name="sharing"]')?.value || '',
+    audioVideo: document.querySelector('input[name="audioVideo"]')?.value || '',
     comments: document.getElementById('comments').value || '',
   };
 
+  console.log(data);
   if (navigator.onLine) {
     sendData(data);
   } else {
@@ -194,7 +192,7 @@ function submitSurvey() {
   // After 10 seconds, reload the page to reset for the next user
   setTimeout(() => {
     location.reload();
-  }, 5000);
+  }, 50000);
 }
 // Idle timeout: reload page after 1 minute of inactivity on any page
 function resetIdleTimer() {

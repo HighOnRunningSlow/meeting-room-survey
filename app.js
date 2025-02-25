@@ -69,12 +69,17 @@ document.querySelectorAll('.thumb-btn').forEach((button) => {
   button.addEventListener('click', function () {
     let feature = this.dataset.feature;
     let value = this.dataset.value;
+    console.log(value);
     document
       .querySelectorAll(`.thumb-btn[data-feature="${feature}"]`)
       .forEach((btn) => {
-        btn.classList.remove('selected');
+        btn.classList.remove('up', 'down');
       });
-    this.classList.add('selected');
+    if (value === 'up') {
+      this.classList.add('up');
+    } else if (value === 'down') {
+      this.classList.add('down');
+    }
   });
 });
 

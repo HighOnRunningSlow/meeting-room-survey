@@ -168,12 +168,101 @@ textarea {
   background: transparent;
   cursor: pointer;
 }
-
 .thumb-btn svg {
   fill: gray;
   transition: fill 0.3s;
 }
 
-.thumb-btn.selected svg {
+.thumb-btn.up svg {
   fill: rgb(34, 197, 19);
+}
+.thumb-btn.down svg {
+  fill: red;
+}
+.thumb-btn.na svg {
+  fill: rgb(0, 119, 255);
+}
+.navigationButtons,
+#firstPageButton {
+  border-radius: 25px;
+  width: 100px;
+}
+#firstPageButton {
+  display: none;
+}
+.flexContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+#submitButton {
+  margin: 10% 36% 0 36%;
+  width: 16rem;
+  height: 4rem;
+}
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeout {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+.bottom-dropdown {
+  position: absolute;
+  bottom: 40px;
+  left: 40px;
+}
+.star {
+  font-size: 100px;
+  cursor: pointer;
+  color: gray;
+  transition: color 0.3s ease;
+}
+.star:hover {
+  color: gold;
+}
+.starRatingText {
+}
+@keyframes heartbeat {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.heart {
+  display: inline-block;
+  animation: heartbeat 1.5s ease-in-out infinite;
+}
+@keyframes fadeSlide {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+#page4 {
+  opacity: 0;
+  animation: fadeSlide 0.8s ease-out forwards;
+  margin-top: 14rem;
 }

@@ -193,9 +193,9 @@ function submitSurvey() {
   dataObject.comments = document.getElementById('comments').value || '';
 
   if (navigator.onLine) {
-    sendData(data);
+    sendData(dataObject);
   } else {
-    saveDataOffline(data);
+    saveDataOffline(dataObject);
   }
 
   nextPage('page4');

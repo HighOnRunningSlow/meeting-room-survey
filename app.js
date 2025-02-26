@@ -5,7 +5,7 @@ let dataObject = {
   overall: "",
   joinMeeting: "",
   sharingContent: "",
-  audioVideoQuality: "",
+  audioVideo: "",
   comments: "",
 };
 let idleTimeout = null;
@@ -83,7 +83,7 @@ document.querySelectorAll('.thumb-btn').forEach((button) => {
     } else if (feature == 'sharingContent') {
       dataObject.sharingContent = value;
     } else if (feature == 'audioVideo') {
-      dataObject.audioVideoQuality = value;
+      dataObject.audioVideo = value;
     }
 
     document

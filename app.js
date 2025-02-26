@@ -1,4 +1,13 @@
 let currentRating = 0;
+let dataObject = {
+  submissionId: null,
+  roomId: null,
+  overall: null,
+  joinMeeting: null,
+  sharingContent: null,
+  audioVideo: null,
+  comments: null,
+};
 let idleTimeout = null;
 const IDLE_TIME_MS = 60000;
 
@@ -68,6 +77,15 @@ document.querySelectorAll('.thumb-btn').forEach((button) => {
   button.addEventListener('click', function () {
     let feature = this.dataset.feature;
     let value = this.dataset.value;
+
+    if (feature == 'joinMeeting') {
+      dataObject.joinMeeting = value;
+    } else if (feature == 'sharingContent') {
+      dataObject.sharingContent = value;
+    } else if (feature == 'audioVideo') {
+      dataObject.audioVideo = value;
+    }
+
     document
       .querySelectorAll(`.thumb-btn[data-feature="${feature}"]`)
       .forEach((btn) => {
@@ -166,22 +184,15 @@ function submitSurvey() {
   // Disable the submit button to prevent duplicate submissions
   document.getElementById('submitButton').disabled = true;
 
-  const data = {
-    submissionId: document.getElementById('submissionId').value,
-    roomId: document.getElementById('roomId').value,
-    overall:
-      currentRating != 0
-        ? currentRating
-        : document.querySelector('input[name="overall"]:checked')?.value,
-    joinMeeting:
-      document.querySelector('input[name="joinMeeting"]')?.value || '',
-    sharingContent:
-      document.querySelector('input[name="sharing"]')?.value || '',
-    audioVideo: document.querySelector('input[name="audioVideo"]')?.value || '',
-    comments: document.getElementById('comments').value || '',
-  };
+  dataObject.submissionId = document.getElementById('submissionId').value;
+  dataObject.roomId = document.getElementById('roomId').value;
+  dataObject.overall =
+    currentRating != 0
+      ? currentRating
+      : document.querySelector('input[name="overall"]:checked')?.value;
+  dataObject.comments = document.getElementById('comments').value || '';
 
-  console.log(data);
+  console.log(dataObject);
   if (navigator.onLine) {
     sendData(data);
   } else {
@@ -192,7 +203,7 @@ function submitSurvey() {
   // After 10 seconds, reload the page to reset for the next user
   setTimeout(() => {
     location.reload();
-  }, 50000);
+  }, 5000);
 }
 // Idle timeout: reload page after 1 minute of inactivity on any page
 function resetIdleTimer() {

@@ -1,599 +1,403 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Meeting Room Experience Survey</title>
-  <!-- Responsive meta tag -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Apple full-screen meta tags -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <!-- Google Font: Roboto -->
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-  <style>
-    /* Reset default margins/paddings */
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-    }
-    /* Body styling; removed centering here to let the container handle layout */
-    body {
-      font-family: 'Roboto', sans-serif;
-      background: #f0f2f5;
-      display: flex;
-    }
-    /* Main container: centered with relative positioning for absolute children */
-    .container {
-      position: relative;
-      margin: auto;
-      background: #fff;
-      padding: 40px 50px;
-      box-sizing: border-box;
-      width: 100%;
-      max-width: 1200px;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      align-items: center;
-    }
-    /* Pages within the container */
-    .page {
-      width: 100%;
-      max-width: 900px;
-      margin: 0 auto;
-      display: none;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      margin-top: 4rem;
-    }
-    .page.active {
-      display: block;
-      opacity: 1;
-    }
-    h1 {
-      font-size: 2.5em;
-      margin: 0.5em 0 0.2em 0;
-      color: #333;
-      text-align: center;
-    }
-    p.description {
-      font-size: 1.4em;
-      margin: 0.2em 0 3.5em 0;
-      color: #555;
-      text-align: center;
-    }
-    /* Smiley container styling */
-    .smiley-container {
-      display: flex;
-      gap: 40px;
-      margin-top: 20px;
-      margin-bottom: 80px; /* Extra space to avoid Next button overlap */
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-    .smiley-container label { 
-      cursor: pointer; 
-      text-align: center; 
-    }
-    .smiley-container input[type="radio"] { 
-      display: none; 
-    }
-    .smiley-container img {
-      width: 140px;
-      height: 140px;
-      object-fit: cover;
-      transition: outline 0.2s ease;
-    }
-    .smiley-container input[type="radio"]:checked + img {
-      outline: 5px solid #0078d4;
-      outline-offset: 3px;
-      border-radius: 50%;
-    }
-    /* Bottom button pinned to the bottom-right */
-    .bottom-button {
-      position: absolute;
-      bottom: 40px;
-      right: 40px;
-    }
-    /* Button styling */
-    .button {
-      padding: 15px 30px;
-      font-size: 1.2em;
-      background-color: #0078d4;
-      color: #fff;
-      border: none;
-      border-radius: 25px;
-      cursor: pointer;
-      transition: background-color 0.2s ease;
-      margin-top: 10px;
+  <head>
+    <meta charset="UTF-8" />
+    <title>Meeting Room Experience Survey</title>
+    <!-- Responsive meta tag -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Apple full-screen meta tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <!-- Google Font: Roboto -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/css/all.min.css" />
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <!-- Link to the external CSS file -->
+  </head>
+  <body>
+    <div class="container">
+      <!-- Hidden fields for room and submission ID -->
+      <input type="hidden" id="roomId" name="roomId" />
+      <input type="hidden" id="submissionId" name="submissionId" />
 
-    }
-    .button:hover { 
-      background-color: #005a9e; 
-    }
-    /* Table styling for feature ratings */
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-bottom: 30px;
-    }
-    th, td {
-      text-align: center;
-      padding: 16px;
-      border: 1px solid #ddd;
-      font-size: 1.2em;
-    }
-    th { 
-      background-color: #f7f7f7;
-      font-weight: 500;
-    }
-    td:first-child, th:first-child { 
-      text-align: left; 
-      background-color: #fff; 
-    }
-    textarea {
-      width: 100%;
-      font-size: 1.2em;
-      padding: 10px;
-      box-sizing: border-box;
-    }
-    /* Custom Modal Styles */
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 9999;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0,0,0,0.4);
-    }
-    .modal-content {
-      background-color: #fff;
-      margin: 15% auto;
-      padding: 20px;
-      border-radius: 8px;
-      width: 80%;
-      max-width: 400px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-      text-align: center;
-      position: relative;
-    }
-    .modal-content h2 { 
-      margin-top: 0; 
-    }
-    .close-button {
-      position: absolute;
-      right: 10px;
-      top: 10px;
-      font-size: 1.5em;
-      cursor: pointer;
-    }
-    .question{
-      margin-top: 3.5rem;
-    }
-      #submitButton{
-      margin-top: 4rem;
-     width: 16rem;
-    height: 4rem;
-      }   
-    #page3{
-      text-align: center;
-    }
-    #page4{
-    margin: 14rem 0;
-    }
-    .toast {
-  visibility: hidden;
-  min-width: 250px;
-  background-color: rgba(51, 51, 51, 0.9);
-  color: white;
-  text-align: center;
-  border-radius: 5px;
-  padding: 12px;
-  position: fixed;
-  bottom: 30px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1000;
-  font-size: 16px;
-  opacity: 0;
-  transition: opacity 0.5s ease-in-out;
-}
+      <!-- Page 1: Wireless Room Survey (Smiley Faces) -->
+      <div id="page1" class="page active">
+        <div class="content">
+          <h1>Wireless Room Survey on the test branch</h1>
+          <p class="description">Only a few seconds to complete!</p>
+          <p class="description" style="font-weight: bold; margin-bottom: 2em">
+            How was your overall meeting room experience?
+          </p>
+          <!-- Smiley Rating (Default) -->
+          <div id="smileyRating" class="smiley-container" style="display: none">
+            <label>
+              <input
+                type="radio"
+                name="overall"
+                value="1"
+                aria-label="Very Poor"
+              />
+              <img src="./images/smiley1.png" alt="Very Poor" />
+            </label>
+            <label>
+              <input type="radio" name="overall" value="2" aria-label="Poor" />
+              <img src="./images/smiley2.png" alt="Poor" />
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="overall"
+                value="3"
+                aria-label="Neutral"
+              />
+              <img src="./images/smiley3.png" alt="Neutral" />
+            </label>
+            <label>
+              <input type="radio" name="overall" value="4" aria-label="Good" />
+              <img src="./images/smiley4.png" alt="Good" />
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="overall"
+                value="5"
+                aria-label="Excellent"
+              />
+              <img src="./images/smiley5.png" alt="Excellent" />
+            </label>
+          </div>
 
-.toast.show {
-  visibility: visible;
-  opacity: 1;
-  animation: fadein 0.5s, fadeout 0.5s 2.5s;
-}
+          <!-- Star Rating (Hidden Initially) -->
+          <div
+            id="starRating"
+            style="display: flex; flex-direction: column; text-align: center"
+          >
+            <div class="smiley-container">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                data-value="1"
+                width="100"
+                height="100"
+                viewBox="0 0 576 512"
+                class="star"
+              >
+                <path
+                  d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"
+                />
+              </svg>
 
-@keyframes fadein {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes fadeout {
-  from { opacity: 1; }
-  to { opacity: 0; }
-}
-    .bottom-dropdown {
-      position: absolute;
-      bottom: 40px;
-      left: 40px;
-    }
-    .star{
-      font-size: 100px;
-      cursor: pointer;
-      color: gray;
-      transition: color 0.3s ease;
-    }
-    .star:hover {
-     color: gold;
-    }
-    .starRatingText{
-    }
-   @keyframes heartbeat {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.2); }
-  100% { transform: scale(1); }
-}
-
-.heart {
-  display: inline-block;
-  animation: heartbeat 1.5s ease-in-out infinite;
-}
-@keyframes fadeSlide {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-#page4 {
-  opacity: 0;
-  animation: fadeSlide 0.8s ease-out forwards;
-}
-    /* Media query for smaller screens */
-    @media (max-width: 600px) {
-      h1 { 
-        font-size: 2em; 
-      }
-      p.description { 
-        font-size: 1.2em; 
-      }
-      .button { 
-        font-size: 1em; 
-        padding: 12px 24px; 
-      }
-      .smiley-container img { 
-        width: 100px; 
-        height: 100px; 
-      }
-      th, td { 
-        font-size: 1em; 
-        padding: 12px; 
-      }
-      textarea { 
-        font-size: 1em; 
-      }
-      .bottom-button {
-        bottom: 20px;
-        right: 20px;
-      }
-
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <!-- Hidden fields for room and submission ID -->
-    <input type="hidden" id="roomId" name="roomId">
-    <input type="hidden" id="submissionId" name="submissionId">
-
-    <!-- Page 1: Wireless Room Survey (Smiley Faces) -->
-    <div id="page1" class="page active">
-      <div class="content">
-        <h1>Wireless Room Survey</h1>
-        <p class="description">Only a few seconds to complete!</p>
-        <p class="description" style="font-weight: bold; margin-bottom: 2em;">
-          How was your overall meeting room experience?
-        </p>
-<!-- Smiley Rating (Default) -->
-<div id="smileyRating" class="smiley-container" style="display: none;">
-  <label>
-    <input type="radio" name="overall" value="1" aria-label="Very Poor">
-    <img src="./images/smiley1.png" alt="Very Poor">
-  </label>
-  <label>
-    <input type="radio" name="overall" value="2" aria-label="Poor">
-    <img src="./images/smiley2.png" alt="Poor">
-  </label>
-  <label>
-   <input type="radio" name="overall" value="3" aria-label="Neutral">
-    <img src="./images/smiley3.png" alt="Neutral">
-  </label>
-  <label>
-    <input type="radio" name="overall" value="4" aria-label="Good">
-    <img src="./images/smiley4.png" alt="Good">
-  </label>
-  <label>
-    <input type="radio" name="overall" value="5" aria-label="Excellent">
-    <img src="./images/smiley5.png" alt="Excellent">
-  </label>
-</div>
-
-<!-- Star Rating (Hidden Initially) -->
-<div id="starRating" style="display: flex; flex-direction: column; text-align: center">
-  <div class="smiley-container">
-  <i class="fa fa-star star" value="1"></i>
-  <i class="fa fa-star star" value="2"></i>
-  <i class="fa fa-star star" value="3"></i>
-  <i class="fa fa-star star" value="4"></i>
-  <i class="fa fa-star star" value="5"></i>
-  </div>
-</div>
-        <div class="bottom-dropdown ">
-  <label for="ratingType">Choose Rating Type:</label>
-  <select id="ratingType" onchange="toggleRating()">
-      <option value="stars">⭐ Stars</option>
-     <option value="smiley">😊 selected>Smileys</option>
-  </select>
-</div>
-</div>
-</div>
-
-    <!-- Page 2: Feature Ratings (Optional) -->
-    <!--<div id="page2" class="page">
-      <h1>Rate the Features (Optional)</h1>
-      <p class="description">
-        Please rate the following aspects of your meeting room experience.       
-      </p>
-      <form id="featuresForm">
-         <span><strong>Note:</strong> 1 = Poor, and 5 = Excellent.</span>
-        <br>
-        <table>
-          <tr>
-            <th style="min-width:150px;">Feature</th>
-            <th>1</th>
-            <th>2</th>
-            <th>3</th>
-            <th>4</th>
-            <th>5</th>
-          </tr>
-          <tr>
-            <td>Video</td>
-            <td><input type="radio" name="video" value="1"></td>
-            <td><input type="radio" name="video" value="2"></td>
-            <td><input type="radio" name="video" value="3"></td>
-            <td><input type="radio" name="video" value="4"></td>
-            <td><input type="radio" name="video" value="5"></td>
-          </tr>
-          <tr>
-            <td>Audio</td>
-            <td><input type="radio" name="audio" value="1"></td>
-            <td><input type="radio" name="audio" value="2"></td>
-            <td><input type="radio" name="audio" value="3"></td>
-            <td><input type="radio" name="audio" value="4"></td>
-            <td><input type="radio" name="audio" value="5"></td>
-          </tr>
-          <tr>
-            <td>Wireless</td>
-            <td><input type="radio" name="wireless" value="1"></td>
-            <td><input type="radio" name="wireless" value="2"></td>
-            <td><input type="radio" name="wireless" value="3"></td>
-            <td><input type="radio" name="wireless" value="4"></td>
-            <td><input type="radio" name="wireless" value="5"></td>
-          </tr>
-          <tr>
-            <td>Whiteboard</td>
-            <td><input type="radio" name="whiteboard" value="1"></td>
-            <td><input type="radio" name="whiteboard" value="2"></td>
-            <td><input type="radio" name="whiteboard" value="3"></td>
-            <td><input type="radio" name="whiteboard" value="4"></td>
-            <td><input type="radio" name="whiteboard" value="5"></td>
-          </tr>
-          <tr>
-            <td>Room Booking</td>
-            <td><input type="radio" name="booking" value="1"></td>
-            <td><input type="radio" name="booking" value="2"></td>
-            <td><input type="radio" name="booking" value="3"></td>
-            <td><input type="radio" name="booking" value="4"></td>
-            <td><input type="radio" name="booking" value="5"></td>
-          </tr>
-        </table>
-      </form>
-    </div>-->
-
-    <!-- Page 3: Additional Feedback (Optional) -->
-    <div id="page3" class="page">
-      <h1>Additional Feedback (Optional)</h1>
-      <div class="question">
-        <textarea id="comments" name="comments" rows="10" placeholder="Your comments..."></textarea>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                data-value="2"
+                width="100"
+                height="100"
+                viewBox="0 0 576 512"
+                class="star"
+              >
+                <path
+                  d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"
+                />
+              </svg>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                data-value="3"
+                width="100"
+                height="100"
+                viewBox="0 0 576 512"
+                class="star"
+              >
+                <path
+                  d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"
+                />
+              </svg>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                data-value="4"
+                width="100"
+                height="100"
+                viewBox="0 0 576 512"
+                class="star"
+              >
+                <path
+                  d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"
+                />
+              </svg>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                data-value="5"
+                width="100"
+                height="100"
+                viewBox="0 0 576 512"
+                class="star"
+              >
+                <path
+                  d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"
+                />
+              </svg>
+            </div>
+          </div>
+          <div class="flexContainer">
+            <div>
+              <label for="ratingType">Choose Rating Type:</label>
+              <select id="ratingType" onchange="toggleRating()">
+                <option value="stars">⭐ Stars</option>
+                <option value="smiley">😊 Smileys</option>
+              </select>
+            </div>
+            <button
+              id="firstPageButton"
+              type="button"
+              class="btn btn-primary"
+              onclick="nextPage('page2')"
+            >
+              Next
+            </button>
+          </div>
+        </div>
       </div>
-      <button id="submitButton" class="button" onclick="submitSurvey()">Submit</button>
+      <!-- Page 2: Feature Ratings (Optional) -->
+      <div id="page2" class="page">
+        <h1>Rate the Features</h1>
+        <p class="description">
+          Please rate the following aspects of your meeting room experience.<br />
+          (Optional)
+        </p>
+        <div class="flexContainer">
+          <span>Join meeting</span>
+          <div class="flexContainerButtons">
+            <button
+              type="button"
+              class="thumb-btn"
+              name="joinMeeting"
+              data-feature="joinMeeting"
+              data-value="up"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 512 512"
+                width="32"
+                height="32"
+              >
+                <path
+                  d="M313.4 32.9c26 5.2 42.9 30.5 37.7 56.5l-2.3 11.4c-5.3 26.7-15.1 52.1-28.8 75.2l144 0c26.5 0 48 21.5 48 48c0 18.5-10.5 34.6-25.9 42.6C497 275.4 504 288.9 504 304c0 23.4-16.8 42.9-38.9 47.1c4.4 7.3 6.9 15.8 6.9 24.9c0 21.3-13.9 39.4-33.1 45.6c.7 3.3 1.1 6.8 1.1 10.4c0 26.5-21.5 48-48 48l-97.5 0c-19 0-37.5-5.6-53.3-16.1l-38.5-25.7C176 420.4 160 390.4 160 358.3l0-38.3 0-48 0-24.9c0-29.2 13.3-56.7 36-75l7.4-5.9c26.5-21.2 44.6-51 51.2-84.2l2.3-11.4c5.2-26 30.5-42.9 56.5-37.7zM32 192l64 0c17.7 0 32 14.3 32 32l0 224c0 17.7-14.3 32-32 32l-64 0c-17.7 0-32-14.3-32-32L0 224c0-17.7 14.3-32 32-32z"
+                />
+              </svg>
+            </button>
+
+            <button
+              type="button"
+              class="thumb-btn"
+              name="joinMeeting"
+              data-feature="joinMeeting"
+              data-value="down"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 512 512"
+                width="32"
+                height="32"
+              >
+                <path
+                  d="M199.6 479.1c-26-5.2-42.9-30.5-37.7-56.5l2.3-11.4c5.3-26.7 15.1-52.1 28.8-75.2l-144 0c-26.5 0-48-21.5-48-48c0-18.5 10.5-34.6 25.9-42.6C15 236.6 8 223.1 8 208c0-23.4 16.8-42.9 38.9-47.1c-4.4-7.3-6.9-15.8-6.9-24.9c0-21.3 13.9-39.4 33.1-45.6c-.7-3.3-1.1-6.8-1.1-10.4c0-26.5 21.5-48 48-48l97.5 0c19 0 37.5 5.6 53.3 16.1l38.5 25.7C336 91.6 352 121.6 352 153.7l0 38.3 0 48 0 24.9c0 29.2-13.3 56.7-36 75l-7.4 5.9c-26.5 21.2-44.6 51-51.2 84.2l-2.3 11.4c-5.2 26-30.5 42.9-56.5 37.7zM480 320l-64 0c-17.7 0-32-14.3-32-32l0-224c0-17.7 14.3-32 32-32l64 0c17.7 0 32 14.3 32 32L512 288c0 17.7-14.3 32-32 32z"
+                />
+              </svg>
+            </button>
+
+            <button
+              type="button"
+              class="thumb-btn"
+              name="joinMeeting"
+              data-feature="joinMeeting"
+              data-value="N/A"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 512 512"
+                width="32"
+                height="32"
+              >
+                <path
+                  d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+        <hr />
+        <div class="flexContainer">
+          <span>Sharing content</span>
+          <div class="flexContainerButtons">
+            <button
+              type="button"
+              class="thumb-btn"
+              name="sharingContent"
+              data-feature="sharingContent"
+              data-value="up"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 512 512"
+                width="32"
+                height="32"
+              >
+                <path
+                  d="M313.4 32.9c26 5.2 42.9 30.5 37.7 56.5l-2.3 11.4c-5.3 26.7-15.1 52.1-28.8 75.2l144 0c26.5 0 48 21.5 48 48c0 18.5-10.5 34.6-25.9 42.6C497 275.4 504 288.9 504 304c0 23.4-16.8 42.9-38.9 47.1c4.4 7.3 6.9 15.8 6.9 24.9c0 21.3-13.9 39.4-33.1 45.6c.7 3.3 1.1 6.8 1.1 10.4c0 26.5-21.5 48-48 48l-97.5 0c-19 0-37.5-5.6-53.3-16.1l-38.5-25.7C176 420.4 160 390.4 160 358.3l0-38.3 0-48 0-24.9c0-29.2 13.3-56.7 36-75l7.4-5.9c26.5-21.2 44.6-51 51.2-84.2l2.3-11.4c5.2-26 30.5-42.9 56.5-37.7zM32 192l64 0c17.7 0 32 14.3 32 32l0 224c0 17.7-14.3 32-32 32l-64 0c-17.7 0-32-14.3-32-32L0 224c0-17.7 14.3-32 32-32z"
+                />
+              </svg>
+            </button>
+            <button
+              type="button"
+              class="thumb-btn"
+              name="sharingContent"
+              data-feature="sharingContent"
+              data-value="down"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 512 512"
+                width="32"
+                height="32"
+              >
+                <path
+                  d="M199.6 479.1c-26-5.2-42.9-30.5-37.7-56.5l2.3-11.4c5.3-26.7 15.1-52.1 28.8-75.2l-144 0c-26.5 0-48-21.5-48-48c0-18.5 10.5-34.6 25.9-42.6C15 236.6 8 223.1 8 208c0-23.4 16.8-42.9 38.9-47.1c-4.4-7.3-6.9-15.8-6.9-24.9c0-21.3 13.9-39.4 33.1-45.6c-.7-3.3-1.1-6.8-1.1-10.4c0-26.5 21.5-48 48-48l97.5 0c19 0 37.5 5.6 53.3 16.1l38.5 25.7C336 91.6 352 121.6 352 153.7l0 38.3 0 48 0 24.9c0 29.2-13.3 56.7-36 75l-7.4 5.9c-26.5 21.2-44.6 51-51.2 84.2l-2.3 11.4c-5.2 26-30.5 42.9-56.5 37.7zM480 320l-64 0c-17.7 0-32-14.3-32-32l0-224c0-17.7 14.3-32 32-32l64 0c17.7 0 32 14.3 32 32L512 288c0 17.7-14.3 32-32 32z"
+                />
+              </svg>
+            </button>
+
+            <button
+              type="button"
+              class="thumb-btn"
+              name="sharingContent"
+              data-feature="sharingContent"
+              data-value="N/A"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 512 512"
+                width="32"
+                height="32"
+              >
+                <path
+                  d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+        <hr />
+        <div class="flexContainer">
+          <span>Audio & Video quality</span>
+          <div class="flexContainerButtons">
+            <button
+              type="button"
+              class="thumb-btn"
+              name="audioVideo"
+              data-feature="audioVideo"
+              data-value="up"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 512 512"
+                width="32"
+                height="32"
+              >
+                <path
+                  d="M313.4 32.9c26 5.2 42.9 30.5 37.7 56.5l-2.3 11.4c-5.3 26.7-15.1 52.1-28.8 75.2l144 0c26.5 0 48 21.5 48 48c0 18.5-10.5 34.6-25.9 42.6C497 275.4 504 288.9 504 304c0 23.4-16.8 42.9-38.9 47.1c4.4 7.3 6.9 15.8 6.9 24.9c0 21.3-13.9 39.4-33.1 45.6c.7 3.3 1.1 6.8 1.1 10.4c0 26.5-21.5 48-48 48l-97.5 0c-19 0-37.5-5.6-53.3-16.1l-38.5-25.7C176 420.4 160 390.4 160 358.3l0-38.3 0-48 0-24.9c0-29.2 13.3-56.7 36-75l7.4-5.9c26.5-21.2 44.6-51 51.2-84.2l2.3-11.4c5.2-26 30.5-42.9 56.5-37.7zM32 192l64 0c17.7 0 32 14.3 32 32l0 224c0 17.7-14.3 32-32 32l-64 0c-17.7 0-32-14.3-32-32L0 224c0-17.7 14.3-32 32-32z"
+                />
+              </svg>
+            </button>
+
+            <button
+              type="button"
+              class="thumb-btn"
+              name="audioVideo"
+              data-feature="audioVideo"
+              data-value="down"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 512 512"
+                width="32"
+                height="32"
+              >
+                <path
+                  d="M199.6 479.1c-26-5.2-42.9-30.5-37.7-56.5l2.3-11.4c5.3-26.7 15.1-52.1 28.8-75.2l-144 0c-26.5 0-48-21.5-48-48c0-18.5 10.5-34.6 25.9-42.6C15 236.6 8 223.1 8 208c0-23.4 16.8-42.9 38.9-47.1c-4.4-7.3-6.9-15.8-6.9-24.9c0-21.3 13.9-39.4 33.1-45.6c-.7-3.3-1.1-6.8-1.1-10.4c0-26.5 21.5-48 48-48l97.5 0c19 0 37.5 5.6 53.3 16.1l38.5 25.7C336 91.6 352 121.6 352 153.7l0 38.3 0 48 0 24.9c0 29.2-13.3 56.7-36 75l-7.4 5.9c-26.5 21.2-44.6 51-51.2 84.2l-2.3 11.4c-5.2 26-30.5 42.9-56.5 37.7zM480 320l-64 0c-17.7 0-32-14.3-32-32l0-224c0-17.7 14.3-32 32-32l64 0c17.7 0 32 14.3 32 32L512 288c0 17.7-14.3 32-32 32z"
+                />
+              </svg>
+            </button>
+
+            <button
+              type="button"
+              class="thumb-btn"
+              name="audioVideo"
+              data-feature="audioVideo"
+              data-value="N/A"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 512 512"
+                width="32"
+                height="32"
+              >
+                <path
+                  d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+        <hr />
+        <div class="flexContainer">
+          <button
+            type="button"
+            class="btn btn-primary navigationButtons"
+            onclick="nextPage('page1')"
+          >
+            Back
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary navigationButtons"
+            onclick="nextPage('page3')"
+          >
+            Next
+          </button>
+        </div>
+      </div>
+      <!-- Page 3: Additional Feedback (Optional) -->
+      <div id="page3" class="page">
+        <h1>Additional Feedback (Optional)</h1>
+        <div class="question">
+          <textarea
+            id="comments"
+            name="comments"
+            rows="10"
+            placeholder="Your comments..."
+          ></textarea>
+        </div>
+        <button id="submitButton" class="button" onclick="submitSurvey()">
+          Submit
+        </button>
+      </div>
+
+      <!-- Page 4: Thank You Page -->
+      <div id="page4" class="page">
+        <h1>Thank You! <span class="heart">❤️</span></h1>
+        <p class="description">
+          We truly appreciate your feedback! Your input helps us improve our
+          meeting rooms for everyone.
+        </p>
+      </div>
     </div>
 
-    <!-- Page 4: Thank You Page -->
-     <div id="page4" class="page">
-  <h1>Thank You! <span class="heart">❤️</span></h1>
-  <p class="description">We truly appreciate your feedback! Your input helps us improve our meeting rooms for everyone.</p>
-</div>
-  </div>
-  <script>
-    let currentRating = 0;
-
-    const starContainer = document.querySelector('#starRating');
-    const smileyContainer = document.querySelector('#smileyRating');
-
-    if (starContainer) {
-      starContainer.addEventListener('click', function (event) {
-        if (event.target.classList.contains('star')) {
-          const selectedValue = event.target.getAttribute('value');
-          nextPage('page3');
-        }
-      });
-    }
-    if(smileyContainer){
-     smileyContainer.addEventListener('click', (event) =>{
-       if(event.target.value){
-        const selectedValue = event.target.value;
-         if(selectedValue != undefined){
-           nextPage('page3');
-         } 
-
-       }
-     })
-   }
-
-    // Generate a unique submission ID on load
-    function generateSubmissionId() {
-      return 'sub-' + Date.now() + '-' + Math.floor(Math.random() * 100000);
-    }
-    function toggleRating() {
-  const ratingType = document.getElementById("ratingType").value;
-  document.getElementById("smileyRating").style.display = ratingType === "smiley" ? "flex" : "none";
-  document.getElementById("starRating").style.display = ratingType === "stars" ? "flex" : "none";
-}
-
-// Star Rating Logic
-function setRating(value) {
-  currentRating = value;
-  updateStars();
-}
-    // Star Hover Effect
-document.querySelectorAll(".star").forEach((star, index) => {
-  star.addEventListener("mouseover", () => {
-    document.querySelectorAll(".star").forEach((s, i) => {
-      s.style.color = i <= index ? "gold" : "gray";
-    });
-  });
-
-  star.addEventListener("mouseout", () => {
-    updateStars(); // Reset to selected state
-  });
-
-  star.addEventListener("click", () => {
-    setRating(index + 1);
-  });
-});
-    function updateStars() {
-  document.querySelectorAll(".star").forEach((star) => {
-    let value = parseInt(star.getAttribute("value"));
-    star.style.color = value <= currentRating ? "gold" : "gray";
-  });
-}
-
-    // Navigate between pages
-    function nextPage(pageId) {
-      const pages = document.querySelectorAll('.page');
-      pages.forEach(page => page.classList.remove('active'));
-      document.getElementById(pageId).classList.add('active');      
-    }
-    // Save data offline in localStorage if offline
-    function saveDataOffline(data) {
-      let offlineSubmissions = JSON.parse(localStorage.getItem('offlineSubmissions')) || [];
-      offlineSubmissions.push(data);
-      localStorage.setItem('offlineSubmissions', JSON.stringify(offlineSubmissions));
-    }    
-    // Send data to the Apps Script web app
-    function sendData(data) {
-      fetch("https://script.google.com/macros/s/AKfycbw0xBHZNvp4CeQ7YpCqmICnd9idAPJK4PoDHKu5x0QirMBl6UD4RZ3N9RCj0dN8IdKd/exec", {
-        method: "POST",
-        mode: "no-cors",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
-      })
-      .then(() => {
-        console.log("Data sent for submissionId:", data.submissionId);
-        removeOfflineSubmission(data.submissionId);
-      })
-      .catch(err => {
-        console.error("Submission error:", err);
-      });
-    }
-
-    // Remove a specific offline submission by its unique ID
-    function removeOfflineSubmission(submissionId) {
-      let offlineSubmissions = JSON.parse(localStorage.getItem('offlineSubmissions')) || [];
-      offlineSubmissions = offlineSubmissions.filter(item => item.submissionId !== submissionId);
-      localStorage.setItem('offlineSubmissions', JSON.stringify(offlineSubmissions));
-    }
-
-    // When device goes online, resend any offline submissions
-    window.addEventListener('online', () => {
-      let offlineSubmissions = JSON.parse(localStorage.getItem('offlineSubmissions')) || [];
-      offlineSubmissions.forEach(sub => {
-        sendData(sub);
-      });
-    });
-
-    // Submit the survey
-    function submitSurvey() {
-      // Disable the submit button to prevent duplicate submissions
-      document.getElementById('submitButton').disabled = true;
-
-      const data = {
-        submissionId: document.getElementById('submissionId').value,
-        roomId: document.getElementById('roomId').value,
-        overall: currentRating != 0 ? currentRating : document.querySelector('input[name="overall"]:checked')?.value,
-        video: document.querySelector('input[name="video"]:checked')?.value || "",
-        audio: document.querySelector('input[name="audio"]:checked')?.value || "",
-        wireless: document.querySelector('input[name="wireless"]:checked')?.value || "",
-        whiteboard: document.querySelector('input[name="whiteboard"]:checked')?.value || "",
-        booking: document.querySelector('input[name="booking"]:checked')?.value || "",
-        comments: document.getElementById('comments').value || ""
-      };
-
-      if (navigator.onLine) {
-        sendData(data);
-      } else {
-        saveDataOffline(data);
-      }
-
-      nextPage('page4');
-      // After 10 seconds, reload the page to reset for the next user
-      setTimeout(() => { location.reload(); }, 5000);
-    }
-
-    // Idle timeout: reload page after 1 minute of inactivity on any page
-    let idleTimeout = null;
-    const IDLE_TIME_MS = 60000;
-    function resetIdleTimer() {
-      clearTimeout(idleTimeout);
-      idleTimeout = setTimeout(() => { location.reload(); }, IDLE_TIME_MS);
-    }
-    ['click','touchstart','keypress','mousemove'].forEach(evt => {
-      document.addEventListener(evt, resetIdleTimer, { passive: true });
-    });
-    resetIdleTimer();
-
-    // Parse the "room" query parameter and generate a unique submission ID on load
-    function getQueryParam(param) {
-      const params = new URLSearchParams(window.location.search);
-      return params.get(param);
-    }
-    document.addEventListener('DOMContentLoaded', () => {
-      const room = getQueryParam('room') || 'Unknown Room';
-      document.getElementById('roomId').value = room;
-      const submissionId = generateSubmissionId();
-      document.getElementById('submissionId').value = submissionId;
-    });
-
-    // Register Service Worker for offline caching
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js')
-          .then(reg => console.log('ServiceWorker registration successful with scope:', reg.scope))
-          .catch(err => console.log('ServiceWorker registration failed:', err));
-      });
-    }
-  </script>
-</body>
+    <!-- Link to the external JavaScript file -->
+    <script src="app.js"></script>
+  </body>
 </html>

@@ -1,12 +1,12 @@
 let currentRating = 0;
 let dataObject = {
-  submissionId: null,
-  roomId: null,
-  overall: null,
-  joinMeeting: null,
-  sharingContent: null,
-  audioVideoQuality: null,
-  comments: null,
+  submissionId: "",
+  roomId: "",
+  overall: "",
+  joinMeeting: "",
+  sharingContent: "",
+  audioVideoQuality: "",
+  comments: "",
 };
 let idleTimeout = null;
 const IDLE_TIME_MS = 60000;

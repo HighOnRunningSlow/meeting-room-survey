@@ -192,7 +192,6 @@ function submitSurvey() {
       : document.querySelector('input[name="overall"]:checked')?.value;
   dataObject.comments = document.getElementById('comments').value || '';
 
-  console.log(dataObject);
   if (navigator.onLine) {
     sendData(data);
   } else {

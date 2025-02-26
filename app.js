@@ -150,7 +150,8 @@ function saveDataOffline(data) {
 // Send data to the Apps Script web app
 function sendData(data) {
   fetch(
-    'https://script.google.com/macros/s/AKfycbw0xBHZNvp4CeQ7YpCqmICnd9idAPJK4PoDHKu5x0QirMBl6UD4RZ3N9RCj0dN8IdKd/exec',
+    //'https://script.google.com/macros/s/AKfycbw0xBHZNvp4CeQ7YpCqmICnd9idAPJK4PoDHKu5x0QirMBl6UD4RZ3N9RCj0dN8IdKd/exec',
+'https://script.google.com/macros/s/AKfycbwzYYZzn8wuvFD9abA2biVqIQ-81aV2EAxlZL5ZZYPdAjBf-CfmQWGntQ8EiYhDgA_X/exec',
     {
       method: 'POST',
       mode: 'no-cors',

@@ -11,14 +11,6 @@ let dataObject = {
 };
 let idleTimeout = null;
 const IDLE_TIME_MS = 60000;
-const ratingType = document.getElementById('ratingType');
-const smileyRating = document.getElementById('smileyRating');
-const starRating = document.getElementById('starRating');
-const ratingLabel = document.getElementById('ratingLabel');
-
-const starContainer = document.querySelector('#starRating');
-const smileyContainer = document.querySelector('#smileyRating');
-
 function checkOnlineStatus() {
   if (navigator.onLine) {
     isOnline = true;
@@ -28,6 +20,14 @@ function checkOnlineStatus() {
     updateRatingDisplay();
   }
 }
+const ratingType = document.getElementById('ratingType');
+const smileyRating = document.getElementById('smileyRating');
+const starRating = document.getElementById('starRating');
+const ratingLabel = document.getElementById('ratingLabel');
+
+const starContainer = document.querySelector('#starRating');
+const smileyContainer = document.querySelector('#smileyRating');
+
 if (starContainer) {
   starContainer.addEventListener('click', function (event) {
     const star = event.target.closest('.star');
@@ -201,7 +201,6 @@ function submitSurvey() {
       ? currentRating
       : document.querySelector('input[name="overall"]:checked')?.value;
   dataObject.comments = document.getElementById('comments').value || '';
-  console.log(dataObject);
 
   if (navigator.onLine) {
     sendData(dataObject);
@@ -210,7 +209,7 @@ function submitSurvey() {
   }
 
   nextPage('page4');
-  // After 10 seconds, reload the page to reset for the next user
+  // After 5 seconds, reload the page to reset for the next user
   setTimeout(() => {
     location.reload();
   }, 5000);

@@ -16,7 +16,7 @@ const smileyContainer = document.querySelector('#smileyRating');
 
 if (starContainer) {
   starContainer.addEventListener('click', function (event) {
-    const star = event.target.closest('.star');
+    const star = event.target.value;
 
     if (star) {
       document.getElementById('firstPageButton').style.display = 'block';
@@ -62,7 +62,8 @@ if ('serviceWorker' in navigator) {
 document.querySelectorAll('.star').forEach((star, index) => {
   star.addEventListener('mouseover', () => {
     document.querySelectorAll('.star').forEach((s, i) => {
-      s.style.fill = i <= index ? 'gold' : 'gray';
+      s.src =
+        i <= index ? './images/star-gold-solid.svg' : '/images/star-solid.svg';
     });
   });
 
@@ -72,6 +73,11 @@ document.querySelectorAll('.star').forEach((star, index) => {
 
   star.addEventListener('click', () => {
     setRating(index + 1);
+
+    star.src =
+      index <= index + 1
+        ? './images/star-gold-solid.svg'
+        : '/images/star-solid.svg';
   });
 });
 document.querySelectorAll('.thumb-btn').forEach((button) => {
@@ -129,7 +135,10 @@ function setRating(value) {
 function updateStars() {
   document.querySelectorAll('.star').forEach((star) => {
     let value = parseInt(star.dataset.value);
-    star.style.fill = value <= currentRating ? 'gold' : 'gray';
+    star.src =
+      value <= currentRating
+        ? './images/star-gold-solid.svg'
+        : '/images/star-solid.svg';
   });
 }
 // Navigate between pages

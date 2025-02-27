@@ -208,7 +208,7 @@ function submitSurvey() {
   nextPage('page4');
   // After 5 seconds, reload the page to reset for the next user
   setTimeout(() => {
-    location.reload();
+    window.location.reload();
   }, 5000);
 }
 // Idle timeout: reload page after 1 minute of inactivity on any page

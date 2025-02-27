@@ -109,7 +109,10 @@ window.addEventListener('online', () => {
     sendData(sub);
   });
 });
-
+window.addEventListener("offline", () => {
+  document.getElementById('smileyRating').style.display = 'flex';
+  document.getElementById('starRating').style.display = 'none';
+});
 // Generate a unique submission ID on load
 function generateSubmissionId() {
   return 'sub-' + Date.now() + '-' + Math.floor(Math.random() * 100000);

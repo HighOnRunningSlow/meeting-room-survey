@@ -22,10 +22,10 @@ const smileyContainer = document.querySelector('#smileyRating');
 function checkOnlineStatus() {
   if (navigator.onLine) {
     isOnline = true;
-    adaptStyles();
+    updateRatingDisplay();
   } else {
     isOnline = false;
-    adaptStyles();
+    updateRatingDisplay();
   }
 }
 if (starContainer) {
@@ -122,11 +122,11 @@ window.addEventListener('online', () => {
     sendData(sub);
   });
   // adaptStyles();
-  updateRatingDisplay();
+  checkOnlineStatus;
 });
 window.addEventListener('offline', () => {
   // adaptStyles();
-  updateRatingDisplay();
+  checkOnlineStatus;
 });
 // function adaptStyles() {
 //   document.getElementById('smileyRating').style.display =

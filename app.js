@@ -1,12 +1,12 @@
 let currentRating = 0;
 let dataObject = {
-  submissionId: '',
-  roomId: '',
-  overall: '',
-  joinMeeting: '',
-  sharingContent: '',
-  audioVideo: '',
-  comments: '',
+  submissionId: "",
+  roomId: "",
+  overall: "",
+  joinMeeting: "",
+  sharingContent: "",
+  audioVideo: "",
+  comments: "",
 };
 let idleTimeout = null;
 const IDLE_TIME_MS = 60000;
@@ -16,8 +16,7 @@ const smileyContainer = document.querySelector('#smileyRating');
 
 if (starContainer) {
   starContainer.addEventListener('click', function (event) {
-    const star = event.target.value;
-
+    const star = event.target.closest('.star');
     if (star) {
       document.getElementById('firstPageButton').style.display = 'block';
       nextPage('page2');
@@ -62,8 +61,7 @@ if ('serviceWorker' in navigator) {
 document.querySelectorAll('.star').forEach((star, index) => {
   star.addEventListener('mouseover', () => {
     document.querySelectorAll('.star').forEach((s, i) => {
-      s.src =
-        i <= index ? './images/star-gold-solid.svg' : '/images/star-solid.svg';
+      s.style.fill = i <= index ? 'gold' : 'gray';
     });
   });
 
@@ -73,11 +71,6 @@ document.querySelectorAll('.star').forEach((star, index) => {
 
   star.addEventListener('click', () => {
     setRating(index + 1);
-
-    star.src =
-      index <= index + 1
-        ? './images/star-gold-solid.svg'
-        : '/images/star-solid.svg';
   });
 });
 document.querySelectorAll('.thumb-btn').forEach((button) => {
@@ -139,10 +132,7 @@ function setRating(value) {
 function updateStars() {
   document.querySelectorAll('.star').forEach((star) => {
     let value = parseInt(star.dataset.value);
-    star.src =
-      value <= currentRating
-        ? './images/star-gold-solid.svg'
-        : '/images/star-solid.svg';
+    star.style.fill = value <= currentRating ? 'gold' : 'gray';
   });
 }
 // Navigate between pages
@@ -205,6 +195,8 @@ function submitSurvey() {
       ? currentRating
       : document.querySelector('input[name="overall"]:checked')?.value;
   dataObject.comments = document.getElementById('comments').value || '';
+console.log(dataObject);
+
   if (navigator.onLine) {
     sendData(dataObject);
   } else {

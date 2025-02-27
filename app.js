@@ -156,18 +156,18 @@ function saveDataOffline(data) {
 }
 // Send data to the Apps Script web app
 function sendData(data) {
-  fetch(
-    'https://script.google.com/macros/s/AKfycbz9KdrRhG6OxxRizJZn_yq01VTN48wYFOXsWYAo0ePmN4aYaYPxS_Zm0X1s4fmcjQYR/exec',
-    {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
-    }
-  )
+  const timestamp = new Date().getTime();
+  const urlWithTimestamp = `https://script.google.com/macros/s/AKfycbz9KdrRhG6OxxRizJZn_yq01VTN48wYFOXsWYAo0ePmN4aYaYPxS_Zm0X1s4fmcjQYR/exec?timestamp=${timestamp}`;
+
+  fetch(urlWithTimestamp, {
+    method: 'POST',
+    mode: 'no-cors', // Make sure to use no-cors mode if you don't expect a response body
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+  })
     .then(() => {
       console.log('Data sent for submissionId:', data.submissionId);
-      removeOfflineSubmission(data.submissionId);
+      removeOfflineSubmission(data.submissionId); // Assuming this function removes offline submissions
     })
     .catch((err) => {
       console.error('Submission error:', err);

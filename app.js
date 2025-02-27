@@ -122,11 +122,11 @@ window.addEventListener('online', () => {
     sendData(sub);
   });
   // adaptStyles();
-  checkOnlineStatus;
+  checkOnlineStatus();
 });
 window.addEventListener('offline', () => {
   // adaptStyles();
-  checkOnlineStatus;
+  checkOnlineStatus();
 });
 // function adaptStyles() {
 //   document.getElementById('smileyRating').style.display =
@@ -251,8 +251,7 @@ function getQueryParam(param) {
   return params.get(param);
 }
 function updateRatingDisplay() {
-  const selectedRating = ratingType.value; // Get selected type ('star' or 'smiley')
-
+  const selectedRating = ratingType.value;
   if (!isOnline) {
     // Offline: Always show smileys, hide stars
     smileyRating.style.display = 'flex';
@@ -263,7 +262,7 @@ function updateRatingDisplay() {
     // Online: Show based on toggle selection
     smileyRating.style.display = selectedRating === 'smiley' ? 'flex' : 'none';
     starRating.style.display = selectedRating === 'smiley' ? 'none' : 'flex';
-    ratingLabel.style.display = 'block'; // Show label when online
-    ratingType.style.display = 'block'; // Show toggle when online
+    ratingLabel.style.display = 'flex'; // Show label when online
+    ratingType.style.display = 'flex'; // Show toggle when online
   }
 }

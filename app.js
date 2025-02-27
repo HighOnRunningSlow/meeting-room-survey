@@ -17,7 +17,7 @@ const smileyContainer = document.querySelector('#smileyRating');
 if (starContainer) {
   starContainer.addEventListener('click', function (event) {
     const star = event.target.closest('.star');
-    console.log(event.target.value);
+
     if (star) {
       document.getElementById('firstPageButton').style.display = 'block';
       nextPage('page2');
@@ -123,7 +123,6 @@ function toggleRating() {
 }
 // Star Rating Logic
 function setRating(value) {
-  console.log(value);
   currentRating = value;
   updateStars();
 }
@@ -152,7 +151,6 @@ function saveDataOffline(data) {
 // Send data to the Apps Script web app
 function sendData(data) {
   fetch(
-    // 'https://script.google.com/macros/s/AKfycbw0xBHZNvp4CeQ7YpCqmICnd9idAPJK4PoDHKu5x0QirMBl6UD4RZ3N9RCj0dN8IdKd/exec',
     'https://script.google.com/macros/s/AKfycbz9KdrRhG6OxxRizJZn_yq01VTN48wYFOXsWYAo0ePmN4aYaYPxS_Zm0X1s4fmcjQYR/exec',
     {
       method: 'POST',

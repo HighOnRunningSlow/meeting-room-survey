@@ -1,12 +1,12 @@
 let currentRating = 0;
 let dataObject = {
-  submissionId: "",
-  roomId: "",
-  overall: "",
-  joinMeeting: "",
-  sharingContent: "",
-  audioVideo: "",
-  comments: "",
+  submissionId: '',
+  roomId: '',
+  overall: '',
+  joinMeeting: '',
+  sharingContent: '',
+  audioVideo: '',
+  comments: '',
 };
 let idleTimeout = null;
 const IDLE_TIME_MS = 60000;
@@ -17,6 +17,7 @@ const smileyContainer = document.querySelector('#smileyRating');
 if (starContainer) {
   starContainer.addEventListener('click', function (event) {
     const star = event.target.closest('.star');
+
     if (star) {
       document.getElementById('firstPageButton').style.display = 'block';
       nextPage('page2');
@@ -191,8 +192,6 @@ function submitSurvey() {
       ? currentRating
       : document.querySelector('input[name="overall"]:checked')?.value;
   dataObject.comments = document.getElementById('comments').value || '';
-console.log(dataObject);
-  
   if (navigator.onLine) {
     sendData(dataObject);
   } else {

@@ -121,36 +121,15 @@ window.addEventListener('online', () => {
   offlineSubmissions.forEach((sub) => {
     sendData(sub);
   });
-  // adaptStyles();
   checkOnlineStatus();
 });
 window.addEventListener('offline', () => {
-  // adaptStyles();
   checkOnlineStatus();
 });
-// function adaptStyles() {
-//   document.getElementById('smileyRating').style.display =
-//     isOnline != true || document.getElementById('ratingType').value == 'smiley'
-//       ? 'flex'
-//       : 'none';
-//   document.getElementById('starRating').style.display =
-//     isOnline != true ? 'none' : 'flex';
-//   document.getElementById('ratingLabel').style.display =
-//     isOnline != true ? 'none' : 'block';
-//   document.getElementById('ratingType').style.display =
-//     isOnline != true ? 'none' : 'block';
-// }
-// // Generate a unique submission ID on load
-// function generateSubmissionId() {
-//   return 'sub-' + Date.now() + '-' + Math.floor(Math.random() * 100000);
-// }
-// function toggleRating() {
-//   const ratingType = document.getElementById('ratingType').value;
-//   document.getElementById('smileyRating').style.display =
-//     ratingType === 'smiley' ? 'flex' : 'none';
-//   document.getElementById('starRating').style.display =
-//     ratingType === 'stars' ? 'flex' : 'none';
-// }
+// Generate a unique submission ID on load
+function generateSubmissionId() {
+  return 'sub-' + Date.now() + '-' + Math.floor(Math.random() * 100000);
+}
 // Star Rating Logic
 function setRating(value) {
   currentRating = value;
@@ -253,16 +232,14 @@ function getQueryParam(param) {
 function updateRatingDisplay() {
   const selectedRating = ratingType.value;
   if (!isOnline) {
-    // Offline: Always show smileys, hide stars
     smileyRating.style.display = 'flex';
     starRating.style.display = 'none';
-    ratingLabel.style.display = 'none'; // Hide label if offline
-    ratingType.style.display = 'none'; // Hide toggle if offline
+    ratingLabel.style.display = 'none';
+    ratingType.style.display = 'none';
   } else {
-    // Online: Show based on toggle selection
     smileyRating.style.display = selectedRating === 'smiley' ? 'flex' : 'none';
     starRating.style.display = selectedRating === 'smiley' ? 'none' : 'flex';
-    ratingLabel.style.display = 'flex'; // Show label when online
-    ratingType.style.display = 'flex'; // Show toggle when online
+    ratingLabel.style.display = 'flex';
+    ratingType.style.display = 'flex';
   }
 }

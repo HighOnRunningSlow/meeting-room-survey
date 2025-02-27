@@ -107,10 +107,15 @@ window.addEventListener('online', () => {
   offlineSubmissions.forEach((sub) => {
     sendData(sub);
   });
+  document.getElementById('smileyRating').style.display = 'none';
+  document.getElementById('starRating').style.display = 'flex';
+  document.getElementById('ratingLabel').style.display = 'block';
+  document.getElementById('ratingType').style.display = 'block';
 });
 window.addEventListener("offline", () => {
   document.getElementById('smileyRating').style.display = 'flex';
   document.getElementById('starRating').style.display = 'none';
+  document.getElementById('ratingLabel').style.display = 'none';
   document.getElementById('ratingType').style.display = 'none';
 });
 // Generate a unique submission ID on load

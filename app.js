@@ -25,11 +25,8 @@ const smileyRating = document.getElementById('smileyRating');
 const starRating = document.getElementById('starRating');
 const ratingLabel = document.getElementById('ratingLabel');
 
-const starContainer = document.querySelector('#starRating');
-const smileyContainer = document.querySelector('#smileyRating');
-
-if (starContainer) {
-  starContainer.addEventListener('click', function (event) {
+if (starRating) {
+  starRating.addEventListener('click', function (event) {
     const star = event.target.closest('.star');
     if (star) {
       document.getElementById('firstPageButton').style.display = 'block';
@@ -37,8 +34,8 @@ if (starContainer) {
     }
   });
 }
-if (smileyContainer) {
-  smileyContainer.addEventListener('click', (event) => {
+if (smileyRating) {
+  smileyRating.addEventListener('click', (event) => {
     if (event.target.value) {
       const selectedValue = event.target.value;
       if (selectedValue != undefined) {

@@ -75,7 +75,7 @@
           </div>
 
           <!-- Star Rating (Hidden Initially) -->
-           <div
+          <div
             id="starRating"
             style="display: flex; flex-direction: column; text-align: center"
           >
@@ -145,8 +145,10 @@
           </div>
           <div class="flexContainer">
             <div>
-              <label id="ratingLabel" for="ratingType">Choose Rating Type:</label>
-              <select id="ratingType" onchange="toggleRating()">
+              <label id="ratingLabel" for="ratingType"
+                >Choose Rating Type:</label
+              >
+              <select id="ratingType" onchange="updateRatingDisplay()">
                 <option value="stars">⭐ Stars</option>
                 <option value="smiley">😊 Smileys</option>
               </select>

@@ -162,7 +162,9 @@ function sendData(data) {
   fetch(urlWithTimestamp, {
     method: 'POST',
     mode: 'no-cors', // Make sure to use no-cors mode if you don't expect a response body
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json',
+             'Cache-Control': 'no-cache',
+      'Pragma': 'no-cache'},
     body: JSON.stringify(data),
   })
     .then(() => {

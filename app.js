@@ -1,4 +1,5 @@
 let currentRating = 0;
+let isOnline = true;
 let dataObject = {
   submissionId: '',
   roomId: '',
@@ -10,10 +11,23 @@ let dataObject = {
 };
 let idleTimeout = null;
 const IDLE_TIME_MS = 60000;
+const ratingType = document.getElementById('ratingType');
+const smileyRating = document.getElementById('smileyRating');
+const starRating = document.getElementById('starRating');
+const ratingLabel = document.getElementById('ratingLabel');
 
 const starContainer = document.querySelector('#starRating');
 const smileyContainer = document.querySelector('#smileyRating');
 
+function checkOnlineStatus() {
+  if (navigator.onLine) {
+    isOnline = true;
+    adaptStyles();
+  } else {
+    isOnline = false;
+    adaptStyles();
+  }
+}
 if (starContainer) {
   starContainer.addEventListener('click', function (event) {
     const star = event.target.closest('.star');
@@ -69,7 +83,7 @@ document.querySelectorAll('.star').forEach((star, index) => {
     updateStars();
   });
 
-  star.addEventListener('click', (event) => {
+  star.addEventListener('click', () => {
     setRating(index + 1);
   });
 });
@@ -101,38 +115,42 @@ document.querySelectorAll('.thumb-btn').forEach((button) => {
   });
 });
 // When device goes online, resend any offline submissions
-window.addEventListener('online', (event) => {
+window.addEventListener('online', () => {
   let offlineSubmissions =
     JSON.parse(localStorage.getItem('offlineSubmissions')) || [];
   offlineSubmissions.forEach((sub) => {
     sendData(sub);
   });
-  adaptStyles(event.style);
+  // adaptStyles();
+  updateRatingDisplay();
 });
-window.addEventListener('offline', (event) => {
-  adaptStyles(event.style);
+window.addEventListener('offline', () => {
+  // adaptStyles();
+  updateRatingDisplay();
 });
-function adaptStyles(eventType) {
-  document.getElementById('smileyRating').style.display =
-    eventType == 'online' ? 'flex' : 'none';
-  document.getElementById('starRating').style.display =
-    eventType != 'online' ? 'none' : 'flex';
-  document.getElementById('ratingLabel').style.display =
-    eventType != 'online' ? 'none' : 'block';
-  document.getElementById('ratingType').style.display =
-    eventType != 'online' ? 'none' : 'block';
-}
-// Generate a unique submission ID on load
-function generateSubmissionId() {
-  return 'sub-' + Date.now() + '-' + Math.floor(Math.random() * 100000);
-}
-function toggleRating() {
-  const ratingType = document.getElementById('ratingType').value;
-  document.getElementById('smileyRating').style.display =
-    ratingType === 'smiley' ? 'flex' : 'none';
-  document.getElementById('starRating').style.display =
-    ratingType === 'stars' ? 'flex' : 'none';
-}
+// function adaptStyles() {
+//   document.getElementById('smileyRating').style.display =
+//     isOnline != true || document.getElementById('ratingType').value == 'smiley'
+//       ? 'flex'
+//       : 'none';
+//   document.getElementById('starRating').style.display =
+//     isOnline != true ? 'none' : 'flex';
+//   document.getElementById('ratingLabel').style.display =
+//     isOnline != true ? 'none' : 'block';
+//   document.getElementById('ratingType').style.display =
+//     isOnline != true ? 'none' : 'block';
+// }
+// // Generate a unique submission ID on load
+// function generateSubmissionId() {
+//   return 'sub-' + Date.now() + '-' + Math.floor(Math.random() * 100000);
+// }
+// function toggleRating() {
+//   const ratingType = document.getElementById('ratingType').value;
+//   document.getElementById('smileyRating').style.display =
+//     ratingType === 'smiley' ? 'flex' : 'none';
+//   document.getElementById('starRating').style.display =
+//     ratingType === 'stars' ? 'flex' : 'none';
+// }
 // Star Rating Logic
 function setRating(value) {
   currentRating = value;
@@ -204,6 +222,7 @@ function submitSurvey() {
       ? currentRating
       : document.querySelector('input[name="overall"]:checked')?.value;
   dataObject.comments = document.getElementById('comments').value || '';
+  console.log(dataObject);
 
   if (navigator.onLine) {
     sendData(dataObject);
@@ -231,10 +250,20 @@ function getQueryParam(param) {
   const params = new URLSearchParams(window.location.search);
   return params.get(param);
 }
-function checkOnlineStatus() {
-  if (navigator.onLine) {
-    adaptStyles('online');
+function updateRatingDisplay() {
+  const selectedRating = ratingType.value; // Get selected type ('star' or 'smiley')
+
+  if (!isOnline) {
+    // Offline: Always show smileys, hide stars
+    smileyRating.style.display = 'flex';
+    starRating.style.display = 'none';
+    ratingLabel.style.display = 'none'; // Hide label if offline
+    ratingType.style.display = 'none'; // Hide toggle if offline
   } else {
-    adaptStyles('offline');
+    // Online: Show based on toggle selection
+    smileyRating.style.display = selectedRating === 'smiley' ? 'flex' : 'none';
+    starRating.style.display = selectedRating === 'smiley' ? 'none' : 'flex';
+    ratingLabel.style.display = 'block'; // Show label when online
+    ratingType.style.display = 'block'; // Show toggle when online
   }
 }

@@ -1,12 +1,12 @@
 let currentRating = 0;
 let dataObject = {
-  submissionId: "",
-  roomId: "",
-  overall: "",
-  joinMeeting: "",
-  sharingContent: "",
-  audioVideo: "",
-  comments: "",
+  submissionId: '',
+  roomId: '',
+  overall: '',
+  joinMeeting: '',
+  sharingContent: '',
+  audioVideo: '',
+  comments: '',
 };
 let idleTimeout = null;
 const IDLE_TIME_MS = 60000;
@@ -69,7 +69,7 @@ document.querySelectorAll('.star').forEach((star, index) => {
     updateStars();
   });
 
-  star.addEventListener('click', () => {
+  star.addEventListener('click', (event) => {
     setRating(index + 1);
   });
 });
@@ -101,23 +101,27 @@ document.querySelectorAll('.thumb-btn').forEach((button) => {
   });
 });
 // When device goes online, resend any offline submissions
-window.addEventListener('online', () => {
+window.addEventListener('online', (event) => {
   let offlineSubmissions =
     JSON.parse(localStorage.getItem('offlineSubmissions')) || [];
   offlineSubmissions.forEach((sub) => {
     sendData(sub);
   });
-  document.getElementById('smileyRating').style.display = 'none';
-  document.getElementById('starRating').style.display = 'flex';
-  document.getElementById('ratingLabel').style.display = 'block';
-  document.getElementById('ratingType').style.display = 'block';
+  adaptStyles(event.style);
 });
-window.addEventListener("offline", () => {
-  document.getElementById('smileyRating').style.display = 'flex';
-  document.getElementById('starRating').style.display = 'none';
-  document.getElementById('ratingLabel').style.display = 'none';
-  document.getElementById('ratingType').style.display = 'none';
+window.addEventListener('offline', (event) => {
+  adaptStyles(event.style);
 });
+function adaptStyles(eventType) {
+  document.getElementById('smileyRating').style.display =
+    eventType == 'online' ? 'flex' : 'none';
+  document.getElementById('starRating').style.display =
+    eventType != 'online' ? 'none' : 'flex';
+  document.getElementById('ratingLabel').style.display =
+    eventType != 'online' ? 'none' : 'block';
+  document.getElementById('ratingType').style.display =
+    eventType != 'online' ? 'none' : 'block';
+}
 // Generate a unique submission ID on load
 function generateSubmissionId() {
   return 'sub-' + Date.now() + '-' + Math.floor(Math.random() * 100000);
@@ -200,7 +204,6 @@ function submitSurvey() {
       ? currentRating
       : document.querySelector('input[name="overall"]:checked')?.value;
   dataObject.comments = document.getElementById('comments').value || '';
-console.log(dataObject);
 
   if (navigator.onLine) {
     sendData(dataObject);
@@ -220,10 +223,18 @@ function resetIdleTimer() {
   idleTimeout = setTimeout(() => {
     location.reload();
   }, IDLE_TIME_MS);
+  checkOnlineStatus();
 }
 resetIdleTimer();
 // Parse the "room" query parameter and generate a unique submission ID on load
 function getQueryParam(param) {
   const params = new URLSearchParams(window.location.search);
   return params.get(param);
+}
+function checkOnlineStatus() {
+  if (navigator.onLine) {
+    adaptStyles('online');
+  } else {
+    adaptStyles('offline');
+  }
 }

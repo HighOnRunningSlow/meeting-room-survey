@@ -16,8 +16,8 @@
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="assets/fontawesome/css/all.min.css" />
-    <link href="assets/fontawesome/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/css/all.min.css" />
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="styles.css" />
     <!-- Link to the external CSS file -->
   </head>
@@ -30,7 +30,7 @@
       <!-- Page 1: Wireless Room Survey (Smiley Faces) -->
       <div id="page1" class="page active">
         <div class="content">
-          <h1>Wireless Room Survey</h1>
+          <h1>Wireless Room Survey on the test branch</h1>
           <p class="description">Only a few seconds to complete!</p>
           <p class="description" style="font-weight: bold; margin-bottom: 2em">
             How was your overall meeting room experience?
@@ -74,31 +74,29 @@
             </label>
           </div>
 
-                    <!-- Star Rating (Hidden Initially) -->
+          <!-- Star Rating (Hidden Initially) -->
           <div
             id="starRating"
             style="display: flex; flex-direction: column; text-align: center"
           >
-            <div class="smiley-container">
+            <div class="star-container">
               <label>
                 <input
-                  class="star"
                   type="radio"
                   name="overall"
                   value="1"
                   aria-label="Neutral"
                 />
-                <img src="./images/star-solid.svg" alt="Neutral" />
+                <img class="star" src="./images/star-solid.svg" alt="Neutral" />
               </label>
               <label>
                 <input
-                  class="star"
                   type="radio"
                   name="overall"
                   value="2"
                   aria-label="Neutral"
                 />
-                <img src="./images/star-solid.svg" alt="Neutral" />
+                <img class="star" src="./images/star-solid.svg" alt="Neutral" />
               </label>
               <label>
                 <input
@@ -448,6 +446,6 @@
     </div>
 
     <!-- Link to the external JavaScript file -->
-    <script src="app.js"></script>
+    <script src="script.js"></script>
   </body>
 </html>

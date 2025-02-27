@@ -198,6 +198,7 @@ textarea {
 }
 .flexContainer span {
   margin-top: 1%;
+  width: 10rem;
 }
 #submitButton {
   margin: 10% 36% 0 36%;
